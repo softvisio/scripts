@@ -1,5 +1,5 @@
 # dnf -y install 'dnf-command(config-manager)'
-# dnf config-manager --add-repo https://bitbucket.org/softvisio/scripts/raw/main/corp-softvisio-release.fedora.repo
+# dnf config-manager --add-repo https://raw.githubusercontent.com/softvisio/scripts/main/corp-softvisio-release.fedora.repo
 
 [copr:copr.fedorainfracloud.org:softvisio:release]
 name                = Copr repo for release owned by softvisio

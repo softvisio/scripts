@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-perl.sh | /bin/bash -s -- setup
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-perl.sh | /bin/bash -s -- cleanup
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-perl.sh | /bin/bash -s -- setup
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-perl.sh | /bin/bash -s -- cleanup
 
 set -e
 set -u
@@ -9,7 +9,7 @@ set -u
 function _setup() {
 
     # setup build env
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build.sh | /bin/bash -s -- setup
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- setup
 
     local PACKAGES=""
 
@@ -83,7 +83,7 @@ function _cleanup() {
     dnf -y autoremove $PACKAGES
 
     # cleanup build env
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build.sh | /bin/bash -s -- cleanup
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 }
 
 case "$1" in

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
 
 set -e
 set -u
@@ -42,7 +42,7 @@ function __setup_user() {
 
     # TODO test
     # install SSH key
-    sudo -u $USERNAME curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/install-auth-key.sh | /bin/bash
+    sudo -u $USERNAME curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
     chmod 600 /home/$USERNAME/.ssh/authorized_keys
     chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
@@ -51,13 +51,13 @@ function __setup_user() {
 function _setup_host_vmware() {
 
     # setup host
-    source <(curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-host.sh) 2>&1 | tee /setup-host.log
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh) 2>&1 | tee /setup-host.log
 
     # enable SSH root login
     sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
 
     # install SSH key
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/install-auth-key.sh | /bin/bash
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
     # setup SSH service
     systemctl enable sshd
@@ -90,10 +90,10 @@ function _setup_host_vmware() {
     fi
 
     # setup timesync
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-timesync.sh | /bin/bash
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh | /bin/bash
 
     # node build env
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-node.sh | /bin/bash -s -- setup
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
     dnf install -y google-chrome-stable postgresql13 3proxy nginx-latest nvim princexml msttcorefonts google-chrome-stable
@@ -104,7 +104,7 @@ function _setup_host_vmware() {
     systemctl enable docker.service
 
     # install .dotfiles
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/dotfiles.sh | /bin/bash -s -- update
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh | /bin/bash -s -- update
 
     # install node
     /bin/bash -l <(
@@ -112,7 +112,7 @@ function _setup_host_vmware() {
 n latest
 n rm latest
 n prune
-curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-node.sh | /bin/bash
+curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
 EOF
     )
 

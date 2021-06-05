@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-host-macos.sh | /bin/bash
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh | /bin/bash
 
 set -e
 set -u
@@ -21,6 +21,6 @@ brew install wget mc node cocoapods ios-sim
 pod setup
 
 # setup node
-curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-node.sh | /bin/bash
+curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
 
 # npm install --global ios-sim

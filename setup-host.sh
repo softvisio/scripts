@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# source <( curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-host.sh )
-# source <( curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-host.sh ) 2>&1 | tee /setup-host.log
+# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh )
+# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
 
 function _setup_host() {
 
     # install common profile
-    curl -fsSLo /etc/profile.d/bash-config.sh https://bitbucket.org/softvisio/scripts/raw/main/bashrc.sh
+    curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
 
     # load os release variables
     . /etc/os-release

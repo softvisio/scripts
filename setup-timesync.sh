@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/setup-timesync.sh | /bin/bash
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh | /bin/bash
 
 set -e
 set -u

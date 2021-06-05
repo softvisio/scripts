@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/dotfiles.sh | /bin/bash -s -- update
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/dotfiles.sh | /bin/bash -s -- remove
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh | /bin/bash -s -- update
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh | /bin/bash -s -- remove
 
 set -e
 
 LOCAL=~
-REMOTE=git@bitbucket.org:zdm/.dotfiles.git
+REMOTE=git@github.com:zdm/.dotfiles.git
 REMOTE_BRANCH=main
 
 function _update() {

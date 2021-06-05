@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/softvisio.repo.sh | /bin/bash
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/softvisio.repo.sh | /bin/bash
 
 set -e
 
@@ -10,7 +10,7 @@ DIST=${DIST//[0-9]/}
 cat <<EOF >/etc/yum.repos.d/softvisio.repo
 [softvisio]
 name                = Softvisio
-baseurl             = https://bitbucket.org/softvisio/rpm/raw/main/repo/$DIST\$releasever-\$basearch/
+baseurl             = https://raw.githubusercontent.com/softvisio/rpm/main/repo/$DIST\$releasever-\$basearch/
 enabled             = 1
 type                = rpm-md
 gpgcheck            = 0

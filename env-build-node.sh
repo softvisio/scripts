@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-node.sh | /bin/bash -s -- setup
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-node.sh | /bin/bash -s -- cleanup
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup
 
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-node.sh | /bin/bash -s -- setup-build
-# curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build-node.sh | /bin/bash -s -- cleanup-build
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup-build
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup-build
 
 set -e
 set -u
@@ -20,7 +20,7 @@ function _setup() {
 function _setup_build() {
 
     # setup build env
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build.sh | /bin/bash -s -- setup
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- setup
 
     local PACKAGES=""
 
@@ -50,7 +50,7 @@ function _cleanup_build() {
     dnf -y autoremove $PACKAGES
 
     # cleanup build env
-    curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/env-build.sh | /bin/bash -s -- cleanup
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
     dnf clean all
 }

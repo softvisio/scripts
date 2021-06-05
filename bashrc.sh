@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# source <( curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/bashrc.sh )
+# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh )
 
 export TERM=putty-256color
 export HISTCONTROL=ignoreboth:erasedups
@@ -32,7 +32,7 @@ alias mv='mv -i'
 alias grep='grep --color=auto'
 alias less='less --no-init --raw-control-chars --ignore-case --quit-on-intr --squeeze-blank-lines --quit-if-one-screen'
 alias autossh="autossh -M 0 -o 'ServerAliveInterval 30' -o 'ServerAliveCountMax 3'"
-alias pscp="source <( curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/pscp.sh )"
+alias pscp="source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/pscp.sh )"
 alias d="docker"
 alias g="git"
 alias s="softvisio-cli"

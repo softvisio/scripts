@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSLO https://bitbucket.org/softvisio/scripts/raw/main/mariadb.sh && chmod +x mariadb.sh
+# curl -fsSLO https://raw.githubusercontent.com/softvisio/scripts/main/mariadb.sh && chmod +x mariadb.sh
 # MYSQL_ROOT_PASSWORD=1 ./mariadb.sh
 
 set -e
@@ -31,6 +31,6 @@ export DOCKER_CONTAINER_ARGS="
     -p 3306:3306/tcp \
 "
 
-curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/docker.sh | /bin/bash -s -- "$@"
+curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/docker.sh | /bin/bash -s -- "$@"
 
 docker logs mariadb

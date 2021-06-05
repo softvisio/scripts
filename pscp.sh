@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# source <( curl -fsSL https://bitbucket.org/softvisio/scripts/raw/main/pscp.sh )
+# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/pscp.sh )
 
 function pscp() {
     printf "\033]0;__pw:"$(pwd)"\007"
