@@ -1,0 +1,20 @@
+{
+    "name": "scripts",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Scripts",
+    "keywords": [
+        "softvisio",
+        "scripts"
+    ],
+    "homepage": "https://github.com/softvisio/scripts",
+    "bugs": {
+        "url": "https://github.com/softvisio/scripts/issues",
+        "email": "zdm@softvisio.net"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/softvisio/scripts.git"
+    },
+    "author": "zdm <zdm@softvisio.net>"
+}

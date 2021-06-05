@@ -1,0 +1,13 @@
+# dnf -y install 'dnf-command(config-manager)'
+# dnf config-manager --add-repo https://bitbucket.org/softvisio/scripts/raw/main/corp-softvisio-release.epel.repo
+
+[copr:copr.fedorainfracloud.org:softvisio:release]
+name                = Copr repo for release owned by softvisio
+baseurl             = https://download.copr.fedorainfracloud.org/results/softvisio/release/epel-$releasever-$basearch/
+type                = rpm-md
+skip_if_unavailable = 1
+gpgcheck            = 1
+gpgkey              = https://download.copr.fedorainfracloud.org/results/softvisio/release/pubkey.gpg
+repo_gpgcheck       = 0
+enabled             = 1
+enabled_metadata    = 1
