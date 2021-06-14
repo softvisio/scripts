@@ -10,7 +10,7 @@ DIST=${DIST//[0-9]/}
 cat <<EOF >/etc/yum.repos.d/softvisio.repo
 [softvisio]
 name                = Softvisio
-baseurl             = https://media.githubusercontent.com/media/softvisio/rpm/main/repo/repo/$DIST\$releasever-\$basearch/
+baseurl             = https://media.githubusercontent.com/media/softvisio/rpm/main/repo/$DIST\$releasever-\$basearch/
 enabled             = 1
 type                = rpm-md
 gpgcheck            = 0
