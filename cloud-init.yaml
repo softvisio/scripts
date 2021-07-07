@@ -1,4 +1,4 @@
-#cloud-config
+# cloud-config
 
 # https://www.digitalocean.com/community/tutorials/how-to-use-cloud-config-for-your-initial-server-setup
 # https://www.digitalocean.com/community/tutorials/an-introduction-to-cloud-config-scripting

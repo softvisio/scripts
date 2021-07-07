@@ -1,0 +1,26 @@
+#!/usr/bin/env -S docker stack deploy cleanup -c
+
+version: "3.9"
+
+# NOTE deploy
+# docker stack deploy -c docker-stack-cleanup.yaml cleanup
+
+services:
+  cleanup:
+    image: docker
+
+    command: [docker, system, prune, --all, --force]
+
+    deploy:
+      mode: global
+      restart_policy:
+        delay: 24h
+
+    networks: [none]
+
+    volumes:
+      - { type: bind, source: /var/run/docker.sock, target: /var/run/docker.sock }
+
+networks:
+  none: { name: host, external: true }
+  # none: { name: none, external: true } # XXX not works in docker v20.10.7
