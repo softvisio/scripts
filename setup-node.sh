@@ -26,7 +26,7 @@ PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     /var/local/devel/softvisio-cli \
     /var/local/archive/softvisio-eslint-plugin \
     /var/local/archive/softvisio-playwright \
-    /var/local/archive/softvisio-databases \
+    /var/local/archive/softvisio-datasets \
     /var/local/archive/softvisio-sqlite \
     cordova \
     neovim \
