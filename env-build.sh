@@ -26,15 +26,15 @@ function _cleanup() {
 }
 
 case "$1" in
-setup)
-    _setup
-    ;;
+    setup)
+        _setup
+        ;;
 
-cleanup)
-    _cleanup
-    ;;
+    cleanup)
+        _cleanup
+        ;;
 
-*)
-    return 1
-    ;;
+    *)
+        return 1
+        ;;
 esac

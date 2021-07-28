@@ -16,14 +16,14 @@ function _update() {
     fi
 
     # fetching remote
-    git fetch origin $REMOTE_BRANCH &>/dev/null
+    git fetch origin $REMOTE_BRANCH &> /dev/null
 
     # creating and checking out "backup" branch
-    git checkout --orphan backup &>/dev/null || git checkout --force backup &>/dev/null
+    git checkout --orphan backup &> /dev/null || git checkout --force backup &> /dev/null
 
-    git reset --hard &>/dev/null
+    git reset --hard &> /dev/null
 
-    git rm --cached \* &>/dev/null || true
+    git rm --cached \* &> /dev/null || true
 
     # adding files, tracked by remote branch
     local IFS=$'\n'
@@ -36,15 +36,15 @@ function _update() {
 
     # commiting "backup"
     if [[ $(git status -s -uno) ]]; then
-        git commit -m"backup" --no-verify &>/dev/null
+        git commit -m"backup" --no-verify &> /dev/null
 
         echo .dotfiles backup created
     fi
 
     # creating branch if not exists and checkout
-    git checkout -B $REMOTE_BRANCH origin/$REMOTE_BRANCH &>/dev/null
+    git checkout -B $REMOTE_BRANCH origin/$REMOTE_BRANCH &> /dev/null
 
-    git reset --hard &>/dev/null
+    git reset --hard &> /dev/null
 
     # chmod .git
     find $LOCAL/.git \
@@ -70,9 +70,9 @@ function _update() {
 function _remove() {
 
     # restore latest backup
-    git checkout --force backup &>/dev/null
+    git checkout --force backup &> /dev/null
 
-    git reset --hard &>/dev/null
+    git reset --hard &> /dev/null
 
     # remove dotfiles repository
     rm -rf $LOCAL/.git
@@ -81,28 +81,28 @@ function _remove() {
 }
 
 case "$1" in
-update)
-    pushd $LOCAL 1>/dev/null
+    update)
+        pushd $LOCAL 1> /dev/null
 
-    _update
+        _update
 
-    if [ -f $LOCAL/.bashrc ]; then source $LOCAL/.bashrc; fi
-    ;;
+        if [ -f $LOCAL/.bashrc ]; then source $LOCAL/.bashrc; fi
+        ;;
 
-remove)
-    pushd $LOCAL 1>/dev/null
+    remove)
+        pushd $LOCAL 1> /dev/null
 
-    _remove
+        _remove
 
-    if [ -f $LOCAL/.bashrc ]; then source $LOCAL/.bashrc; fi
+        if [ -f $LOCAL/.bashrc ]; then source $LOCAL/.bashrc; fi
 
-    # restore default command prompt
-    export PS1="[\u@\h \W]\$ "
-    ;;
+        # restore default command prompt
+        export PS1="[\u@\h \W]\$ "
+        ;;
 
-*)
-    return 1
-    ;;
+    *)
+        return 1
+        ;;
 esac
 
-popd 1>/dev/null
+popd 1> /dev/null

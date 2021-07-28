@@ -24,7 +24,7 @@ fi
 
 shopt -s cdspell cmdhist dirspell histappend nocaseglob no_empty_cmd_completion
 
-bind "set completion-ignore-case on" 2>/dev/null
+bind "set completion-ignore-case on" 2> /dev/null
 
 alias rm='rm -i'
 alias cp='cp -i'

@@ -72,13 +72,13 @@ function _setup_host_vmware() {
     if mountpoint -q -- "/mnt/hgfs"; then
         echo HGFS is already mounted
     else
-        mkdir /mnt/hgfs 2>/dev/null || true
+        mkdir /mnt/hgfs 2> /dev/null || true
         mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o defaults,allow_other
     fi
 
     # update fstab
     if ! grep -q "/mnt/hgfs" "/etc/fstab"; then
-        echo ".host:/ /mnt/hgfs fuse.vmhgfs-fuse defaults,allow_other 0 0" >>/etc/fstab
+        echo ".host:/ /mnt/hgfs fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
     fi
 
     # install hgfs symlinks for vmware workstation
@@ -108,7 +108,7 @@ function _setup_host_vmware() {
 
     # install node
     /bin/bash -l <(
-        cat <<EOF
+        cat << EOF
 n latest
 n rm latest
 n prune

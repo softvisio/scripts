@@ -7,7 +7,7 @@ set -e
 DIST=$(rpm -E %{?dist})
 DIST=${DIST//[0-9]/}
 
-cat <<EOF >/etc/yum.repos.d/softvisio.repo
+cat << EOF > /etc/yum.repos.d/softvisio.repo
 [softvisio]
 name                = Softvisio
 baseurl             = https://media.githubusercontent.com/media/softvisio/rpm/main/repo/$DIST\$releasever-\$basearch/

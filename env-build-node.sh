@@ -56,23 +56,23 @@ function _cleanup_build() {
 }
 
 case "$1" in
-setup)
-    _setup
-    ;;
+    setup)
+        _setup
+        ;;
 
-setup-build)
-    _setup_build
-    ;;
+    setup-build)
+        _setup_build
+        ;;
 
-cleanup)
-    _cleanup
-    ;;
+    cleanup)
+        _cleanup
+        ;;
 
-cleanup-build)
-    _cleanup_build
-    ;;
+    cleanup-build)
+        _cleanup_build
+        ;;
 
-*)
-    return 1
-    ;;
+    *)
+        return 1
+        ;;
 esac
