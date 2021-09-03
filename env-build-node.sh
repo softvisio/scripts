@@ -40,6 +40,9 @@ function _cleanup() {
 
     # remove dnf cache
     rm -rf /var/cache/dnf
+
+    # clean npm cache
+    rm -rf ~/.npm-cache
 }
 
 function _cleanup_build() {
@@ -53,6 +56,9 @@ function _cleanup_build() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
     dnf clean all
+
+    # clean npm cache
+    rm -rf ~/.npm-cache
 }
 
 case "$1" in
