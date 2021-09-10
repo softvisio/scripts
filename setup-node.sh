@@ -29,5 +29,4 @@ PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     /var/local/archive/softvisio-datasets \
     /var/local/archive/softvisio-sqlite \
     cordova \
-    neovim \
-    typescript
+    neovim
