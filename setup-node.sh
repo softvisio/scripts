@@ -24,7 +24,6 @@ PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
     /var/local/devel/softvisio-core \
     /var/local/devel/softvisio-cli \
-    /var/local/archive/datasets \
     /var/local/archive/softvisio-eslint-plugin \
     /var/local/archive/softvisio-playwright \
     /var/local/archive/softvisio-sqlite \
