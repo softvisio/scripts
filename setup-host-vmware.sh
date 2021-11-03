@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
 
 set -e
@@ -96,7 +97,7 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    dnf install -y google-chrome-stable postgresql13 3proxy nginx-latest nvim princexml msttcorefonts google-chrome-stable
+    dnf install -y google-chrome-stable postgresql14 3proxy nginx-latest nvim princexml msttcorefonts google-chrome-stable
 
     # install docker
     dnf install -y docker-ce
