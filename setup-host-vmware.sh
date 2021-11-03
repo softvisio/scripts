@@ -97,7 +97,7 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    dnf install -y google-chrome-stable postgresql14 3proxy nginx-latest nvim princexml msttcorefonts google-chrome-stable
+    dnf install -y nvim postgresql14 msttcorefonts google-chrome-stable
 
     # install docker
     dnf install -y docker-ce
@@ -108,15 +108,16 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh | /bin/bash -s -- update
 
     # install node
-    /bin/bash -l <(
-        cat << EOF
-n latest
-n rm latest
-n prune
-curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
-EOF
-    )
+    #     /bin/bash -l <(
+    #         cat << EOF
+    # n latest
+    # n rm latest
+    # n prune
+    # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
+    # EOF
+    #     )
 
+    # install perl
     # dnf install -y perl-5.34.0
     # plenv global perl-5.34.0
 
