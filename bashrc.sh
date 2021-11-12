@@ -38,6 +38,7 @@ alias g="git"
 alias s="softvisio-cli"
 
 function update() {
-    dnf -y update
-    dnf -y remove --oldinstallonly || true
+    apt update
+    apt full-upgrade
+    apt autoremove
 }
