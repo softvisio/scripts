@@ -6,9 +6,9 @@ export TERM=putty-256color
 export HISTCONTROL=ignoreboth:erasedups
 export CLICOLOR=1
 
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+export LANGUAGE=C.UTF-8
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
 
 export PGUSER=postgres
 export PGHOST=127.0.0.1

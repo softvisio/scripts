@@ -5,10 +5,10 @@
 set -e
 set -u
 
-dnf -y install tzdata chrony
+apt -y install tzdata chrony
 
-systemctl enable chronyd
-systemctl restart chronyd
+systemctl enable chrony
+systemctl restart chrony
 
 timedatectl set-timezone UTC
 timedatectl set-ntp yes
