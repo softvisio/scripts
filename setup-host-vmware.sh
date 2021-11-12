@@ -60,11 +60,7 @@ function _setup_host_vmware() {
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
-    # setup SSH service
-    systemctl enable sshd
-    systemctl restart sshd
-
-    dnf install -y open-vm-tools mc htop git git-lfs
+    apt install -y open-vm-tools mc htop git git-lfs
 
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
@@ -97,12 +93,11 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    dnf install -y nvim postgresql14 msttcorefonts google-chrome-stable
+    # apt install -y nvim msttcorefonts
+    apt install -y postgresql-client-14 google-chrome-stable
 
     # install docker
-    dnf install -y docker-ce
-    systemctl start docker.service
-    systemctl enable docker.service
+    apt install -y docker-ce
 
     # install .dotfiles
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh | /bin/bash -s -- update
@@ -116,10 +111,6 @@ function _setup_host_vmware() {
     # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
     # EOF
     #     )
-
-    # install perl
-    # dnf install -y perl-5.34.0
-    # plenv global perl-5.34.0
 
     echo Setup vmware host finished.
     echo You need to reboot server

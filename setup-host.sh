@@ -8,53 +8,53 @@ function _setup_host() {
     # install common profile
     curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
 
-    # load os release variables
-    . /etc/os-release
-
-    # centos
-    if [[ $ID == "centos" ]]; then
-
-        # centos 8
-        if [[ $VERSION_ID == "8" ]]; then
-
-            # fix locale, https://github.com/CentOS/sig-cloud-instance-images/issues/71#issuecomment-538302151
-            dnf install -y glibc-langpack-en
-        fi
-
-        # epel repo
-        dnf install -y epel-release
-    fi
-
-    # softvisio/release repo
-    dnf install -y dnf-plugins-core
-    dnf copr -y enable softvisio/release
-
-    # centos additional repos
-    if [[ $ID == "centos" ]]; then
-        dnf install -y 'dnf-command(config-manager)'
-
-        # centos 8
-        if [[ $VERSION_ID == "8" ]]; then
-            dnf config-manager --set-enabled plus powertools
-        fi
-    fi
-
     # install repos
-    dnf install -y repo-softvisio repo-pgsql repo-docker repo-google-chrome n
-    source /etc/profile.d/n.sh
+    # XXX softvisio repository
 
-    # plenv
-    # dnf install -y plenv
-    # source /etc/profile.d/plenv.sh
+    # postgres repository
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/pgdg-archive-keyring.gpg
+    cat << EOF > /etc/apt/sources.list.d/pgdg.list
+deb [signed-by=/usr/share/keyrings/pgdg-archive-keyring.gpg] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main
+EOF
+
+    # docker repository
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    cat << EOF > /etc/apt/sources.list.d/docker.list
+deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+EOF
+
+    # google chrome repository
+    curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-archive-keyring.gpg
+    cat << EOF > /etc/apt/sources.list.d/google-chrome.list
+deb [signed-by=/usr/share/keyrings/google-archive-keyring.gpg] https://dl.google.com/linux/chrome/deb/ stable main
+EOF
+
+    # n
+    # XXX deb package, source /etc/profile.d/n.sh
+    export N_PREFIX=/usr/n
+    mkdir -p $N_PREFIX
+    curl -fsSL https://github.com/tj/n/archive/master.tar.gz | tar -C $N_PREFIX --strip-components=1 -xz
+    cat << EOF > /etc/profile.d/n.sh
+#!/bin/sh
+
+export N_PREFIX=/usr/n
+
+NPM_PREFIX=\$(realpath ~)/.npm/bin
+
+[[ :\$PATH: == *":\$NPM_PREFIX:"* ]] || PATH+=":\$NPM_PREFIX"
+
+[[ :\$PATH: == *":\$N_PREFIX/bin:"* ]] || PATH+=":\$N_PREFIX/bin"
+EOF
 
     # upgrade installed packages to the latest versions
-    dnf update -y
+    apt update -y
+    apt full-upgrade -y
 
     # install common packages
-    dnf install -y bash-completion ca-certificates tar bzip2
+    apt install -y bash-completion ca-certificates tar bzip2
 
     # clean old kernels
-    dnf remove --oldinstallonly || true
+    apt autoremove
 }
 
 _setup_host
