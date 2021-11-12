@@ -7,19 +7,17 @@ set -e
 set -u
 
 function _setup() {
-    dnf -y install make patch gcc gcc-c++
+    apt -y install make patch gcc g++
 }
 
 function _cleanup() {
 
     # remove build environment
-    dnf -y autoremove gcc gcc-c++
+    apt -y autoremove make patch gcc g++
 
-    # cleanup dnf
-    dnf clean all
-
-    # remove dnf cache
-    rm -rf /var/cache/dnf
+    # cleanup apt
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
 
     # remove cpanm temp dir
     rm -rf /tmp/.cpanm

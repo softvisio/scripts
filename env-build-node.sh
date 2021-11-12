@@ -14,7 +14,7 @@ function _setup() {
 
     PACKAGES="$PACKAGES git"
 
-    dnf -y install $PACKAGES
+    apt -y install $PACKAGES
 }
 
 function _setup_build() {
@@ -24,9 +24,9 @@ function _setup_build() {
 
     local PACKAGES=""
 
-    PACKAGES="$PACKAGES git python3 make gcc-c++"
+    PACKAGES="$PACKAGES git python3 make g++"
 
-    dnf -y install $PACKAGES
+    apt -y install $PACKAGES
 }
 
 function _cleanup() {
@@ -34,12 +34,11 @@ function _cleanup() {
 
     PACKAGES="$PACKAGES git"
 
-    dnf -y autoremove $PACKAGES
+    apt -y autoremove $PACKAGES
 
-    dnf clean all
-
-    # remove dnf cache
-    rm -rf /var/cache/dnf
+    # cleanup apt
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
     rm -rf ~/.npm-cache
@@ -48,14 +47,16 @@ function _cleanup() {
 function _cleanup_build() {
     local PACKAGES=""
 
-    PACKAGES="$PACKAGES git python3 make gcc-c++"
+    PACKAGES="$PACKAGES git python3 make g++"
 
-    dnf -y autoremove $PACKAGES
+    apt -y autoremove $PACKAGES
 
     # cleanup build env
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
-    dnf clean all
+    # cleanup apt
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
     rm -rf ~/.npm-cache
