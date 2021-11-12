@@ -5,6 +5,10 @@
 
 function _setup_host() {
 
+    apt update
+
+    apt install -y curl gpg lsb-release
+
     # install common profile
     curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
 
@@ -47,8 +51,8 @@ NPM_PREFIX=\$(realpath ~)/.npm/bin
 EOF
 
     # upgrade installed packages to the latest versions
-    apt update -y
-    apt full-upgrade -y
+    apt update
+    apt full-upgrade
 
     # install common packages
     apt install -y bash-completion ca-certificates tar bzip2
