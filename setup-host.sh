@@ -55,7 +55,8 @@ EOF
     apt full-upgrade
 
     # install common packages
-    DEBIAN_FRONTEND=noninteractive apt install -y bash-completion ca-certificates tar bzip2 ncurses-term tzdate
+    # ncurses-term required to support putty-256color term in docker
+    DEBIAN_FRONTEND=noninteractive apt install -y bash-completion ca-certificates tar bzip2 ncurses-term tzdata
 
     # clean old kernels
     apt autoremove
