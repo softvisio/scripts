@@ -34,7 +34,7 @@ function _cleanup() {
 
     PACKAGES="$PACKAGES git"
 
-    apt -y autoremove $PACKAGES
+    apt -y autoremove $PACKAGES || true
 
     # cleanup apt
     apt-get clean
@@ -49,7 +49,7 @@ function _cleanup_build() {
 
     PACKAGES="$PACKAGES git python3 make g++"
 
-    apt -y autoremove $PACKAGES
+    apt -y autoremove $PACKAGES || true
 
     # cleanup build env
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
