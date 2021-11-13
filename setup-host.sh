@@ -55,7 +55,7 @@ EOF
     apt full-upgrade
 
     # install common packages
-    apt install -y bash-completion ca-certificates tar bzip2 ncurses-term
+    DEBIAN_FRONTEND=noninteractive apt install -y bash-completion ca-certificates tar bzip2 ncurses-term tzdate
 
     # clean old kernels
     apt autoremove
