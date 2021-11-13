@@ -2,8 +2,6 @@
 
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh )
 
-echo ========================= RI
-
 export TERM=putty-256color
 export HISTCONTROL=ignoreboth:erasedups
 export CLICOLOR=1
