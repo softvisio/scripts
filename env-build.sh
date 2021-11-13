@@ -7,13 +7,14 @@ set -e
 set -u
 
 function _setup() {
-    apt -y install make patch gcc g++
+    apt update
+    apt install -y make patch gcc g++
 }
 
 function _cleanup() {
 
     # remove build environment
-    apt -y autoremove make patch gcc g++ || true
+    apt autoremove make patch gcc g++ || true
 
     # cleanup apt
     apt-get clean

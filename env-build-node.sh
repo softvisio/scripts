@@ -14,7 +14,8 @@ function _setup() {
 
     PACKAGES="$PACKAGES git"
 
-    apt -y install $PACKAGES
+    apt update
+    apt install -y $PACKAGES
 }
 
 function _setup_build() {
@@ -26,7 +27,7 @@ function _setup_build() {
 
     PACKAGES="$PACKAGES git python3 make g++"
 
-    apt -y install $PACKAGES
+    apt install -y $PACKAGES
 }
 
 function _cleanup() {
@@ -34,7 +35,7 @@ function _cleanup() {
 
     PACKAGES="$PACKAGES git"
 
-    apt -y autoremove $PACKAGES || true
+    apt autoremove $PACKAGES || true
 
     # cleanup apt
     apt-get clean
@@ -49,7 +50,7 @@ function _cleanup_build() {
 
     PACKAGES="$PACKAGES git python3 make g++"
 
-    apt -y autoremove $PACKAGES || true
+    apt autoremove $PACKAGES || true
 
     # cleanup build env
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
