@@ -9,7 +9,7 @@ function _setup_host() {
 
     # install common packages
     # ncurses-term required to support putty-256color term in docker
-    apt install -y bash-completion ca-certificates tar bzip2 ncurses-term curl gpg
+    apt install -y bash-completion tar ca-certificates curl ncurses-term gpg
     DEBIAN_FRONTEND=noninteractive apt install -y tzdata
 
     # load os release variables
