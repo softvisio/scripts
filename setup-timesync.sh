@@ -5,7 +5,9 @@
 set -e
 set -u
 
-apt -y install tzdata chrony
+DEBIAN_FRONTEND=noninteractive
+
+apt install -y tzdata chrony
 
 systemctl enable chrony
 systemctl restart chrony

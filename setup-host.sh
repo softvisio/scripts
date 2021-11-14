@@ -60,7 +60,7 @@ EOF
     DEBIAN_FRONTEND=noninteractive apt install -y tzdata
 
     # clean old kernels
-    apt autoremove
+    apt autoremove -y
 }
 
 _setup_host

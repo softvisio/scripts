@@ -40,5 +40,5 @@ alias s="softvisio-cli"
 function update() {
     apt update
     apt full-upgrade
-    apt autoremove
+    apt autoremove -y
 }

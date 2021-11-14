@@ -14,7 +14,7 @@ function _setup() {
 function _cleanup() {
 
     # remove build environment
-    apt autoremove make patch gcc g++ || true
+    apt autoremove -y make patch gcc g++ || true
 
     # cleanup apt
     apt-get clean
