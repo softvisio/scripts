@@ -17,7 +17,7 @@ function _cleanup() {
     apt autoremove -y make patch gcc g++ || true
 
     # cleanup apt
-    apt-get clean
+    apt clean
     rm -rf /var/lib/apt/lists/*
 
     # remove cpanm temp dir

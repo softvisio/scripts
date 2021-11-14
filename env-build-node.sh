@@ -38,7 +38,7 @@ function _cleanup() {
     apt autoremove -y $PACKAGES || true
 
     # cleanup apt
-    apt-get clean
+    apt clean
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
@@ -56,7 +56,7 @@ function _cleanup_build() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
     # cleanup apt
-    apt-get clean
+    apt clean
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
