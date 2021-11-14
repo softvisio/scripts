@@ -7,7 +7,13 @@ function _setup_host() {
 
     apt update
 
-    apt install -y curl gpg lsb-release
+    # install common packages
+    # ncurses-term required to support putty-256color term in docker
+    apt install -y bash-completion ca-certificates tar bzip2 ncurses-term curl gpg
+    DEBIAN_FRONTEND=noninteractive apt install -y tzdata
+
+    # load os release variables
+    . /etc/os-release
 
     # install common profile
     curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
@@ -18,13 +24,13 @@ function _setup_host() {
     # postgres repository
     curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/pgdg-archive-keyring.gpg
     cat << EOF > /etc/apt/sources.list.d/pgdg.list
-deb [signed-by=/usr/share/keyrings/pgdg-archive-keyring.gpg] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main
+deb [signed-by=/usr/share/keyrings/pgdg-archive-keyring.gpg] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main
 EOF
 
     # docker repository
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     cat << EOF > /etc/apt/sources.list.d/docker.list
-deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $VERSION_CODENAME stable
 EOF
 
     # google chrome repository
@@ -54,12 +60,7 @@ EOF
     apt update
     apt full-upgrade
 
-    # install common packages
-    # ncurses-term required to support putty-256color term in docker
-    apt install -y bash-completion ca-certificates tar bzip2 ncurses-term
-    DEBIAN_FRONTEND=noninteractive apt install -y tzdata
-
-    # clean old kernels
+    # cleanup
     apt autoremove -y
 }
 
