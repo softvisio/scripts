@@ -58,7 +58,7 @@ EOF
 
     # upgrade installed packages to the latest versions
     apt update
-    apt full-upgrade
+    apt full-upgrade -y
 
     # cleanup
     apt autoremove -y
