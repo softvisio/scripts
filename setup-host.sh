@@ -20,7 +20,7 @@ function _setup_host() {
 
     # softvisio repository
     cat << EOF > /etc/apt/sources.list.d/softvisio.list
-deb [trusted=yes] https://media.githubusercontent.com/media/softvisio/deb/main/repo/ stable main
+deb [trusted=yes] https://media.githubusercontent.com/media/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 EOF
 
     apt update
