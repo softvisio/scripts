@@ -11,7 +11,7 @@ function _setup_host() {
 
     # install common packages
     # ncurses-term required to support putty-256color term in docker
-    apt install -y bash-completion tar ca-certificates curl ncurses-term tzdata
+    apt install -y apt-utils dialog bash-completion tar ca-certificates curl ncurses-term tzdata
 
     # load os release variables
     VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
