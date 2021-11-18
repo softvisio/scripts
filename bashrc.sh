@@ -2,6 +2,9 @@
 
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh )
 
+echo ========== BASH PROFILE LOADED ================
+
+export DEBIAN_FRONTEND=teletype
 export TERM=putty-256color
 export HISTCONTROL=ignoreboth:erasedups
 export CLICOLOR=1

@@ -50,6 +50,7 @@ function __setup_user() {
 }
 
 function _setup_host_vmware() {
+    export DEBIAN_FRONTEND=noninteractive
 
     # setup host
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh) 2>&1 | tee /setup-host.log
