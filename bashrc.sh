@@ -12,7 +12,7 @@ export LANG=C.UTF-8
 export LC_ALL=C.UTF-8
 
 export PGUSER=postgres
-export PGHOST=127.0.0.1
+export PGHOST=/var/lib/docker/volumes/pgsql/_data/sock
 
 # root user
 if [ "$(id -u)" == "0" ]; then
