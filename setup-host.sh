@@ -20,8 +20,9 @@ function _setup_host_debian() {
     curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
 
     # softvisio repository
+    curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://media.githubusercontent.com/media/softvisio/deb/main/dists/keyring.gpg
     cat << EOF > /etc/apt/sources.list.d/softvisio.list
-deb [trusted=yes] https://media.githubusercontent.com/media/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
+deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://media.githubusercontent.com/media/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 EOF
 
     apt update
