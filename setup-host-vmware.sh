@@ -61,7 +61,7 @@ function _setup_host_vmware() {
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
-    apt install -y open-vm-tools mc htop git git-lfs
+    apt install -y open-vm-tools mc htop git git-lfs git-filter-repo
 
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
