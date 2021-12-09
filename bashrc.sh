@@ -11,8 +11,9 @@ export LANGUAGE=C.UTF-8
 export LANG=C.UTF-8
 export LC_ALL=C.UTF-8
 
-export PGUSER=postgres
-export PGHOST=127.0.0.1
+# do not override, if already set
+if [ -z ${PGUSER+x} ]; then export PGUSER=postgres; fi
+if [ -z ${PGHOST+x} ]; then export PGHOST=127.0.0.1; fi
 
 # root user
 if [ "$(id -u)" == "0" ]; then
