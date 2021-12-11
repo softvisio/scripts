@@ -91,4 +91,6 @@ function _setup_host_redhat() {
     dnf remove --oldinstallonly || true
 }
 
+mkdir -p /var/run/postgresql
+
 _setup_host_debian
