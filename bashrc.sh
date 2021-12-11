@@ -11,7 +11,8 @@ export LANGUAGE=C.UTF-8
 export LANG=C.UTF-8
 export LC_ALL=C.UTF-8
 
-# do not override, if already set
+# postgresql
+mkdir -p /var/run/postgresql
 if [ -z ${PGUSER+x} ]; then export PGUSER=postgres; fi
 
 # root user
