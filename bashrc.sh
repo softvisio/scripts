@@ -4,8 +4,9 @@
 
 if [[ -z "$DEBIAN_FRONTEND" ]]; then export DEBIAN_FRONTEND=teletype; fi
 export TERM=putty-256color
-export HISTCONTROL=ignoreboth:erasedups
 export CLICOLOR=1
+export HISTCONTROL=ignoreboth:erasedups
+PROMPT_COMMAND="history -n; history -w; history -c; history -r"
 
 export LANGUAGE=C.UTF-8
 export LANG=C.UTF-8
