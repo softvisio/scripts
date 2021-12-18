@@ -19,6 +19,10 @@ function _setup_host_debian() {
     # install common profile
     curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
 
+    # install pgsqlrc
+    mkdir -p /etc/postgresql-common
+    curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/softvisio/scripts/main/psqlrc
+
     # softvisio repository
     curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
     cat << EOF > /etc/apt/sources.list.d/softvisio.list
