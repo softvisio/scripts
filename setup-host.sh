@@ -31,7 +31,7 @@ deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.gi
 EOF
 
     apt update
-    apt install -y repo-docker repo-pgsql repo-google-chrome n
+    apt install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
 
     # upgrade installed packages to the latest versions
     apt update

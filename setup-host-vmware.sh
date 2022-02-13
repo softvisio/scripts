@@ -95,7 +95,7 @@ function _setup_host_vmware() {
 
     # install software
     # apt install -y nvim msttcorefonts
-    apt install -y postgresql-client-14 google-chrome-stable
+    apt install -y postgresql-client-14 google-chrome-stable google-cloud-sdk
     DEBIAN_FRONTEND=noninteractive apt install -y ttf-mscorefonts-installer
 
     # install docker
