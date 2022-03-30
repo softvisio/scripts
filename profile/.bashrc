@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh )
+# if not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
 if [[ -z "$DEBIAN_FRONTEND" ]]; then export DEBIAN_FRONTEND=teletype; fi
 export TERM=putty-256color
 export CLICOLOR=1
+export HISTSIZE=1000
+export HISTFILESIZE=2000
 export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -n; history -w; history -c; history -r"
 
@@ -27,6 +30,9 @@ fi
 
 shopt -s cdspell cmdhist dirspell histappend nocaseglob no_empty_cmd_completion
 
+# check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 bind "set completion-ignore-case on" 2> /dev/null
 
 alias rm='rm -i'
@@ -39,6 +45,10 @@ alias pscp="source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scr
 alias d="docker"
 alias g="git"
 alias s="softvisio-cli"
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 function update() {
     apt update

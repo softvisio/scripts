@@ -16,12 +16,8 @@ function _setup_host_debian() {
     # load os release variables
     local VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
 
-    # install common profile
-    curl -fsSLo /etc/profile.d/bash-config.sh https://raw.githubusercontent.com/softvisio/scripts/main/bashrc.sh
-
-    # install pgsqlrc
-    mkdir -p /etc/postgresql-common
-    curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/softvisio/scripts/main/psqlrc
+    # install profile
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
 
     # softvisio repository
     curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
