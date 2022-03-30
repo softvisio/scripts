@@ -55,3 +55,7 @@ function update() {
     apt full-upgrade -y
     apt autoremove -y
 }
+
+function update-profile() {
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
+}
