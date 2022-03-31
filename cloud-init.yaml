@@ -9,4 +9,4 @@ runcmd:
   - curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
   - apt install -y docker-ce
   # - docker swarm init
-  # - docker network create --driver overlay --attachable swarm
+  # - docker network create --driver overlay --attachable main
