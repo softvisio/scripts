@@ -57,6 +57,9 @@ function _setup_host_vmware() {
     # enable SSH root login
     sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
 
+    # enable SSH agent forward
+    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
+
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
