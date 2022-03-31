@@ -28,7 +28,7 @@ else
     export PS1="[\[\e[1;32m\]\u\[\e[0;32m\]@\[\e[1;32m\]\H\[\e[0m\]\w]\[\e[1;33m\]>\[\e[0m\] "
 fi
 
-shopt -s cdspell cmdhist dirspell histappend nocaseglob no_empty_cmd_completion extglob
+shopt -s cdspell cmdhist dirspell histappend nocaseglob no_empty_cmd_completion
 
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
