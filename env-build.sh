@@ -4,7 +4,6 @@
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
 set -e
-set -u
 
 function _setup() {
     apt update

@@ -4,7 +4,6 @@
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
 
 set -e
-set -u
 
 # disable selinux
 # sed -i -e '/SELINUX=enforcing/ s/=enforcing/=permissive/' /etc/selinux/config

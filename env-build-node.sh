@@ -7,7 +7,6 @@
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup-build
 
 set -e
-set -u
 
 function _setup() {
     local PACKAGES=""

@@ -3,7 +3,6 @@
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh | /bin/bash
 
 set -e
-set -u
 
 DEBIAN_FRONTEND=noninteractive
 

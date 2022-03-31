@@ -2,7 +2,6 @@
 
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-rpm.sh | /bin/bash
 
-set -u
 set -e
 
 source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)

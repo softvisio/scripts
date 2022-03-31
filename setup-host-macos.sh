@@ -3,7 +3,6 @@
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh | /bin/bash
 
 set -e
-set -u
 
 # install devel tools
 xcode-select --install
