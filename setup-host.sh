@@ -4,7 +4,7 @@
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
 
 function _setup_host_debian() {
-    DEBIAN_FRONTEND=noninteractive
+    local DEBIAN_FRONTEND=noninteractive
 
     apt update
 
@@ -17,7 +17,9 @@ function _setup_host_debian() {
 
     # install profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
-    DEBIAN_FRONTEND=noninteractive
+    echo =================== $DEBIAN_FRONTEND
+    local DEBIAN_FRONTEND=noninteractive
+    echo =================== $DEBIAN_FRONTEND
 
     # softvisio repository
     curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
