@@ -17,9 +17,6 @@ function _setup_host_debian() {
 
     # install profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
-    echo =================== $DEBIAN_FRONTEND
-    local DEBIAN_FRONTEND=noninteractive
-    echo =================== $DEBIAN_FRONTEND
 
     # softvisio repository
     curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
@@ -28,12 +25,22 @@ function _setup_host_debian() {
 deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 EOF
 
-    apt update
-    apt install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
+    (
+        echo ===================
+        echo ===================
+        echo ===================
+        echo ===================
+        echo =================== $DEBIAN_FRONTEND
+        local DEBIAN_FRONTEND=noninteractive
+        echo =================== $DEBIAN_FRONTEND
 
-    # upgrade installed packages to the latest versions
-    apt update
-    apt full-upgrade -y
+        apt update
+        apt install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
+
+        # upgrade installed packages to the latest versions
+        apt update
+        apt full-upgrade -y
+    )
 
     # cleanup
     apt autoremove -y
