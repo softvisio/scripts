@@ -7,7 +7,6 @@ set -e
 # if [[ ! -x "$(command -v node)" ]]; then
 #     if [[ -x "$(command -v n)" ]]; then
 #         n latest
-#         n dubnium
 #     fi
 # fi
 
