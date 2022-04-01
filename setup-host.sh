@@ -5,7 +5,7 @@
 
 function _setup_host_debian() {
 
-    export DEBIAN_FRONTEND=noninteractive
+    DEBIAN_FRONTEND=noninteractive
 
     apt update
 
