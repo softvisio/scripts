@@ -4,7 +4,7 @@
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
 
 function _setup_host_debian() {
-    local DEBIAN_FRONTEND=noninteractive
+    DEBIAN_FRONTEND=noninteractive
 
     apt update
 
@@ -12,11 +12,11 @@ function _setup_host_debian() {
     # ncurses-term required to support putty-256color term in docker
     apt install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
 
-    # load os release variables
-    local VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
-
     # install profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
+
+    # load os release variables
+    local VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
 
     # softvisio repository
     curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
@@ -29,7 +29,7 @@ EOF
         echo ===================
         echo ===================
         echo ===================
-        echo =================== NON LOCAL
+        echo =================== NON LOCAL 11111111111111111111
         echo =================== $DEBIAN_FRONTEND
         DEBIAN_FRONTEND=noninteractive
         echo =================== $DEBIAN_FRONTEND
