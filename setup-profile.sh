@@ -8,6 +8,6 @@ curl -fsSLo ~/.inputrc https://raw.githubusercontent.com/softvisio/scripts/main/
 mkdir -p /etc/postgresql-common
 curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/softvisio/scripts/main/profile/psqlrc
 
-. ~/.bashrc
+source ~/.bashrc
 
 echo User bash profile updated
