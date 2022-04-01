@@ -1,19 +1,20 @@
-#!/bin/bash
+DEBIAN_FRONTEND=noninteractive
+
+export LANGUAGE=C.UTF-8
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
 
 # if not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-if [[ -z "$DEBIAN_FRONTEND" ]]; then export DEBIAN_FRONTEND=teletype; fi
+DEBIAN_FRONTEND=teletype
+
 export TERM=putty-256color
 export CLICOLOR=1
 export HISTSIZE=1000
 export HISTFILESIZE=2000
 export HISTCONTROL=ignoreboth:erasedups
 export PROMPT_COMMAND="history -n; history -w; history -c; history -r"
-
-export LANGUAGE=C.UTF-8
-export LANG=C.UTF-8
-export LC_ALL=C.UTF-8
 
 # postgresql
 mkdir -p /var/run/postgresql
