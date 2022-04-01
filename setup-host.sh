@@ -29,9 +29,9 @@ EOF
         echo ===================
         echo ===================
         echo ===================
-        echo ===================
+        echo =================== NON LOCAL
         echo =================== $DEBIAN_FRONTEND
-        local DEBIAN_FRONTEND=noninteractive
+        DEBIAN_FRONTEND=noninteractive
         echo =================== $DEBIAN_FRONTEND
 
         apt update
