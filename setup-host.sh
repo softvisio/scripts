@@ -15,24 +15,18 @@ function _setup_host_debian() {
     # install profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
 
-    # load os release variables
-    local VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
+    (
+        DEBIAN_FRONTEND=noninteractive
 
-    # softvisio repository
-    curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
-    cat << EOF > /etc/apt/sources.list.d/softvisio.list
+        # load os release variables
+        local VERSION_CODENAME=$(source /etc/os-release && echo $VERSION_CODENAME)
+
+        # softvisio repository
+        curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
+        cat << EOF > /etc/apt/sources.list.d/softvisio.list
 # deb [trusted=yes] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 EOF
-
-    (
-        echo ===================
-        echo ===================
-        echo ===================
-        echo =================== NON LOCAL 11111111111111111111
-        echo =================== $DEBIAN_FRONTEND
-        DEBIAN_FRONTEND=noninteractive
-        echo =================== $DEBIAN_FRONTEND
 
         apt update
         apt install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
@@ -40,10 +34,10 @@ EOF
         # upgrade installed packages to the latest versions
         apt update
         apt full-upgrade -y
-    )
 
-    # cleanup
-    apt autoremove -y
+        # cleanup
+        apt autoremove -y
+    )
 }
 
 function _setup_host_redhat() {
