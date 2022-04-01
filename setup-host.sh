@@ -4,7 +4,6 @@
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
 
 function _setup_host_debian() {
-
     DEBIAN_FRONTEND=noninteractive
 
     apt update
