@@ -7,20 +7,24 @@
 LOCATION=~
 TMP_LOCATION=$LOCATION/_tmp_profile
 
+function _move_profile() {
+    (
+        shopt -s dotglob
+        chmod -R u=rw,go= $TMP_LOCATION/profile/*
+        mv -f $TMP_LOCATION/profile/* $LOCATION/
+        rm -rf $TMP_LOCATION
+    )
+}
+
 function _update_public_profile() {
     echo Updating public profile
 
     rm -rf $TMP_LOCATION
     mkdir -p $TMP_LOCATION
 
-    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=2 -xzf - dotfiles-public-main/profile
+    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=1 -xzf -
 
-    (
-        shopt -s dotglob
-        chmod -R u=rw,go= $TMP_LOCATION/*
-        mv -f $TMP_LOCATION/* $LOCATION/
-        rm -rf $TMP_LOCATION
-    )
+    _move_profile
 
     # postgresql
     mkdir -p /var/run/postgresql
@@ -38,25 +42,27 @@ function _update_private_profile() {
 
     git clone git@github.com:zdm/dotfile-private.git $TMP_LOCATION
 
-    (
-        shopt -s dotglob
-        chmod -R u=rw,go= $TMP_LOCATION/profile/*
-        mv -f $TMP_LOCATION/profile/* $LOCATION/
-        rm -rf $TMP_LOCATION
-    )
+    _move_profile
 }
 
 case "$1" in
     public)
         _update_public_profile
+
         ;;
 
     private)
         _update_private_profile
+
         ;;
 
     *)
         _update_public_profile
-        _update_private_profile
+
+        if [ -f $LOCATION/.private-profile ]; then
+            _update_private_profile
+        fi
+
         ;;
+
 esac
