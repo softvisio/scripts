@@ -10,8 +10,15 @@ TMP_LOCATION=$LOCATION/_tmp_profile
 function _move_profile() {
     (
         shopt -s dotglob
+
         chmod -R u=rw,go= $TMP_LOCATION/profile/*
+
+        if [[ -f $TMP_LOCATION/.git-hooks ]]; then
+            chmod +x $TMP_LOCATION/.git-hooks/*
+        fi
+
         mv -f $TMP_LOCATION/profile/* $LOCATION/
+
         rm -rf $TMP_LOCATION
     )
 }
