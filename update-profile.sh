@@ -18,7 +18,7 @@ function _update_public_profile() {
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=2 -xzf - dotfiles-public-main/profile
 
     chmod -R u=rw,go= $TMP_LOCATION/*
-    mv -f $TMP_LOCATION/profile/* $LOCATION/
+    mv -f $TMP_LOCATION/* $LOCATION/
     rm -rf $TMP_LOCATION
 
     # postgresql
