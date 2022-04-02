@@ -6,7 +6,7 @@ set -e
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) -- private
 
 function _update_public_profile() {
-    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C=~ --strip-components=2 -xzf - dotfiles-public-main/profile
+    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C ~ --strip-components=2 -xzf - dotfiles-public-main/profile
 
     # postgresql
     mkdir -p /var/run/postgresql
