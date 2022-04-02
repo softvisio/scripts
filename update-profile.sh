@@ -31,6 +31,8 @@ case "$1" in
         ;;
 
     *)
+        echo Argument is required
+
         return 1
         ;;
 esac
