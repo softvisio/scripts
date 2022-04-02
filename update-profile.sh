@@ -37,7 +37,7 @@ function _update_public_profile() {
     mkdir -p /var/run/postgresql
 
     # mkdir -p /etc/postgresql-common
-    # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/psqlrc
+    # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
 
     if [ -f $LOCATION/.bashrc ]; then source $LOCATION/.bashrc; fi
 }
