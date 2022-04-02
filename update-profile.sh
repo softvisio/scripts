@@ -2,8 +2,9 @@
 
 set -e
 
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) -- public
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) -- private
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) all
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) private
 
 function _update_public_profile() {
     echo Updating public profile
@@ -21,6 +22,14 @@ function _update_public_profile() {
 
 function _update_private_profile() {
     echo Updating private profile
+
+    rm -rf ~/_private_profile_tmp
+
+    git clone git@github.com:zdm/dotfile-private.git ~/_private_profile_tmp
+
+    mv -f ~/_private_profile_tmp/profile/* ~/
+
+    rm -rf ~/_private_profile_tmp
 }
 
 case "$1" in
