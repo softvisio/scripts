@@ -6,10 +6,13 @@ set -e
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) private
 
+LOCATION=~
+TMP_LOCATION=$LOCATION/_tmp_profile
+
 function _update_public_profile() {
     echo Updating public profile
 
-    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C ~ --strip-components=2 -xzf - dotfiles-public-main/profile
+    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $LOCATION --strip-components=2 -xzf - dotfiles-public-main/profile
 
     # postgresql
     mkdir -p /var/run/postgresql
@@ -17,19 +20,19 @@ function _update_public_profile() {
     # mkdir -p /etc/postgresql-common
     # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/psqlrc
 
-    if [ -f ~/.bashrc ]; then source ~/.bashrc; fi
+    if [ -f $LOCATION/.bashrc ]; then source $LOCATION/.bashrc; fi
 }
 
 function _update_private_profile() {
     echo Updating private profile
 
-    rm -rf ~/_private_profile_tmp
+    rm -rf $TMP_LOCATION
 
-    git clone git@github.com:zdm/dotfile-private.git ~/_private_profile_tmp
+    git clone git@github.com:zdm/dotfile-private.git $TMP_LOCATION
 
-    mv -f ~/_private_profile_tmp/profile/* ~/
+    mv -f $TMP_LOCATION/profile/* $LOCATION/
 
-    rm -rf ~/_private_profile_tmp
+    rm -rf $TMP_LOCATION
 }
 
 case "$1" in
