@@ -33,11 +33,6 @@ function _update_private_profile() {
 }
 
 case "$1" in
-    all)
-        _update_public_profile
-        _update_private_profile
-        ;;
-
     public)
         _update_public_profile
         ;;
@@ -47,8 +42,7 @@ case "$1" in
         ;;
 
     *)
-        echo Argument is required
-
-        return 1
+        _update_public_profile
+        _update_private_profile
         ;;
 esac
