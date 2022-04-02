@@ -13,7 +13,7 @@ function _update_public_profile() {
     echo Updating public profile
 
     rm -rf $TMP_LOCATION
-    mkdir -pf $TMP_LOCATION
+    mkdir -p $TMP_LOCATION
 
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=2 -xzf - dotfiles-public-main/profile
 
