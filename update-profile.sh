@@ -18,6 +18,7 @@ function _update_public_profile() {
 }
 
 function _update_private_profile() {
+    echo Not implemented
 }
 
 case "$1" in
