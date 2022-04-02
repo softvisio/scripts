@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh)
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) private
@@ -17,9 +15,12 @@ function _update_public_profile() {
 
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=2 -xzf - dotfiles-public-main/profile
 
-    chmod -R u=rw,go= $TMP_LOCATION/*
-    mv -f $TMP_LOCATION/* $LOCATION/
-    rm -rf $TMP_LOCATION
+    (
+        shopt -s dotglob
+        chmod -R u=rw,go= $TMP_LOCATION/*
+        mv -f $TMP_LOCATION/* $LOCATION/
+        rm -rf $TMP_LOCATION
+    )
 
     # postgresql
     mkdir -p /var/run/postgresql
@@ -37,9 +38,12 @@ function _update_private_profile() {
 
     git clone git@github.com:zdm/dotfile-private.git $TMP_LOCATION
 
-    chmod -R u=rw,go= $TMP_LOCATION/*
-    mv -f $TMP_LOCATION/profile/* $LOCATION/
-    rm -rf $TMP_LOCATION
+    (
+        shopt -s dotglob
+        chmod -R u=rw,go= $TMP_LOCATION/profile/*
+        mv -f $TMP_LOCATION/profile/* $LOCATION/
+        rm -rf $TMP_LOCATION
+    )
 }
 
 case "$1" in
