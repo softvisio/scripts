@@ -13,7 +13,7 @@ function _setup_host_debian() {
     apt install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
 
     # install profile
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-profile.sh)
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
 
     (
         DEBIAN_FRONTEND=noninteractive
