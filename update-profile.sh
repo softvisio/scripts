@@ -13,7 +13,7 @@ function _move_profile() {
 
         chmod -R u=rw,go= $TMP_LOCATION/profile/*
 
-        if [[ -f $TMP_LOCATION/.git-hooks ]]; then
+        if [[ -d $TMP_LOCATION/.git-hooks ]]; then
             chmod +x $TMP_LOCATION/.git-hooks/*
         fi
 
