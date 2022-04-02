@@ -6,6 +6,8 @@ set -e
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) -- private
 
 function _update_public_profile() {
+    echo Updating public profile
+
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C ~ --strip-components=2 -xzf - dotfiles-public-main/profile
 
     # postgresql
@@ -18,10 +20,15 @@ function _update_public_profile() {
 }
 
 function _update_private_profile() {
-    echo Not implemented
+    echo Updating private profile
 }
 
 case "$1" in
+    all)
+        _update_public_profile
+        _update_private_profile
+        ;;
+
     public)
         _update_public_profile
         ;;
