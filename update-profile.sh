@@ -2,7 +2,7 @@
 
 set -e
 
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) all
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh)
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) private
 
