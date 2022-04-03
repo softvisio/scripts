@@ -76,6 +76,8 @@ case "$1" in
             _update_public_dotfiles
         )
 
+        if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
+
         ;;
 
     private)
@@ -84,8 +86,6 @@ case "$1" in
 
             _update_private_dotfiles
         )
-
-        if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
 
         ;;
 
