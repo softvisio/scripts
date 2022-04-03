@@ -7,9 +7,21 @@
 LOCATION=~
 TMP_LOCATION=$LOCATION/_tmp_profile
 
-function _move_profile() {
+function _update_profile() {
+    local type = $1
+
     (
         shopt -s dotglob
+
+        if [ -f $LOCATION/.cache/profiles/$type.txt ]; then
+            for file in $(cat $LOCATION/.cache/profiles/$type.txt); do
+                rm -f "$LOCATION/$file"
+            done
+        fi
+
+        mkdir -p $LOCATION/.cache/profiles
+
+        find $TMP_LOCATION/profile -type f -printf "%P\n" > $LOCATION/.cache/profiles/$type.txt
 
         chmod -R u=rw,go= $TMP_LOCATION/profile/*
 
@@ -17,6 +29,7 @@ function _move_profile() {
             chmod +x $TMP_LOCATION/profile/.git-hooks/*
         fi
 
+        # XXX
         mv -f $TMP_LOCATION/profile/* $LOCATION/
 
         rm -rf $TMP_LOCATION
@@ -31,7 +44,7 @@ function _update_public_profile() {
 
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $TMP_LOCATION --strip-components=1 -xzf -
 
-    _move_profile
+    _update_profile "public"
 
     # postgresql
     mkdir -p /var/run/postgresql
@@ -49,7 +62,7 @@ function _update_private_profile() {
 
     git clone git@github.com:zdm/dotfile-private.git $TMP_LOCATION
 
-    _move_profile
+    _update_profile "private"
 }
 
 case "$1" in
@@ -66,7 +79,7 @@ case "$1" in
     *)
         _update_public_profile
 
-        if [ -f $LOCATION/.private-profile ]; then
+        if [ -f $LOCATION/.cache/profiles/private.txt ]; then
             _update_private_profile
         fi
 
