@@ -56,8 +56,6 @@ function _update_public_dotfiles() {
 
     # mkdir -p /etc/postgresql-common
     # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
-
-    if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
 }
 
 function _update_private_dotfiles() {
@@ -72,12 +70,22 @@ function _update_private_dotfiles() {
 
 case "$1" in
     public)
-        _update_public_dotfiles
+        (
+            set -e
+
+            _update_public_dotfiles
+        )
 
         ;;
 
     private)
-        _update_private_dotfiles
+        (
+            set -e
+
+            _update_private_dotfiles
+        )
+
+        if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
 
         ;;
 
