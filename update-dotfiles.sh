@@ -76,7 +76,11 @@ case "$1" in
             _update_public_dotfiles
         )
 
-        if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
+        if [ -f $DOTFILES_HOME/.bashrc ]; then
+            echo Source $DOTFILES_HOME/.bashrc
+
+            source $DOTFILES_HOME/.bashrc
+        fi
 
         ;;
 
