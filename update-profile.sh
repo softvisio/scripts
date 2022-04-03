@@ -33,7 +33,6 @@ function _update_profile() {
         fi
 
         # move profile
-        # mv -f $TMP_LOCATION/profile/* $LOCATION/
         yes | cp -rf $TMP_LOCATION/profile/* $LOCATION/ 2> /dev/null
 
         # remove tmp location
