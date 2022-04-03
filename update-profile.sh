@@ -5,7 +5,7 @@
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) private
 
 LOCATION=~
-TMP_LOCATION=$LOCATION/_tmp_profile
+TMP_LOCATION=$LOCATION/.cache/profiles/tmp
 
 function _update_profile() {
     local type=$1
@@ -13,25 +13,28 @@ function _update_profile() {
     (
         shopt -s dotglob
 
+        # remove profile files
         if [ -f $LOCATION/.cache/profiles/$type.txt ]; then
             for file in $(cat $LOCATION/.cache/profiles/$type.txt); do
                 rm -f "$LOCATION/$file"
             done
         fi
 
+        # create profile files list
         mkdir -p $LOCATION/.cache/profiles
-
         find $TMP_LOCATION/profile -type f -printf "%P\n" > $LOCATION/.cache/profiles/$type.txt
 
+        # chmod
         chmod -R u=rw,go= $TMP_LOCATION/profile/*
 
         if [[ -d $TMP_LOCATION/profile/.git-hooks ]]; then
             chmod +x $TMP_LOCATION/profile/.git-hooks/*
         fi
 
-        # XXX
-        mv -f $TMP_LOCATION/profile/* $LOCATION/
+        # move profile
+        mv -f TMP_LOCATION/profile/* $LOCATION/
 
+        # remove tmp file
         rm -rf $TMP_LOCATION
     )
 }
