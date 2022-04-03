@@ -42,63 +42,61 @@ function _update_dotfiles() {
 }
 
 function _update_public_dotfiles() {
-    echo Updating public profile
+    (
+        set -e
 
-    rm -rf $DOTFILES_TMP
-    mkdir -p $DOTFILES_TMP
+        echo Updating public profile
 
-    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
+        rm -rf $DOTFILES_TMP
+        mkdir -p $DOTFILES_TMP
 
-    _update_dotfiles "public"
+        curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
-    echo 111111111111111111
+        _update_dotfiles "public"
 
-    # postgresql
-    mkdir -p /var/run/postgresql
+        echo 111111111111111111
 
-    echo 222222222222222
+        # postgresql
+        mkdir -p /var/run/postgresql
 
-    # mkdir -p /etc/postgresql-common
-    # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
+        echo 222222222222222
+
+        # mkdir -p /etc/postgresql-common
+        # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
+    )
+
+    echo -------------
+
+    if [ -f $DOTFILES_HOME/.bashrc ]; then
+        echo Source $DOTFILES_HOME/.bashrc
+
+        source $DOTFILES_HOME/.bashrc
+    fi
 }
 
 function _update_private_dotfiles() {
-    echo Updating private profile
+    (
+        set -e
 
-    rm -rf $DOTFILES_TMP
+        echo Updating private profile
 
-    git clone git@github.com:zdm/dotfile-private.git $DOTFILES_TMP
+        rm -rf $DOTFILES_TMP
 
-    _update_dotfiles "private"
+        git clone git@github.com:zdm/dotfile-private.git $DOTFILES_TMP
+
+        _update_dotfiles "private"
+    )
 }
 
 case "$1" in
     public)
-        (
-            set -e
-
-            _update_public_dotfiles
-        )
-
-        echo -------------
-
-        if [ -f $DOTFILES_HOME/.bashrc ]; then
-            echo Source $DOTFILES_HOME/.bashrc
-
-            source $DOTFILES_HOME/.bashrc
-        fi
+        _update_public_dotfiles
 
         ;;
-
     private)
-        (
-            set -e
-
-            _update_private_dotfiles
-        )
+        _update_private_dotfiles
 
         ;;
-
     *)
         _update_public_dotfiles
 
@@ -107,5 +105,4 @@ case "$1" in
         fi
 
         ;;
-
 esac
