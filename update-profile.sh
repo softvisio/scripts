@@ -35,7 +35,7 @@ function _update_profile() {
         # move profile
         mv -f $TMP_LOCATION/profile/* $LOCATION/
 
-        # remove tmp file
+        # remove tmp location
         rm -rf $TMP_LOCATION
     )
 }
