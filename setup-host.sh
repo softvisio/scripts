@@ -12,8 +12,8 @@ function _setup_host_debian() {
     # ncurses-term required to support putty-256color term in docker
     apt install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
 
-    # install profile
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-profile.sh) public
+    # install dotfiles
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
     (
         DEBIAN_FRONTEND=noninteractive

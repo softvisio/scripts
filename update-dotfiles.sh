@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh)
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
+
+DOTFILES_HOME=~
+DOTFILES_CACHE=$DOTFILES_HOME/.cache/dotfiles
+DOTFILES_TMP=$DOTFILES_CACHE/tmp
+
+function _update_profile() {
+    local type=$1
+
+    (
+        shopt -s dotglob
+
+        # remove profile files
+        if [ -f $DOTFILES_CACHE/$type.txt ]; then
+            for file in $(cat $DOTFILES_CACHE/$type.txt); do
+                rm -f "$DOTFILES_HOME/$file"
+            done
+        fi
+
+        # create profile files list
+        mkdir -p $DOTFILES_CACHE
+        find $DOTFILES_TMP/profile -type f -printf "%P\n" > $DOTFILES_CACHE/$type.txt
+
+        # chmod
+        chmod -R u=rw,go= $DOTFILES_TMP/profile/*
+
+        # git hooks must be executable
+        if [[ -d $DOTFILES_TMP/profile/.git-hooks ]]; then
+            chmod +x $DOTFILES_TMP/profile/.git-hooks/*
+        fi
+
+        # move profile
+        yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/ 2> /dev/null
+
+        # remove tmp location
+        rm -rf $DOTFILES_TMP
+    )
+}
+
+function _update_public_profile() {
+    echo Updating public profile
+
+    rm -rf $DOTFILES_TMP
+    mkdir -p $DOTFILES_TMP
+
+    curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
+
+    _update_profile "public"
+
+    # postgresql
+    mkdir -p /var/run/postgresql
+
+    # mkdir -p /etc/postgresql-common
+    # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
+
+    if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
+}
+
+function _update_private_profile() {
+    echo Updating private profile
+
+    rm -rf $DOTFILES_TMP
+
+    git clone git@github.com:zdm/dotfile-private.git $DOTFILES_TMP
+
+    _update_profile "private"
+}
+
+case "$1" in
+    public)
+        _update_public_profile
+
+        ;;
+
+    private)
+        _update_private_profile
+
+        ;;
+
+    *)
+        _update_public_profile
+
+        if [ -f $DOTFILES_CACHE/private.txt ]; then
+            _update_private_profile
+        fi
+
+        ;;
+
+esac
