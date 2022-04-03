@@ -8,7 +8,7 @@ DOTFILES_HOME=~
 DOTFILES_CACHE=$DOTFILES_HOME/.cache/dotfiles
 DOTFILES_TMP=$DOTFILES_CACHE/tmp
 
-function _update_profile() {
+function _update_dotfiles() {
     local type=$1
 
     (
@@ -41,7 +41,7 @@ function _update_profile() {
     )
 }
 
-function _update_public_profile() {
+function _update_public_dotfiles() {
     echo Updating public profile
 
     rm -rf $DOTFILES_TMP
@@ -49,7 +49,7 @@ function _update_public_profile() {
 
     curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
-    _update_profile "public"
+    _update_dotfiles "public"
 
     # postgresql
     mkdir -p /var/run/postgresql
@@ -60,32 +60,32 @@ function _update_public_profile() {
     if [ -f $DOTFILES_HOME/.bashrc ]; then source $DOTFILES_HOME/.bashrc; fi
 }
 
-function _update_private_profile() {
+function _update_private_dotfiles() {
     echo Updating private profile
 
     rm -rf $DOTFILES_TMP
 
     git clone git@github.com:zdm/dotfile-private.git $DOTFILES_TMP
 
-    _update_profile "private"
+    _update_dotfiles "private"
 }
 
 case "$1" in
     public)
-        _update_public_profile
+        _update_public_dotfiles
 
         ;;
 
     private)
-        _update_private_profile
+        _update_private_dotfiles
 
         ;;
 
     *)
-        _update_public_profile
+        _update_public_dotfiles
 
         if [ -f $DOTFILES_CACHE/private.txt ]; then
-            _update_private_profile
+            _update_private_dotfiles
         fi
 
         ;;
