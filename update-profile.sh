@@ -8,7 +8,7 @@ LOCATION=~
 TMP_LOCATION=$LOCATION/_tmp_profile
 
 function _update_profile() {
-    local type = $1
+    local type=$1
 
     (
         shopt -s dotglob
