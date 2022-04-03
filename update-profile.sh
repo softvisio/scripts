@@ -27,6 +27,7 @@ function _update_profile() {
         # chmod
         chmod -R u=rw,go= $TMP_LOCATION/profile/*
 
+        # git hooks must be executable
         if [[ -d $TMP_LOCATION/profile/.git-hooks ]]; then
             chmod +x $TMP_LOCATION/profile/.git-hooks/*
         fi
