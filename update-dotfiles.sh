@@ -5,7 +5,7 @@
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
 DOTFILES_HOME=~
-DOTFILES_CACHE=$DOTFILES_HOME/.cache/dotfiles
+DOTFILES_CACHE=$DOTFILES_HOME/.local/share/dotfiles
 DOTFILES_TMP=$DOTFILES_CACHE/tmp
 
 function _update_dotfiles() {
