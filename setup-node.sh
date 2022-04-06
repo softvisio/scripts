@@ -4,10 +4,8 @@
 
 set -e
 
-# if [[ ! -x "$(command -v node)" ]]; then
-#     if [[ -x "$(command -v n)" ]]; then
-#         n latest
-#     fi
+# if [[ ! -x "$(command -v node)" && -x "$(command -v n)" ]]; then
+#     n latest
 # fi
 
 # make global modules loadable
