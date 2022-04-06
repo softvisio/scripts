@@ -74,18 +74,16 @@ case "$1" in
         _setup_build
 
         ;;
-
     cleanup)
         _cleanup
 
         ;;
-
     cleanup-build)
         _cleanup_build
 
         ;;
-
     *)
         return 1
+
         ;;
 esac
