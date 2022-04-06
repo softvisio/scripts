@@ -41,6 +41,7 @@ function _cleanup() {
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
+    # npm cache clear --force
     rm -rf ~/.npm-cache
 }
 
@@ -59,24 +60,29 @@ function _cleanup_build() {
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
+    # npm cache clear --force
     rm -rf ~/.npm-cache
 }
 
 case "$1" in
     setup)
         _setup
+
         ;;
 
     setup-build)
         _setup_build
+
         ;;
 
     cleanup)
         _cleanup
+
         ;;
 
     cleanup-build)
         _cleanup_build
+
         ;;
 
     *)
