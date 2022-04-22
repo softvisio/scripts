@@ -52,7 +52,7 @@ function _setup_host_vmware() {
     DEBIAN_FRONTEND=noninteractive
 
     # setup host
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh) 2>&1 | tee /setup-host.log
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
     # enable SSH root login
     sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
