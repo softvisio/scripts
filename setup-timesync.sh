@@ -13,11 +13,13 @@ systemctl restart chrony
 
 timedatectl set-timezone UTC
 timedatectl set-ntp yes
+timedatectl set-local-rtc false
 
 # chronyc sources
 # chronyc sourcestats
 # chronyc tracking
 
-hwclock --systohc
+# not required, synchronized automatically every 11 minutes
+# hwclock --systohc
 
 timedatectl status
