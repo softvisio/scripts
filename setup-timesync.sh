@@ -14,9 +14,9 @@ systemctl restart chrony
 timedatectl set-timezone UTC
 timedatectl set-ntp yes
 
-chronyc sources
-chronyc sourcestats
-chronyc tracking
+# chronyc sources
+# chronyc sourcestats
+# chronyc tracking
 
 hwclock --systohc
 
