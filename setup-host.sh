@@ -16,6 +16,7 @@ function _setup_host_debian() {
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
     # postgresql tmp files
+    mkdir -p /etc/tmpfiles.d
     cat << EOF > /etc/tmpfiles.d/postgresql.conf
 d /var/run/postgresql 0755 root root	
 EOF
