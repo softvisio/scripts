@@ -96,8 +96,13 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    apt install -y postgresql-client-14 google-chrome-stable google-cloud-sdk
-    apt install -y ttf-mscorefonts-installer
+    apt install -y google-cloud-sdk
+
+    # install postgresql client
+    apt install -y postgresql-client-14
+
+    # install chrome
+    apt install -y google-chrome-stable ttf-mscorefonts-installer
 
     # install docker
     apt install -y docker-ce
@@ -112,8 +117,7 @@ function _setup_host_vmware() {
     n prune
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
 
-    echo Setup vmware host finished
-    echo You need to reboot server
+    echo Setup vmware host finished, you need to reboot server
 }
 
 _setup_host_vmware
