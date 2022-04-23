@@ -63,7 +63,7 @@ function _setup_host_vmware() {
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
-    apt install -y open-vm-tools mc htop git git-lfs git-filter-repo
+    apt install -y open-vm-tools mc htop git git-lfs git-filter-repo nvim
 
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
@@ -96,27 +96,23 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    # apt install -y nvim msttcorefonts
     apt install -y postgresql-client-14 google-chrome-stable google-cloud-sdk
-    DEBIAN_FRONTEND=noninteractive apt install -y ttf-mscorefonts-installer
+    apt install -y ttf-mscorefonts-installer
 
     # install docker
     apt install -y docker-ce
 
-    # install .dotfiles
+    # install private dotfiles
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
     # install node
-    #     /bin/bash -l <(
-    #         cat << EOF
-    # n latest
-    # n rm latest
-    # n prune
-    # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
-    # EOF
-    #     )
+    source /etc/profile.d/n.sh
+    n latest
+    n rm latest
+    n prune
+    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
 
-    echo Setup vmware host finished.
+    echo Setup vmware host finished
     echo You need to reboot server
 }
 
