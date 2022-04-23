@@ -55,8 +55,6 @@ function _update_public_dotfiles() {
         _update_dotfiles "public"
 
         # postgresql
-        mkdir -p /var/run/postgresql
-
         # mkdir -p /etc/postgresql-common
         # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
     )
