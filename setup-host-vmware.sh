@@ -104,7 +104,6 @@ function _setup_host_vmware() {
     apt install -y docker-ce
 
     # install .dotfiles
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
     # install node

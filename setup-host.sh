@@ -15,7 +15,7 @@ function _setup_host_debian() {
     # install dotfiles
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
-    cat << EOF > /etc/tmpfile.d/postgresql.conf
+    cat << EOF > /etc/tmpfiles.d/postgresql.conf
 d /var/run/postgresql 0755 root root	
 EOF
 
