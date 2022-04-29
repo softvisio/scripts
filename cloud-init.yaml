@@ -1,12 +1,13 @@
 #cloud-config
 
-# XXX
-# package_upgrade: true
+package_upgrade: true
 
 runcmd:
   - curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh | /bin/bash
   - curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh | /bin/bash
   - curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
+  - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
+  - hostname > /etc/hostname
   - apt install -y docker-ce
   # - docker swarm init
   # - docker network create --driver overlay --attachable main
