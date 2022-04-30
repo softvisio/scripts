@@ -60,7 +60,7 @@ function _setup_host_vmware() {
     # enable SSH agent forward
     sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
 
-    # enable single-label domains resilution
+    # enable unqualified single-label domains (NFQDN) resolution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
     systemctl restart systemd-resolved
 
