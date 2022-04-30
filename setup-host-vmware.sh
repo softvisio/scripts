@@ -60,9 +60,12 @@ function _setup_host_vmware() {
     # enable SSH agent forward
     sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
 
-    # enable UQDN
+    # enable single-label domains resilution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
     systemctl restart systemd-resolved.service
+
+    # prefer ipv4 over ipv6
+    sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
 
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
