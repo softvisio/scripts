@@ -62,7 +62,7 @@ function _setup_host_vmware() {
 
     # enable single-label domains resilution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
-    systemctl restart systemd-resolved.service
+    systemctl restart systemd-resolved
 
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
