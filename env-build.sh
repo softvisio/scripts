@@ -6,17 +6,17 @@
 set -e
 
 function _setup() {
-    apt update
-    apt install -y make patch gcc g++
+    apt-get update
+    apt-get install -y make patch gcc g++
 }
 
 function _cleanup() {
 
     # remove build environment
-    apt autoremove -y make patch gcc g++ || true
+    apt-get autoremove -y make patch gcc g++ || true
 
     # cleanup apt
-    apt clean
+    apt-get clean
     rm -rf /var/lib/apt/lists/*
 
     # remove cpanm temp dir

@@ -70,7 +70,7 @@ function _setup_host_vmware() {
     # install SSH key
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
 
-    apt install -y open-vm-tools mc htop git git-lfs git-filter-repo nvim
+    apt-get install -y open-vm-tools mc htop git git-lfs git-filter-repo nvim
 
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
@@ -103,16 +103,16 @@ function _setup_host_vmware() {
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
     # install software
-    apt install -y google-cloud-sdk
+    apt-get install -y google-cloud-sdk
 
     # install postgresql client
-    apt install -y postgresql-client-14
+    apt-get install -y postgresql-client-14
 
     # install chrome
-    apt install -y google-chrome-stable ttf-mscorefonts-installer
+    apt-get install -y google-chrome-stable ttf-mscorefonts-installer
 
     # install docker
-    apt install -y docker-ce
+    apt-get install -y docker-ce
 
     # install private dotfiles
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private

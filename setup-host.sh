@@ -6,11 +6,11 @@
 function _setup_host_debian() {
     DEBIAN_FRONTEND=noninteractive
 
-    apt update
+    apt-get update
 
     # install common packages
     # ncurses-term required to support putty-256color term in docker
-    apt install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
+    apt-get install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
 
     # install public dotfiles
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
@@ -34,15 +34,15 @@ EOF
 deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_CODENAME) main
 EOF
 
-        apt update
-        apt install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
+        apt-get update
+        apt-get install -y repo-docker repo-pgsql repo-google-chrome repo-google-cloud n
 
         # upgrade installed packages to the latest versions
-        apt update
-        apt full-upgrade -y
+        apt-get update
+        apt-get full-upgrade -y
 
         # cleanup
-        apt autoremove -y
+        apt-get autoremove -y
     )
 }
 

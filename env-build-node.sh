@@ -13,8 +13,8 @@ function _setup() {
 
     PACKAGES="$PACKAGES git"
 
-    apt update
-    apt install -y $PACKAGES
+    apt-get update
+    apt-get install -y $PACKAGES
 }
 
 function _setup_build() {
@@ -26,7 +26,7 @@ function _setup_build() {
 
     PACKAGES="$PACKAGES git python3 make g++"
 
-    apt install -y $PACKAGES
+    apt-get install -y $PACKAGES
 }
 
 function _cleanup() {
@@ -34,10 +34,10 @@ function _cleanup() {
 
     PACKAGES="$PACKAGES git"
 
-    apt autoremove -y $PACKAGES || true
+    apt-get autoremove -y $PACKAGES || true
 
     # cleanup apt
-    apt clean
+    apt-get clean
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache
@@ -50,13 +50,13 @@ function _cleanup_build() {
 
     PACKAGES="$PACKAGES git python3 make g++"
 
-    apt autoremove -y $PACKAGES || true
+    apt-get autoremove -y $PACKAGES || true
 
     # cleanup build env
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
 
     # cleanup apt
-    apt clean
+    apt-get clean
     rm -rf /var/lib/apt/lists/*
 
     # clean npm cache

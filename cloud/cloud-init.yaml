@@ -8,6 +8,6 @@ runcmd:
   - curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
   - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
   - hostname > /etc/hostname
-  - apt install -y docker-ce
+  - apt-get install -y docker-ce
   # - docker swarm init
   # - docker network create --driver overlay --attachable main
