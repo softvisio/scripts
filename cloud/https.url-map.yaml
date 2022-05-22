@@ -1,0 +1,20 @@
+kind: compute#urlMap
+name: https
+
+defaultService: https://www.googleapis.com/compute/v1/projects/viche-development-1/global/backendServices/http
+
+hostRules:
+  - hosts:
+      - proxy.softvisio.net
+    pathMatcher: proxy
+pathMatchers:
+  - name: proxy
+    defaultService: https://www.googleapis.com/compute/v1/projects/viche-development-1/global/backendServices/proxy-http
+
+tests:
+  - host: defaulr
+    path: /
+    service: https://www.googleapis.com/compute/v1/projects/viche-development-1/global/backendServices/http
+  - host: proxy.softvisio.net
+    path: /
+    service: https://www.googleapis.com/compute/v1/projects/viche-development-1/global/backendServices/proxy-http
