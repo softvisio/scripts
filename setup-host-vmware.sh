@@ -102,8 +102,9 @@ function _setup_host_vmware() {
     # node build env
     curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 
-    # install software
+    # install gcloud
     apt-get install -y google-cloud-sdk
+    $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
     apt-get install -y postgresql-client-14
