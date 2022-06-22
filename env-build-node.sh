@@ -1,21 +1,11 @@
 #!/bin/bash
 
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup
 
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup-build
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup-build
 
 set -e
-
-function _setup() {
-    local PACKAGES=""
-
-    PACKAGES="$PACKAGES git"
-
-    apt-get update
-    apt-get install -y $PACKAGES
-}
 
 function _setup_build() {
 
@@ -30,11 +20,6 @@ function _setup_build() {
 }
 
 function _cleanup() {
-    local PACKAGES=""
-
-    PACKAGES="$PACKAGES git"
-
-    apt-get autoremove -y $PACKAGES || true
 
     # cleanup apt
     apt-get clean

@@ -18,9 +18,6 @@ function _cleanup() {
     # cleanup apt
     apt-get clean
     rm -rf /var/lib/apt/lists/*
-
-    # remove cpanm temp dir
-    rm -rf /tmp/.cpanm
 }
 
 case "$1" in
