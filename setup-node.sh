@@ -13,12 +13,12 @@ rm -rf ~/.node_modules
 ln -s ~/.npm/lib/node_modules ~/.node_modules
 
 # update node_modules
-npm install --location=global npm
-# npm update --location=global --force --unsafe
+npm install --global npm
+# npm update --global --force --unsafe
 
 # install common modules
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
-    npm install --location=global \
+    npm install --global \
     /var/local/@softvisio/core \
     /var/local/@softvisio/cli \
     /var/local/etc/psqls \
