@@ -23,3 +23,5 @@ pod setup
 curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
 
 # npm install --global ios-sim
+
+npm i -g cordova neovim
