@@ -8,7 +8,7 @@ set -e
 xcode-select --install
 
 # install brew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/main/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # set the patb for the active devel dir
 # sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
