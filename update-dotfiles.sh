@@ -23,7 +23,8 @@ function _update_dotfiles() {
 
         # create profile files list
         mkdir -p $DOTFILES_CACHE
-        find $DOTFILES_TMP/profile -type f -printf "%P\n" > $DOTFILES_CACHE/$type.txt
+        # find $DOTFILES_TMP/profile -type f -printf "%P\n" > $DOTFILES_CACHE/$type.txt
+        find $DOTFILES_TMP/profile -type f -print0 | tr "\0" "\n" > $DOTFILES_CACHE/$type.txt
 
         # chmod
         chmod -R u=rw,go= $DOTFILES_TMP/profile/*
