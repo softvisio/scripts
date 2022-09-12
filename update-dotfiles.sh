@@ -35,7 +35,7 @@ function _update_dotfiles() {
         fi
 
         # move profile
-        yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/
+        yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/ 2> /dev/null || true
 
         # remove tmp location
         rm -rf $DOTFILES_TMP
