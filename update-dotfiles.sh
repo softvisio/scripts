@@ -29,22 +29,15 @@ function _update_dotfiles() {
         find $DOTFILES_TMP/profile -type d -exec chmod u=rwx,go= {} \;
         find $DOTFILES_TMP/profile -type f -exec chmod u=rw,go= {} \;
 
-        echo 1
-
         # git hooks must be executable
         if [[ -d $DOTFILES_TMP/profile/.git-hooks ]]; then
             chmod +x $DOTFILES_TMP/profile/.git-hooks/*
         fi
 
-        echo 2
-
         # move profile
         yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/
 
-        echo 3
-
         # remove tmp location
-        echo "rm -rf $DOTFILES_TMP"
         rm -rf $DOTFILES_TMP
     )
 }
