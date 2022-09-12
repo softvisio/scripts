@@ -39,7 +39,7 @@ function _update_dotfiles() {
         echo 2
 
         # move profile
-        yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/ 2> /dev/null
+        yes | cp -rf $DOTFILES_TMP/profile/* $DOTFILES_HOME/
 
         echo 3
 
