@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh)
 # curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
 
 set -e
