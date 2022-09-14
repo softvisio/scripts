@@ -14,11 +14,13 @@ sudo systemsetup -settimezone UTC
 brew install bash wget mc nvim node cocoapods ios-sim
 
 # setup bash
-sudo /bin/bash << EOF
-	echo /usr/local/bin/bash >> /etc/shells
+if ! grep -q "/usr/local/bin/bash" /etc/shells; then
+    sudo /bin/bash << EOF
+echo /usr/local/bin/bash >> /etc/shells
 EOF
 
-sudo chsh -s /usr/local/bin/bash
+    sudo chsh -s /usr/local/bin/bash
+fi
 
 # install public dotfiles
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
