@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup
 
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup-build
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- cleanup-build
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup-build
 
 set -e
 
 function _setup_build() {
 
     # setup build env
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- setup
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) setup
 
     local PACKAGES=""
 
@@ -38,7 +38,7 @@ function _cleanup_build() {
     apt-get autoremove -y $PACKAGES || true
 
     # cleanup build env
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) cleanup
 
     # cleanup apt
     apt-get clean

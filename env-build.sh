@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- setup
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh | /bin/bash -s -- cleanup
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) setup
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) cleanup
 
 set -e
 

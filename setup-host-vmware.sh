@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh)
-# curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vmware.sh | /bin/bash 2>&1 | tee /setup-host.log
 
 set -e
 
@@ -42,7 +41,7 @@ function __setup_user() {
 
     # TODO test
     # install SSH key
-    sudo -u $USERNAME curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
+    sudo -u $USERNAME /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
 
     chmod 600 /home/$USERNAME/.ssh/authorized_keys
     chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
@@ -68,7 +67,7 @@ function _setup_host_vmware() {
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
 
     # install SSH key
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh | /bin/bash
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
 
     apt-get install -y open-vm-tools mc htop git git-lfs git-filter-repo nvim
 
@@ -97,10 +96,10 @@ function _setup_host_vmware() {
     fi
 
     # setup timesync
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh | /bin/bash
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
     # node build env
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh | /bin/bash -s -- setup
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup
 
     # install gcloud
     apt-get install -y google-cloud-sdk
@@ -123,7 +122,7 @@ function _setup_host_vmware() {
     n latest
     n rm latest
     n prune
-    curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh | /bin/bash
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
     echo Setup vmware host finished, you need to reboot server
 }
