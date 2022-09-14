@@ -11,7 +11,7 @@ sudo systemsetup -settimezone UTC
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
 
 # install brew packages
-brew install bash wget mc nvim node cocoapods ios-sim
+brew install bash wget htop mc nvim node cocoapods ios-sim
 
 # setup bash
 if ! grep -q "/usr/local/bin/bash" /etc/shells; then
