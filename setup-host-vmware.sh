@@ -106,7 +106,7 @@ function _setup_host_vmware() {
     $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
-    apt-get install -y postgresql-client-14
+    apt-get install -y postgresql-client-15
 
     # install chrome
     apt-get install -y google-chrome-stable ttf-mscorefonts-installer
