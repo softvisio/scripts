@@ -19,8 +19,8 @@ npm install --global npm
 # install common modules
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
-    /var/local/@softvisio/core \
-    /var/local/@softvisio/cli \
-    /var/local/etc/psqls \
+    /var/local/softvisio/core \
+    /var/local/softvisio/cli \
+    /var/local/doftvisio/psqls \
     cordova \
     neovim
