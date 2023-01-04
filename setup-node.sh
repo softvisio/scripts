@@ -16,11 +16,21 @@ ln -s ~/.npm/lib/node_modules ~/.node_modules
 npm install --global npm
 # npm update --global --force --unsafe
 
-# install common modules
+# link packages globally
+pushd /var/local/@softvisio/cli
+npm link
+popd
+
+pushd /var/local/@softvisio/core
+npm link
+popd
+
+pushd /var/local/softvisio/psqls
+npm link
+popd
+
+# install common packages
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
-    /var/local/@softvisio/core \
-    /var/local/@softvisio/cli \
-    /var/local/softvisio/psqls \
     cordova \
     neovim
