@@ -17,11 +17,11 @@ npm install --global npm
 # npm update --global --force --unsafe
 
 # link packages globally
-pushd /var/local/@softvisio/cli
+pushd /var/local/softvisio-node/cli
 npm link
 popd
 
-pushd /var/local/@softvisio/core
+pushd /var/local/softvisio-node/core
 npm link
 popd
 
