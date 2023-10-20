@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/softvisio/scripts.git"
+        "url": "git+https://github.com/softvisio/scripts.git"
     },
     "license": "Proprietary Software",
     "author": "zdm <zdm@softvisio.net>"
