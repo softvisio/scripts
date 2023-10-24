@@ -5,7 +5,7 @@
 set -e
 
 # if [[ ! -x "$(command -v node)" && -x "$(command -v n)" ]]; then
-#     n latest
+#     n lts
 # fi
 
 # make global modules loadable

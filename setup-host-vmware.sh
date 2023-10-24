@@ -119,8 +119,8 @@ function _setup_host_vmware() {
 
     # install node
     source /etc/profile.d/n.sh
-    n latest
-    n rm latest
+    n lts
+    n rm lts
     n prune
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
