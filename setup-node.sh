@@ -13,7 +13,7 @@ rm -rf ~/.node_modules
 ln -s ~/.npm/lib/node_modules ~/.node_modules
 
 # update node_modules
-npm install --global npm
+# npm install --global npm
 # npm update --global --force --unsafe
 
 # link packages globally
