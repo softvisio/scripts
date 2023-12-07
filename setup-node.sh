@@ -25,10 +25,6 @@ pushd /var/local/softvisio-node/core
 npm link
 popd
 
-pushd /var/local/softvisio/psqls
-npm link
-popd
-
 # install common packages
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
