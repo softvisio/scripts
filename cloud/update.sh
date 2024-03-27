@@ -10,6 +10,8 @@ cd "${0%/*}"
 echo ----------------
 pwd
 
+exit 2
+
 chmod +x **/docker-compose.yaml
 
 # create network if not exists
