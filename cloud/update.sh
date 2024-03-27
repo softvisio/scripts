@@ -25,7 +25,7 @@ for name in !(*.disabled); do
         docker stack deploy \
             --prune \
             --resolve-image=always \
-            --detach=false \
+            --detach \
             --with-registry-auth \
             -c $name/docker-compose.yaml \
             $name
