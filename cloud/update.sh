@@ -22,8 +22,12 @@ done
 # create services
 for name in !(*.disabled); do
     if [ -f "$name/docker-compose.yaml" ]; then
-        # $name/docker-compose.yaml
-
-        docker stack deploy --prune --resolve-image=always --detach=false --with-registry-auth -c $name/docker-compose.yaml $name
+        docker stack deploy \
+            --prune \
+            --resolve-image=always \
+            --detach=false \
+            --with-registry-auth \
+            -c $name/docker-compose.yaml \
+            $name
     fi
 done
