@@ -22,6 +22,8 @@ done
 # create services
 for name in !(*.disabled); do
     if [ -f "$name/docker-compose.yaml" ]; then
-        $name/docker-compose.yaml
+        # $name/docker-compose.yaml
+
+        docker stack deploy --detach=false --with-registry-auth -c $name/docker-compose.yaml $name
     fi
 done
