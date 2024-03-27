@@ -1,16 +1,11 @@
 #!/bin/bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
 
 set -e
 shopt -s extglob
 
 cd "${0%/*}"
-
-echo ----------------
-pwd
-
-exit 2
 
 chmod +x **/docker-compose.yaml
 
