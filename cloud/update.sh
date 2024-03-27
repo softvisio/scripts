@@ -5,7 +5,7 @@
 set -e
 shopt -s extglob
 
-cd "${0%/*}"
+# cd "${0%/*}"
 
 echo ----------------
 pwd
