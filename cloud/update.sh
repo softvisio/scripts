@@ -7,6 +7,9 @@ shopt -s extglob
 
 cd "${0%/*}"
 
+echo ----------------
+pwd
+
 chmod +x **/docker-compose.yaml
 
 # create network if not exists
