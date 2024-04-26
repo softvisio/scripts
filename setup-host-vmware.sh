@@ -103,7 +103,8 @@ function _setup_host_vmware() {
 
     # install gcloud
     apt-get install -y google-cloud-sdk
-    $(gcloud info --format="value(basic.python_location)") -m pip install numpy
+    # XXX
+    # $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
     apt-get install -y postgresql-client-16
