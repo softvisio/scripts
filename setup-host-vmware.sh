@@ -99,7 +99,7 @@ function _setup_host_vmware() {
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
     # node build env
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
 
     # install gcloud
     apt-get install -y google-cloud-sdk

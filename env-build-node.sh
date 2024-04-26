@@ -50,11 +50,6 @@ function _cleanup_build() {
 }
 
 case "$1" in
-    setup)
-        _setup
-
-        ;;
-
     setup-build)
         _setup_build
 
