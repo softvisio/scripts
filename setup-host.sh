@@ -28,7 +28,7 @@ EOF
         local VERSION_ID=$(source /etc/os-release && echo $VERSION_ID)
 
         # softvisio repository
-        /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/apt/main/install.sh)
+        /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/apt/main/setup.sh) install
 
         apt-get update
         apt-get install -y repo-docker repo-postgresql repo-google-chrome repo-google-cloud n
