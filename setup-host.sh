@@ -37,6 +37,9 @@ EOF
         apt-get update
         apt-get full-upgrade -y
 
+        # setup timesync
+        /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+
         # cleanup
         apt-get autoremove -y
     )
