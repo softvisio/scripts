@@ -28,10 +28,10 @@ EOF
         local VERSION_ID=$(source /etc/os-release && echo $VERSION_ID)
 
         # softvisio repository
-        curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/deb/main/dists/keyring.gpg
+        curl -fsSLo /usr/share/keyrings/softvisio-archive-keyring.gpg https://raw.githubusercontent.com/softvisio/apt/main/dists/keyring.gpg
         cat << EOF > /etc/apt/sources.list.d/softvisio.list
-# deb [trusted=yes] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_ID) main
-deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.githubusercontent.com/softvisio/deb/main/ $(. /etc/os-release && echo $VERSION_ID) main
+# deb [trusted=yes] https://raw.githubusercontent.com/softvisio/apt/main/ $(. /etc/os-release && echo $VERSION_ID) main
+deb [signed-by=/usr/share/keyrings/softvisio-archive-keyring.gpg] https://raw.githubusercontent.com/softvisio/apt/main/ $(. /etc/os-release && echo $VERSION_ID) main
 EOF
 
         apt-get update
