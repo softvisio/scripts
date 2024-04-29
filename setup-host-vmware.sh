@@ -95,6 +95,9 @@ function _setup_host_vmware() {
         ln -fs /mnt/hgfs/downloads /var/local
     fi
 
+    # setup timesync
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+
     # node build env
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
 
