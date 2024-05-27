@@ -115,6 +115,11 @@ function _setup_host_vmware() {
     # install docker
     apt-get install -y docker-ce
 
+    # install tor
+    apt-get install -y tor nyx
+    sed -i -e '/SocksPort 9050/ s/9050/0.0.0.0:9050\nControlPort 0.0.0.0:9051/' /usr/share/tor/tor-service-defaults-torrc
+    systemctl restart tor
+
     # install private dotfiles
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
