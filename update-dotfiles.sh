@@ -76,7 +76,7 @@ function _update_private_dotfiles() {
 
         rm -rf $DOTFILES_TMP
 
-        git clone --depth=1 git@github.com:zdm/dotfile-private.git $DOTFILES_TMP
+        git clone --depth=1 git@github.com:zdm/dotfiles-private.git $DOTFILES_TMP
 
         _update_dotfiles "private"
     )
