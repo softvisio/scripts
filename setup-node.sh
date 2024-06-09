@@ -25,6 +25,10 @@ pushd /var/local/softvisio-node/core
 npm link
 popd
 
+pushd /var/local/zdm/scripts
+npm link
+popd
+
 # install common packages
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
