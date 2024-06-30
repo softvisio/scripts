@@ -2,6 +2,7 @@
 
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh)
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
 DOTFILES_HOME=~
@@ -68,6 +69,20 @@ function _update_public_dotfiles() {
     fi
 }
 
+function _update_deployment_dotfiles() {
+    (
+        set -e
+
+        echo Updating deployment profile
+
+        rm -rf $DOTFILES_TMP
+
+        git clone --depth=1 git@github.com:zdm/dotfiles-deployment.git $DOTFILES_TMP
+
+        _update_dotfiles "deployment"
+    )
+}
+
 function _update_private_dotfiles() {
     (
         set -e
@@ -87,12 +102,20 @@ case "$1" in
         _update_public_dotfiles
 
         ;;
+    deployment)
+        _update_deployment_dotfiles
+
+        ;;
     private)
         _update_private_dotfiles
 
         ;;
     *)
         _update_public_dotfiles
+
+        if [ -f $DOTFILES_CACHE/deployment.txt ]; then
+            _update_deployment_dotfiles
+        fi
 
         if [ -f $DOTFILES_CACHE/private.txt ]; then
             _update_private_dotfiles
