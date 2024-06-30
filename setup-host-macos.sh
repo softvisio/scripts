@@ -22,7 +22,7 @@ EOF
     sudo chsh -s /usr/local/bin/bash
 fi
 
-# install public dotfiles
+# install public dotfiles profile
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 

@@ -120,7 +120,7 @@ function _setup_host_vmware() {
     sed -i -e '/SocksPort 9050/ s/9050/0.0.0.0:9050\nControlPort 0.0.0.0:9051/' /usr/share/tor/tor-service-defaults-torrc
     systemctl restart tor
 
-    # install private dotfiles
+    # install private dotfiles profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
     # install node

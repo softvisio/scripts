@@ -12,7 +12,7 @@ function _setup_host_debian() {
     # ncurses-term required to support putty-256color term in docker
     apt-get install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
 
-    # install public dotfiles
+    # install public dotfiles profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
     # postgresql tmp files
