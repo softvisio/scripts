@@ -7,15 +7,15 @@ runcmd:
 
   - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
+  # setup hostname
   - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
 
   - hostname > /etc/hostname
 
+  # install dotfiles deployment profile
+  - update-dotfiles deployment
+
+  # install docker
   - apt-get install -y docker-ce
 
-  # install deployment dotfiles profile
-  # - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
-
   # - docker swarm init
-
-  # - docker network create --driver overlay --attachable main
