@@ -13,7 +13,7 @@ chmod +x **/docker-compose.yaml
 [ -z $(docker network ls -q --filter name=main) ] && docker network create --driver overlay --attachable main
 
 # remove stack
-docker stack rm $STACK_NAME
+docker stack rm --detach=false $STACK_NAME
 
 # remove resolved compose files
 rm -rf **/docker-compose.resolved.yaml
@@ -32,7 +32,7 @@ ls **/docker-compose.resolved.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
     --prune \
     --resolve-image=always \
-    --detach \
+    --detach=false \
     --with-registry-auth \
     $STACK_NAME
 
