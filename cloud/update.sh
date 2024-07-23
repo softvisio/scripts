@@ -23,7 +23,7 @@ for name in !(*.disabled); do
     if [ -f "$name/docker-compose.yaml" ]; then
         docker stack config \
             -c $name/docker-compose.yaml \
-            > $STACK_TMP_DIR/$name-docker-compose.yaml
+            > $STACK_TMP_DIR/$name.docker-compose.yaml
     fi
 done
 
@@ -31,7 +31,7 @@ done
 docker stack rm --detach=false $STACK_NAME
 
 # deploy stack
-ls $STACK_TMP_DIR/*-docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
+ls $STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
     --prune \
     --resolve-image=always \
