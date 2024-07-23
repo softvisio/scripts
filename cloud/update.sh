@@ -4,6 +4,7 @@
 
 STACK_NAME=$1
 
+echo "--------------"
 env
 
 set -e
