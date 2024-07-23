@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh) $STACK_NAME
+
+STACK_NAME=$1
 
 set -e
 shopt -s extglob
@@ -12,22 +14,29 @@ chmod +x **/docker-compose.yaml
 # create network if not exists
 [ -z $(docker network ls -q --filter name=main) ] && docker network create --driver overlay --attachable main
 
-# remove services
-for name in *; do
+# remove stack
+docker stack rm $STACK_NAME
+
+# remove resolved compose files
+rm -rf **/docker-compose.resolved.yaml
+
+# resolve services
+for name in !(*.disabled); do
     if [ -f "$name/docker-compose.yaml" ]; then
-        docker stack rm ${name%%.*}
+        docker stack config \
+            -c $name/docker-compose.yaml \
+            > $name/docker-compose.resolved.yaml
     fi
 done
 
-# create services
-for name in !(*.disabled); do
-    if [ -f "$name/docker-compose.yaml" ]; then
-        docker stack deploy \
-            --prune \
-            --resolve-image=always \
-            --detach \
-            --with-registry-auth \
-            -c $name/docker-compose.yaml \
-            $name
-    fi
-done
+# deploy stack
+ls **/docker-compose.resolved.yaml | xargs printf -- '-c %s\n' | xargs \
+    docker stack deploy \
+    --prune \
+    --resolve-image=always \
+    --detach \
+    --with-registry-auth \
+    $STACK_NAME
+
+# remove resolved compose files
+rm -rf **/docker-compose.resolved.yaml
