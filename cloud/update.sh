@@ -35,7 +35,7 @@ ls $STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
     --prune \
     --resolve-image=always \
-    --detach=false \
+    --detach=true \
     --with-registry-auth \
     $STACK_NAME
 
