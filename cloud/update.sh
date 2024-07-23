@@ -30,7 +30,7 @@ version: "3.9"
 
 networks:
   network:
-  	name: $DOCKER_STACK_NETWORK_NAME
+    name: $DOCKER_STACK_NETWORK_NAME
     driver: overlay
     attachable: true
 EOF
@@ -48,7 +48,6 @@ ls $DOCKER_STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xar
     --resolve-image=always \
     --detach=true \
     --with-registry-auth \
-    {} \
     $DOCKER_STACK_NAME
 
 # remove tmp dir
