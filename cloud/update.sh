@@ -4,6 +4,8 @@
 
 STACK_NAME=$1
 
+env
+
 set -e
 shopt -s extglob
 
