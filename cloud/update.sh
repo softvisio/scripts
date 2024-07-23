@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh) $STACK_NAME
-
-STACK_NAME=$1
-
-echo "--------------"
-env
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
 
 set -e
 shopt -s extglob
