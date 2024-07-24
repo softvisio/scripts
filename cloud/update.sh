@@ -19,16 +19,10 @@ mkdir -p $DOCKER_STACK_TMP_DIR
 for name in !(*.disabled); do
     if [ -f "$name/docker-compose.yaml" ]; then
 
-        cat << EOF | docker stack config \
+        docker stack config \
             -c $name/docker-compose.yaml \
-            -c - \
+            -c docker-compose.yaml \
             > $DOCKER_STACK_TMP_DIR/$name.docker-compose.yaml
-networks:
-  network:
-    name: ${DOCKER_STACK_NETWORK_NAME:-$DOCKER_STACK_NAME}
-    driver: overlay
-    attachable: true
-EOF
 
     fi
 done
