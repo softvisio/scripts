@@ -4,6 +4,10 @@
 
 DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
 
+if [[ -z $DOCKER_STACK_NETWORK_NAME ]]; then
+    DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NAME
+fi
+
 set -e
 shopt -s extglob
 
