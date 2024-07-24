@@ -9,7 +9,7 @@ shopt -s extglob
 
 cd "${0%/*}"
 
-chmod +x **/docker-compose.yaml
+chmod +x */docker-compose.yaml
 
 # prepare tmp dir
 rm -rf $DOCKER_STACK_TMP_DIR
