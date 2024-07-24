@@ -28,7 +28,7 @@ version: "3.9"
 networks:
   network:
     name: ${DOCKER_STACK_NETWORK_NAME:-ingress}
-	external: true
+    external: true
     # driver: overlay
     # attachable: true
 EOF
