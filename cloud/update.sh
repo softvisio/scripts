@@ -27,7 +27,7 @@ version: "3.9"
 
 networks:
   network:
-    name: ${DOCKER_STACK_NETWORK_NAME:-main}
+    name: ${DOCKER_STACK_NETWORK_NAME:-$DOCKER_STACK_NAME}
     driver: overlay
     attachable: true
 EOF
