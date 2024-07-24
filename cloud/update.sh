@@ -23,8 +23,6 @@ for name in !(*.disabled); do
             -c $name/docker-compose.yaml \
             -c - \
             > $DOCKER_STACK_TMP_DIR/$name.docker-compose.yaml
-version: "3.9"
-
 networks:
   network:
     name: ${DOCKER_STACK_NETWORK_NAME:-$DOCKER_STACK_NAME}
