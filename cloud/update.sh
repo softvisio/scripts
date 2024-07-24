@@ -11,9 +11,6 @@ cd "${0%/*}"
 
 chmod +x **/docker-compose.yaml
 
-# create network if not exists
-# [ -z $(docker network ls -q --filter name=main) ] && docker network create --driver overlay --attachable main
-
 # prepare tmp dir
 rm -rf $DOCKER_STACK_TMP_DIR
 mkdir -p $DOCKER_STACK_TMP_DIR
@@ -30,9 +27,10 @@ version: "3.9"
 
 networks:
   network:
-    name: $DOCKER_STACK_NETWORK_NAME
-    driver: overlay
-    attachable: true
+  	name: ${DOCKER_STACK_NETWORK_NAME:-ingress}
+	external: true
+    # driver: overlay
+    # attachable: true
 EOF
 
     fi
