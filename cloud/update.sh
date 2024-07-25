@@ -13,6 +13,8 @@ DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
 export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
 export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
+echo ==========================
+
 set -e
 shopt -s extglob
 
