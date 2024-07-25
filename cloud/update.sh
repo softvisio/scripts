@@ -8,6 +8,8 @@ if [[ -z $DOCKER_STACK_NETWORK_NAME ]]; then
     DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NAME
 fi
 
+echo $DOCKER_STACK_NETWORK_NAME
+
 set -e
 shopt -s extglob
 
