@@ -2,13 +2,16 @@
 
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
 
-DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
+if [[ -z $DOCKER_STACK_NAME ]]; then
+    echo DOCKER_STACK_NAME is required
 
-if [[ -z $DOCKER_STACK_NETWORK_NAME ]]; then
-    DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NAME
+    exit 1
 fi
 
-echo $DOCKER_STACK_NETWORK_NAME
+DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
+
+export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
+export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
 set -e
 shopt -s extglob
