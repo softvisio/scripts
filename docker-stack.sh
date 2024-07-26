@@ -24,11 +24,6 @@ DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
 export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
 export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
-# create network if not exists
-if [[ -z $(docker network ls -q --filter name=$DOCKER_STACK_NETWORK_NAME) ]]; then
-    docker network create --driver overlay --attachable $DOCKER_STACK_NETWORK_NAME
-fi
-
 # prepare tmp dir
 rm -rf $DOCKER_STACK_TMP_DIR
 mkdir -p $DOCKER_STACK_TMP_DIR
@@ -47,6 +42,11 @@ done
 
 # remove stack
 docker stack rm --detach=false $DOCKER_STACK_NAME
+
+# create network if not exists
+if [[ -z $(docker network ls -q --filter name=$DOCKER_STACK_NETWORK_NAME) ]]; then
+    echo Creating stack network ${DOCKER_STACK_NETWORK_NAME}: $(docker network create --driver overlay --attachable $DOCKER_STACK_NETWORK_NAME)
+fi
 
 # deploy stack
 ls $DOCKER_STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
