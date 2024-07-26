@@ -1,17 +1,6 @@
 #!/bin/bash
 
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/cloud/update.sh)
-
-if [[ -z $DOCKER_STACK_NAME ]]; then
-    echo DOCKER_STACK_NAME is required
-
-    exit 1
-fi
-
-DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
-
-export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
-export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
+# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/docker-stack.sh)
 
 set -e
 shopt -s extglob
@@ -19,6 +8,26 @@ shopt -s extglob
 cd "${0%/*}"
 
 chmod +x */docker-compose.yaml
+
+if [[ -z $DOCKER_STACK_NAME ]]; then
+    echo DOCKER_STACK_NAME is required
+
+    exit 1
+fi
+
+if [[ -z $DOCKER_STACK_NETWORK_NAME ]]; then
+    DOCKER_STACK_NETWORK_NAME=${DOCKER_STACK_NAME}_network
+fi
+
+DOCKER_STACK_TMP_DIR=/tmp/$DOCKER_STACK_NAME
+
+export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
+export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
+
+# create network if not exists
+if [[ -z $(docker network ls -q --filter name=$DOCKER_STACK_NETWORK_NAME) ]]; then
+    docker network create --driver overlay --attachable $DOCKER_STACK_NETWORK_NAME
+fi
 
 # prepare tmp dir
 rm -rf $DOCKER_STACK_TMP_DIR
