@@ -43,11 +43,12 @@ done
 # remove stack
 docker stack rm --detach=false $DOCKER_STACK_NAME
 
-# create network if not exists
-if [[ -z $(docker network ls -q --filter name=$DOCKER_STACK_NETWORK_NAME) ]]; then
-    echo Creating stack network ${DOCKER_STACK_NETWORK_NAME}: $(docker network create --driver overlay --attachable $DOCKER_STACK_NETWORK_NAME)
+# create external network if not exists
+if [[ ! -z $DOCKER_STACK_EXTERNAL_NETWORK ]]; then
+    if [[ -z $(docker network ls -q --filter name=$DOCKER_STACK_NETWORK_NAME) ]]; then
+        echo Creating stack network ${DOCKER_STACK_NETWORK_NAME}: $(docker network create $DOCKER_STACK_EXTERNAL_NETWORK $DOCKER_STACK_NETWORK_NAME)
+    fi
 fi
-
 # deploy stack
 ls $DOCKER_STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
