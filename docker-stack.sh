@@ -7,8 +7,6 @@ shopt -s extglob
 
 cd "${0%/*}"
 
-chmod +x */docker-compose.yaml
-
 if [[ -z $DOCKER_STACK_NAME ]]; then
     echo DOCKER_STACK_NAME is required
 
