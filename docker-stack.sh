@@ -28,12 +28,12 @@ mkdir -p $DOCKER_STACK_TMP_DIR
 
 # resolve services
 for name in !(*.disabled); do
-    if [ -f "$name/docker-compose.yaml" ]; then
+    if [ -f "$name/compose.yaml" ]; then
 
         docker stack config \
-            -c $name/docker-compose.yaml \
-            -c docker-compose.yaml \
-            > $DOCKER_STACK_TMP_DIR/$name.docker-compose.yaml
+            -c $name/compose.yaml \
+            -c compose.yaml \
+            > $DOCKER_STACK_TMP_DIR/$name.compose.yaml
 
     fi
 done
@@ -48,7 +48,7 @@ if [[ ! -z $DOCKER_STACK_EXTERNAL_NETWORK ]]; then
     fi
 fi
 # deploy stack
-ls $DOCKER_STACK_TMP_DIR/*.docker-compose.yaml | xargs printf -- '-c %s\n' | xargs \
+ls $DOCKER_STACK_TMP_DIR/*.compose.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
     --prune \
     --resolve-image=always \
