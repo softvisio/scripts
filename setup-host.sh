@@ -18,7 +18,7 @@ function _setup_host_debian() {
     # postgresql tmp files
     mkdir -p /etc/tmpfiles.d
     cat << EOF > /etc/tmpfiles.d/postgresql.conf
-d /var/run/postgresql 0755 root root	
+d /var/run/postgresql 0755 root root
 EOF
 
     (
