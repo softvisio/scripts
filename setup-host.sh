@@ -31,7 +31,7 @@ EOF
         /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/apt/main/setup.sh) install
 
         apt-get update
-        apt-get reinstall -y repo-docker repo-postgresql repo-google-chrome repo-google-cloud
+        apt-get reinstall -y repo-docker repo-postgresql repo-google-chrome repo-google-cloud repo-microsoft-edge
         apt-get install -y n
 
         # upgrade installed packages to the latest versions
