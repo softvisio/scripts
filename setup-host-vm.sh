@@ -206,8 +206,11 @@ systemd = true
 # command =
 EOF
 
+    # keep wsl running in the background
+    apt-get install -y keychain
+
     cat << EOF >> /etc/profile.d/keep-wsl-running.sh
-#!/usr/bin/env sh
+#!/bin/sh
 
 eval \$(keychain -q)
 EOF
