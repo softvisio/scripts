@@ -11,7 +11,6 @@ set -e
 # disable firewalld
 # systemctl stop firewalld; systemctl disable firewalld
 
-# setup user
 function __setup_user() {
     local USERNAME=zdm
 
@@ -78,9 +77,6 @@ function _setup_host_vm() {
 
     apt-get install -y mc htop git git-lfs git-filter-repo nvim
 
-    # setup timesync
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
-
     # node build env
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
 
@@ -125,6 +121,9 @@ function _setup_host_vmware() {
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
 
+    # setup timesync
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+
     # mount hgfs, if not mounted
     if mountpoint -q -- "/mnt/hgfs"; then
         echo HGFS is already mounted
@@ -150,7 +149,7 @@ function _setup_host_vmware() {
 # function _setup_host_wsl() {
 # }
 
-_setup_host_vm
+# _setup_host_vm
 
 case "$1" in
     vmware)
