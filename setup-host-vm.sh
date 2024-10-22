@@ -126,6 +126,7 @@ function _setup_ssh() {
     # install SSH key
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
 
+    # restart SSH service
     service ssh restart
 }
 
