@@ -48,28 +48,7 @@ function __setup_user() {
 }
 
 function _setup_host_vmware() {
-    DEBIAN_FRONTEND=noninteractive
-
-    # setup host
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
-
-    # enable SSH root login
-    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
-
-    # enable SSH agent forward
-    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
-
-    # enable unqualified single-label domains (NFQDN) resolution
-    sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
-    systemctl restart systemd-resolved
-
-    # prefer ipv4 over ipv6
-    sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
-
-    # install SSH key
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
-
-    apt-get install -y open-vm-tools mc htop git git-lfs git-filter-repo nvim
+    apt-get install -y open-vm-tools
 
     # enable timesync with host
     vmware-toolbox-cmd timesync enable
@@ -94,6 +73,37 @@ function _setup_host_vmware() {
         ln -fs /mnt/hgfs/projects/* /var/local
         ln -fs /mnt/hgfs/downloads /var/local
     fi
+}
+
+function _setup_host_wsl() {
+    apt-get install -y openssh-server
+
+    service ssh restart
+}
+
+function _setup_host_vm() {
+    DEBIAN_FRONTEND=noninteractive
+
+    # setup host
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
+
+    # enable SSH root login
+    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
+
+    # enable SSH agent forward
+    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
+
+    # enable unqualified single-label domains (NFQDN) resolution
+    sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
+    systemctl restart systemd-resolved
+
+    # prefer ipv4 over ipv6
+    sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
+
+    # install SSH key
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
+
+    apt-get install -y mc htop git git-lfs git-filter-repo nvim
 
     # setup timesync
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
@@ -130,7 +140,7 @@ function _setup_host_vmware() {
     n prune
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
-    echo Setup vmware host finished, you need to reboot server
+    echo Setup host finished, you need to reboot server
 }
 
-_setup_host_vmware
+_setup_host_vm
