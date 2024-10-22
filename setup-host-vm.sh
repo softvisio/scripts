@@ -148,6 +148,7 @@ function _setup_host_vmware() {
 }
 
 function _setup_host_wsl() {
+    #
 }
 
 _setup_host_vm
