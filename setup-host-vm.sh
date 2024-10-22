@@ -201,11 +201,11 @@ hostname = wsl
 [user]
 default = root
 
-# Set a command to run when a new WSL instance launches.
-# This example starts the Docker container service.
 [boot]
 systemd = true
-# command = service docker start
+
+# keep wsl running in the background
+command = dbus-launch true
 EOF
 
     # link dirs
