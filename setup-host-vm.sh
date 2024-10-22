@@ -68,6 +68,9 @@ function _setup_host_vm() {
     # setup host
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
+    # setup SSH
+    _setup_ssh
+
     # enable unqualified single-label domains (NFQDN) resolution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
     systemctl restart systemd-resolved
@@ -99,9 +102,6 @@ function _setup_host_vm() {
     sed -i -e '/SocksPort 9050/ s/9050/0.0.0.0:9050\nControlPort 0.0.0.0:9051/' /usr/share/tor/tor-service-defaults-torrc
     systemctl restart tor
 
-    # install private dotfiles profile
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
-
     # install node
     source /etc/profile.d/n.sh
     n lts
@@ -109,8 +109,8 @@ function _setup_host_vm() {
     n prune
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
-    # setup SSH
-    _setup_ssh
+    # install private dotfiles profile
+    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
     echo Setup host finished, you need to reboot server
 }
