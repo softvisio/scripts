@@ -203,9 +203,13 @@ default = root
 
 [boot]
 systemd = true
+# command =
+EOF
 
-# keep wsl running in the background
-command = dbus-launch true
+    cat << EOF >> /etc/profile.d/keep-wsl-running.sh
+#!/usr/bin/env sh
+
+eval \$(keychain -q)
 EOF
 
     # link dirs
