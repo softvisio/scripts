@@ -34,3 +34,5 @@ PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     npm install --global \
     cordova \
     neovim
+
+npm cache clean --force
