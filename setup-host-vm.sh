@@ -203,7 +203,8 @@ default = root
 
 # Set a command to run when a new WSL instance launches.
 # This example starts the Docker container service.
-# [boot]
+[boot]
+systemd = true
 # command = service docker start
 EOF
 
