@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh)
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) vmware
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) wsl
 
 set -e
 
@@ -47,36 +48,17 @@ function __setup_user() {
     chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
 }
 
-function _setup_host_vmware() {
-    apt-get install -y open-vm-tools
-
-    # enable timesync with host
-    vmware-toolbox-cmd timesync enable
-
-    # mount hgfs, if not mounted
-    if mountpoint -q -- "/mnt/hgfs"; then
-        echo HGFS is already mounted
-    else
-        mkdir /mnt/hgfs 2> /dev/null || true
-        mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o defaults,allow_other
-    fi
-
-    # update fstab
-    if ! grep -q "/mnt/hgfs" "/etc/fstab"; then
-        echo ".host:/ /mnt/hgfs fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
-    fi
-
-    # install hgfs symlinks for vmware workstation
-    if [ -d /mnt/hgfs ]; then
-
-        # link hgfs dirs
-        ln -fs /mnt/hgfs/projects/* /var/local
-        ln -fs /mnt/hgfs/downloads /var/local
-    fi
-}
-
-function _setup_host_wsl() {
+function _setup_ssh() {
     apt-get install -y openssh-server
+
+    # enable SSH root login
+    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
+
+    # enable SSH agent forward
+    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
+
+    # install SSH key
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
 
     service ssh restart
 }
@@ -87,21 +69,12 @@ function _setup_host_vm() {
     # setup host
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
-    # enable SSH root login
-    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
-
-    # enable SSH agent forward
-    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
-
     # enable unqualified single-label domains (NFQDN) resolution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
     systemctl restart systemd-resolved
 
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
-
-    # install SSH key
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
 
     apt-get install -y mc htop git git-lfs git-filter-repo nvim
 
@@ -140,7 +113,55 @@ function _setup_host_vm() {
     n prune
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
+    # setup SSH
+    _setup_ssh
+
     echo Setup host finished, you need to reboot server
 }
 
+function _setup_host_vmware() {
+    apt-get install -y open-vm-tools
+
+    # enable timesync with host
+    vmware-toolbox-cmd timesync enable
+
+    # mount hgfs, if not mounted
+    if mountpoint -q -- "/mnt/hgfs"; then
+        echo HGFS is already mounted
+    else
+        mkdir /mnt/hgfs 2> /dev/null || true
+        mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o defaults,allow_other
+    fi
+
+    # update fstab
+    if ! grep -q "/mnt/hgfs" "/etc/fstab"; then
+        echo ".host:/ /mnt/hgfs fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
+    fi
+
+    # install hgfs symlinks for vmware workstation
+    if [ -d /mnt/hgfs ]; then
+
+        # link hgfs dirs
+        ln -fs /mnt/hgfs/projects/* /var/local
+        ln -fs /mnt/hgfs/downloads /var/local
+    fi
+}
+
+function _setup_host_wsl() {
+}
+
 _setup_host_vm
+
+case "$1" in
+    vmware)
+        _setup_host_vmware
+        ;;
+
+    wsl)
+        _setup_host_wsl
+        ;;
+
+    *)
+        return 1
+        ;;
+esac
