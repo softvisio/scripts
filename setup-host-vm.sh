@@ -165,7 +165,7 @@ function _setup_host_wsl() {
 
     # install wsl.conf
     # https://learn.microsoft.com/en-us/windows/wsl/wsl-config#wslconf
-    cat << EOF >> /etc/wsl.conf
+    cat << EOF > /etc/wsl.conf
 # https://learn.microsoft.com/en-us/windows/wsl/wsl-config#wslconf
 
 # Automatically mount Windows drive when the distribution is launched
@@ -209,7 +209,7 @@ EOF
     # keep wsl running in the background
     apt-get install -y keychain
 
-    cat << EOF >> /etc/profile.d/keep-wsl-running.sh
+    cat << EOF > /etc/profile.d/keep-wsl-running.sh
 #!/bin/sh
 
 eval \$(keychain -q)
