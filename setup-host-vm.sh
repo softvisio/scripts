@@ -147,9 +147,8 @@ function _setup_host_vmware() {
     fi
 }
 
-function _setup_host_wsl() {
-    #
-}
+# function _setup_host_wsl() {
+# }
 
 _setup_host_vm
 
@@ -159,7 +158,7 @@ case "$1" in
         ;;
 
     wsl)
-        _setup_host_wsl
+        # _setup_host_wsl
         ;;
 
     *)
