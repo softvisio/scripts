@@ -47,21 +47,6 @@ function __setup_user() {
     chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
 }
 
-function _setup_ssh() {
-    apt-get install -y openssh-server
-
-    # enable SSH root login
-    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
-
-    # enable SSH agent forward
-    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
-
-    # install SSH key
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
-
-    service ssh restart
-}
-
 function _setup_host_vm() {
     DEBIAN_FRONTEND=noninteractive
 
@@ -70,6 +55,20 @@ function _setup_host_vm() {
 
     # setup SSH
     _setup_ssh
+
+    case "$1" in
+        vmware)
+            _setup_host_vmware
+            ;;
+
+        wsl)
+            _setup_host_wsl
+            ;;
+
+        *)
+            return 1
+            ;;
+    esac
 
     # enable unqualified single-label domains (NFQDN) resolution
     sed -i -r '/ResolveUnicastSingleLabel/c ResolveUnicastSingleLabel=yes' /etc/systemd/resolved.conf
@@ -115,6 +114,21 @@ function _setup_host_vm() {
     echo Setup host finished, you need to reboot server
 }
 
+function _setup_ssh() {
+    apt-get install -y openssh-server
+
+    # enable SSH root login
+    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
+
+    # enable SSH agent forward
+    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
+
+    # install SSH key
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
+
+    service ssh restart
+}
+
 function _setup_host_vmware() {
     apt-get install -y open-vm-tools
 
@@ -154,18 +168,4 @@ function _setup_host_wsl() {
 
 }
 
-_setup_host_vm
-
-case "$1" in
-    vmware)
-        _setup_host_vmware
-        ;;
-
-    wsl)
-        _setup_host_wsl
-        ;;
-
-    *)
-        return 1
-        ;;
-esac
+_setup_host_vm $1
