@@ -1,6 +1,9 @@
 #!/bin/bash
 
+# vmware
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) vmware
+
+# wsl
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) wsl
 
 set -e

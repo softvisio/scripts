@@ -10,7 +10,13 @@ function _setup_host_debian() {
 
     # install common packages
     # ncurses-term required to support putty-256color term in docker
-    apt-get install -y apt-utils bash-completion tar ca-certificates curl ncurses-term
+    apt-get install -y \
+        apt-utils \
+        bash-completion \
+        tar \
+        ca-certificates \
+        curl \
+        ncurses-term
 
     # install public dotfiles profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
@@ -31,7 +37,11 @@ EOF
         /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/apt/main/setup.sh) install
 
         apt-get update
-        apt-get reinstall -y repo-docker repo-postgresql repo-google-chrome repo-google-cloud repo-microsoft-edge
+        apt-get reinstall -y \
+            repo-docker \
+            repo-postgresql \
+            repo-google-chrome \
+            repo-google-cloud
         apt-get install -y n
 
         # upgrade installed packages to the latest versions

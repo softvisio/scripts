@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# cleanup
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup
 
+# setup build environment
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
+
+# cleanup build environment
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup-build
 
 set -e
