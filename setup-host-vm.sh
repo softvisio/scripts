@@ -80,7 +80,13 @@ function _setup_host_vm() {
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
 
-    apt-get install -y mc htop git git-lfs git-filter-repo nvim
+    apt-get install -y mc htop nvim
+
+    # git
+    apt-get install -y software-properties-common
+    add-apt-repository -y ppa:git-core/ppa
+    apt-get update
+    apt-get install -y git git-lfs git-filter-repo
 
     # node build env
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
