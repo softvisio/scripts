@@ -83,9 +83,6 @@ function _setup_host_vm() {
     apt-get install -y mc htop nvim
 
     # git
-    apt-get install -y software-properties-common
-    add-apt-repository -y ppa:git-core/ppa
-    apt-get update
     apt-get install -y git git-lfs git-filter-repo
 
     # node build env
