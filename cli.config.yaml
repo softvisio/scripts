@@ -1,5 +1,1 @@
 private: true
-
-metadata:
-  executables:
-    - /**/*.sh
