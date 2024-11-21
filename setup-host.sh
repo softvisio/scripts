@@ -41,6 +41,7 @@ EOF
         apt-get reinstall -y \
             repo-docker \
             repo-git \
+            repo-git-lfs \
             repo-google-chrome \
             repo-google-cloud \
             repo-postgresql
