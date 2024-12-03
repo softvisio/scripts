@@ -25,7 +25,7 @@ pushd /var/local/softvisio-node/core
 npm link
 popd
 
-pushd /var/local/zdm/scripts
+pushd /var/local/zdm/utils
 npm link
 popd
 
