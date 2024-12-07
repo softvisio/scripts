@@ -3,19 +3,19 @@
 package_upgrade: true
 
 runcmd:
-  - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
+    - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
-  - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+    - /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
-  # setup hostname
-  - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
+    # setup hostname
+    - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
 
-  - hostname > /etc/hostname
+    - hostname > /etc/hostname
 
-  # install dotfiles deployment profile
-  - update-dotfiles deployment
+    # install dotfiles deployment profile
+    - update-dotfiles deployment
 
-  # install docker
-  - apt-get install -y docker-ce
+    # install docker
+    - apt-get install -y docker-ce
 
-  # - docker swarm init
+    # - docker swarm init
