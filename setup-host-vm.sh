@@ -96,9 +96,6 @@ function _setup_host_vm() {
     # install postgresql client
     apt-get install -y postgresql-client-17
 
-    # install chrome
-    apt-get install -y google-chrome-stable ttf-mscorefonts-installer
-
     # install docker
     apt-get install -y docker-ce
 
