@@ -10,6 +10,7 @@ mkdir -m 700 ~/.ssh 2> /dev/null || true
 
 if [[ ! -f ~/.ssh/authorized_keys ]] || ! grep -q "$KEY" ~/.ssh/authorized_keys; then
     cat << EOF >> ~/.ssh/authorized_keys
+# zdm public key
 $KEY
 EOF
 fi
