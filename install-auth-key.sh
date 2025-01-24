@@ -4,7 +4,7 @@
 
 set -e
 
-KEY="ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHxTsx4kSEnxw83QPe8aBfIihbXsjtVM4fAdyCi4wCmMiqkowrynLd/f4eFsTQXARa4hA1ZbmiQ1L7AzTh9e3+MTgDWb7xXGvuP7EOuJimmG5xV/EtKjKGealVwgIxBDmFLp0VrtFsJBRhPVHZz8WWL499Sxw9a2+XYSBSoNbW943+nMQ== openpgp:0xE35FD126"
+KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/nPzEIJ9FvODTzjuTvrk+h6b3mq1ilgsm7wQpYLVRP openpgp:0x490E6007"
 
 mkdir -m 700 ~/.ssh 2> /dev/null || true
 
