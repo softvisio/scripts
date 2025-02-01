@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
+# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
 
 set -e
 

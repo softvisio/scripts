@@ -44,7 +44,7 @@ function __setup_user() {
 
     # TODO test
     # install SSH key
-    sudo -u $USERNAME /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
+    sudo -u $USERNAME /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
 
     chmod 600 /home/$USERNAME/.ssh/authorized_keys
     chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
@@ -127,7 +127,7 @@ function _setup_ssh() {
     sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
 
     # install SSH key
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-auth-key.sh)
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
 
     # restart SSH service
     service ssh restart
