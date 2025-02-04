@@ -54,7 +54,7 @@ function _update_public_dotfiles() {
     (
         set -e
 
-        echo Updating "public" profile
+        echo 'Updating "public" profile'
 
         rm -rf $DOTFILES_TMP
         mkdir -p $DOTFILES_TMP
@@ -80,7 +80,7 @@ function _update_deployment_dotfiles() {
     (
         set -e
 
-        echo Updating "deployment" profile
+        echo 'Updating "deployment" profile'
 
         rm -rf $DOTFILES_TMP
 
@@ -94,7 +94,7 @@ function _update_private_dotfiles() {
     (
         set -e
 
-        echo Updating "private" profile
+        echo 'Updating "private" profile'
 
         rm -rf $DOTFILES_TMP
 
