@@ -32,7 +32,7 @@ EOF
         local VERSION_ID=$(source /etc/os-release && echo $VERSION_ID)
 
         # softvisio repository
-        /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/apt/main/setup.sh) install
+        /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/deb/main/setup.sh) install
 
         apt-get update
 
