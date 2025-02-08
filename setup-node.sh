@@ -30,9 +30,8 @@ npm link
 popd
 
 # install common packages
-PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
-    npm install --global \
-    cordova \
+npm install --global \
     neovim
 
+# clear npm cache
 npm cache clean --force
