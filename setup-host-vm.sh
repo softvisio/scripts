@@ -124,7 +124,7 @@ function _setup_ssh() {
     sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
 
     # enable SSH agent forward
-    sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
+    # sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
 
     # install SSH key
     /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
