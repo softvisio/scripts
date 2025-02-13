@@ -30,24 +30,8 @@ function __setup_user() {
     # allow users of "wheel" group perform any sudo commands without password
     sed -i -e '/#\s*%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL/ s/#\s*%wheel/%wheel/' /etc/sudoers
 
-    # disable password authentication via ssh
-    sed -i -e '/^PasswordAuthentication\s\+yes/ s/yes/no/' /etc/ssh/sshd_config
-
-    # disable root login via ssh
-    sed -i -e '/^#PermitRootLogin\s\+yes/ s/#PermitRootLogin\s\+yes/PermitRootLogin no/' /etc/ssh/sshd_config
-
-    # place public ssh key
-    chmod 700 /home/$USERNAME
-    mkdir /home/$USERNAME/.ssh
-    chmod 700 /home/$USERNAME/.ssh
-    chown $USERNAME:$USERNAME /home/$USERNAME/.ssh
-
-    # TODO test
-    # install SSH key
+    # install SSH public key
     sudo -u $USERNAME /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
-
-    chmod 600 /home/$USERNAME/.ssh/authorized_keys
-    chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
 }
 
 function _setup_host_vm() {
@@ -57,7 +41,8 @@ function _setup_host_vm() {
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
     # setup SSH
-    _setup_ssh
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
+    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
 
     case "$1" in
         vmware)
@@ -115,22 +100,6 @@ function _setup_host_vm() {
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
     echo Setup host finished, you need to reboot server
-}
-
-function _setup_ssh() {
-    apt-get install -y openssh-server
-
-    # enable SSH root login
-    sed -i -r '/#*\s*PermitRootLogin.+/c PermitRootLogin yes' /etc/ssh/sshd_config
-
-    # enable SSH agent forward
-    # sed -i -r '/#*\s*ForwardAgent.+/c ForwardAgent yes' /etc/ssh/ssh_config
-
-    # install SSH key
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
-
-    # restart SSH service
-    service ssh restart
 }
 
 function _setup_host_vmware() {
