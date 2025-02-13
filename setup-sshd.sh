@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NOTE https://man7.org/linux/man-pages/man5/sshd_config.5.html
+
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
 
 set -e
