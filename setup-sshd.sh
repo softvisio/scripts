@@ -18,6 +18,7 @@ PermitEmptyPasswords            no
 
 AllowAgentForwarding            yes
 AllowTcpForwarding              yes
+AllowStreamLocalForwarding      yes
 GatewayPorts                    yes
 EOF
 
