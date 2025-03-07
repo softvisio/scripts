@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh )
 # source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log

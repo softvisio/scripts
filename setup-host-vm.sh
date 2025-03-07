@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # vmware
 # /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) vmware
@@ -182,7 +182,7 @@ EOF
     apt-get install -y keychain
 
     cat << EOF > /etc/profile.d/keep-wsl-running.sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 eval \$(keychain -q)
 EOF

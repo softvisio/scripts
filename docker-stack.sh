@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/docker-stack.sh)
 
