@@ -52,11 +52,9 @@ function _update_public_dotfiles() {
         echo 'Updating "public" profile'
 
         rm -rf $DOTFILES_TMP
-        # mkdir -p $DOTFILES_TMP
+        mkdir -p $DOTFILES_TMP
 
-        # curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
-
-        git clone -q --depth=1 https://github.com/zdm/dotfiles-public.git $DOTFILES_TMP
+        curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
         _update_dotfiles "public"
 
