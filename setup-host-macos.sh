@@ -15,7 +15,7 @@ brew install bash wget htop mc nvim node cocoapods ios-sim
 
 # setup bash
 if ! grep -q "/usr/local/bin/bash" /etc/shells; then
-    sudo /bin/bash << EOF
+    sudo /usr/bin/env bash << EOF
 echo /usr/local/bin/bash >> /etc/shells
 EOF
 
@@ -24,7 +24,7 @@ fi
 
 # install public dotfiles profile
 # source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
-/bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+/usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
 # setup cocoapods environment
 pod setup
