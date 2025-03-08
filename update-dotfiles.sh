@@ -38,8 +38,6 @@ function _update_dotfiles() {
         find $DOTFILES_TMP/profile -type f -exec chmod go= {} \;
         # find $DOTFILES_TMP/profile -type f -exec chmod u=rw,go= {} \;
 
-        ls -lA $DOTFILES_TMP/profile
-
         # git hooks must be executable
         # if [[ -d $DOTFILES_TMP/profile/.config/git/hooks ]]; then
         #     chmod +x $DOTFILES_TMP/profile/.config/git/hooks/*
