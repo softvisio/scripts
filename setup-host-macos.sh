@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh)
+# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh)
 
 set -e
 
@@ -8,7 +8,7 @@ set -e
 sudo systemsetup -settimezone UTC
 
 # install brew
-/bin/bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+/usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
 
 # install brew packages
 brew install bash wget htop mc nvim node cocoapods ios-sim

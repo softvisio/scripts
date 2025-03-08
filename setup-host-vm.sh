@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # vmware
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) vmware
+# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) vmware
 
 # wsl
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) wsl
+# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh) wsl
 
 set -e
 
@@ -31,7 +31,7 @@ function __setup_user() {
     sed -i -e '/#\s*%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL/ s/#\s*%wheel/%wheel/' /etc/sudoers
 
     # install SSH public key
-    sudo -u $USERNAME /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
+    sudo -u $USERNAME /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
 }
 
 function _setup_host_vm() {
@@ -41,8 +41,8 @@ function _setup_host_vm() {
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
     # setup SSH
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
+    /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
+    /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
 
     case "$1" in
         vmware)
@@ -71,7 +71,7 @@ function _setup_host_vm() {
     apt-get install -y git git-lfs git-filter-repo
 
     # node build env
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
+    /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
 
     # install gcloud
     apt-get install -y google-cloud-sdk
@@ -94,7 +94,7 @@ function _setup_host_vm() {
     n lts
     n rm lts
     n prune
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
+    /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
     # install private dotfiles profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
@@ -109,7 +109,7 @@ function _setup_host_vmware() {
     vmware-toolbox-cmd timesync enable
 
     # setup timesync
-    /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+    /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
     # mount hgfs, if not mounted
     if mountpoint -q -- "/mnt/hgfs"; then

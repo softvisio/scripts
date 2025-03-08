@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# /bin/bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
+# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh)
 
 set -e
 
