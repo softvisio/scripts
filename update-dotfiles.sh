@@ -16,6 +16,10 @@ DOTFILES_HOME=~
 DOTFILES_CACHE=$DOTFILES_HOME/.local/share/dotfiles
 DOTFILES_TMP=$DOTFILES_CACHE/tmp
 
+DOTFILES_PUBLIC_GITHUB_SLUG=zdm/dotfiles-public
+DOTFILES_PRIVATE_GITHUB_SLUG=zdm/dotfiles-private
+DOTFILES_DEPLOYMENT_GITHUB_SLUG=zdm/dotfiles-deployment
+
 function _update_dotfiles() {
     local type=$1
 
@@ -54,7 +58,7 @@ function _update_public_dotfiles() {
         rm -rf $DOTFILES_TMP
         mkdir -p $DOTFILES_TMP
 
-        curl -fsSL https://github.com/zdm/dotfiles-public/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
+        curl -fsSL https://github.com/$DOTFILES_PUBLIC_GITHUB_SLUG/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
         _update_dotfiles "public"
 
@@ -71,20 +75,6 @@ function _update_public_dotfiles() {
     fi
 }
 
-function _update_deployment_dotfiles() {
-    (
-        set -e
-
-        echo 'Updating "deployment" profile'
-
-        rm -rf $DOTFILES_TMP
-
-        git clone -q --depth=1 git@github.com:zdm/dotfiles-deployment.git $DOTFILES_TMP
-
-        _update_dotfiles "deployment"
-    )
-}
-
 function _update_private_dotfiles() {
     (
         set -e
@@ -93,9 +83,23 @@ function _update_private_dotfiles() {
 
         rm -rf $DOTFILES_TMP
 
-        git clone -q --depth=1 git@github.com:zdm/dotfiles-private.git $DOTFILES_TMP
+        git clone -q --depth=1 git@github.com:$DOTFILES_PRIVATE_GITHUB_SLUG.git $DOTFILES_TMP
 
         _update_dotfiles "private"
+    )
+}
+
+function _update_deployment_dotfiles() {
+    (
+        set -e
+
+        echo 'Updating "deployment" profile'
+
+        rm -rf $DOTFILES_TMP
+
+        git clone -q --depth=1 git@github.com:$DOTFILES_DEPLOYMENT_GITHUB_SLUG.git $DOTFILES_TMP
+
+        _update_dotfiles "deployment"
     )
 }
 
@@ -104,12 +108,12 @@ case "$1" in
         _update_public_dotfiles
 
         ;;
-    deployment)
-        _update_deployment_dotfiles
-
-        ;;
     private)
         _update_private_dotfiles
+
+        ;;
+    deployment)
+        _update_deployment_dotfiles
 
         ;;
     *)
