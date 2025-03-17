@@ -69,7 +69,7 @@ function _update_public_dotfiles() {
 
     # source .bashrc
     if [ -f $DOTFILES_HOME/.bashrc ]; then
-        echo Source $DOTFILES_HOME/.bashrc
+        # echo Source $DOTFILES_HOME/.bashrc
 
         source $DOTFILES_HOME/.bashrc
     fi
