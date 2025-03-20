@@ -40,6 +40,7 @@ EOF
             repo-docker \
             repo-git \
             repo-git-lfs \
+            repo-github-cli \
             repo-google-cloud \
             repo-postgresql
 
