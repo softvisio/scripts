@@ -68,7 +68,7 @@ function _setup_host_vm() {
     apt-get install -y mc htop nvim
 
     # git
-    apt-get install -y git git-lfs git-filter-repo gh
+    apt-get install -y git git-lfs git-filter-repo git-crypt gh
 
     # node build env
     /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
