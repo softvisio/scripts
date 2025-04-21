@@ -84,7 +84,7 @@ function _update_private_dotfiles() {
         rm -rf $DOTFILES_TMP
 
         git clone -q --depth=1 git@github.com:$DOTFILES_PRIVATE_GITHUB_SLUG.git $DOTFILES_TMP
-        git crypt -C $DOTFILES_TMP unlock
+        git -C $DOTFILES_TMP crypt unlock
 
         _update_dotfiles "private"
     )
@@ -99,7 +99,7 @@ function _update_deployment_dotfiles() {
         rm -rf $DOTFILES_TMP
 
         git clone -q --depth=1 git@github.com:$DOTFILES_DEPLOYMENT_GITHUB_SLUG.git $DOTFILES_TMP
-        git crypt -C $DOTFILES_TMP unlock
+        git -C $DOTFILES_TMP crypt unlock
 
         _update_dotfiles "deployment"
     )
