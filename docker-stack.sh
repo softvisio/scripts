@@ -27,7 +27,7 @@ rm -rf $DOCKER_STACK_TMP_DIR
 mkdir -p $DOCKER_STACK_TMP_DIR
 
 # resolve services
-for name in !(*.disabled); do
+for name in !(disabled); do
     if [ -f "$name/compose.yaml" ]; then
 
         docker stack config \
