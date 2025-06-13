@@ -38,6 +38,7 @@ EOF
         apt-get update
 
         apt-get reinstall -y \
+            repo-cloudflare \
             repo-docker \
             repo-git \
             repo-git-lfs \
