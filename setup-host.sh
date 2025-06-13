@@ -14,7 +14,8 @@ function _setup_host_debian() {
         bash-completion \
         tar \
         ca-certificates \
-        curl
+        curl \
+        jq
 
     # install public dotfiles profile
     source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
