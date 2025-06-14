@@ -53,7 +53,7 @@ function _cleanup() {
     rm -rf $SOURCE_TMP_DIR
 }
 
-if (_clone_source); then
+if _clone_source; then
 
     # resolve services
     for name in *; do
