@@ -34,6 +34,11 @@ function _clone_source() {
 
         git clone --quiet --depth=1 --single-branch ssh://git@github.com/$SOURCE .
 
+        # unlock
+        if [[ -f "./unlock-gpg.sh" ]]; then
+            ./unlock-gpg.sh || true
+        fi
+
         git crypt unlock
     fi
 }
