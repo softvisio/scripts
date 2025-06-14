@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/docker-stack.sh)
+# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/docker-stack.sh)
 
 set -e
 shopt -s extglob
-
-cd "${0%/*}"
 
 if [[ -z $DOCKER_STACK_NAME ]]; then
     echo DOCKER_STACK_NAME is required
@@ -47,6 +45,7 @@ if [[ ! -z $DOCKER_STACK_EXTERNAL_NETWORK ]]; then
         echo Creating stack network ${DOCKER_STACK_NETWORK_NAME}: $(docker network create $DOCKER_STACK_EXTERNAL_NETWORK $DOCKER_STACK_NETWORK_NAME)
     fi
 fi
+
 # deploy stack
 ls $DOCKER_STACK_TMP_DIR/*.compose.yaml | xargs printf -- '-c %s\n' | xargs \
     docker stack deploy \
