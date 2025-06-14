@@ -32,7 +32,7 @@ function _clone_source() {
     if [[ ! -f "package.json" ]]; then
         cd $SOURCE_TMP_DIR
 
-        git clone --depth=1 --single-branch ssh://git@github.com/$SOURCE .
+        git clone --quiet --depth=1 --single-branch ssh://git@github.com/$SOURCE .
 
         git crypt unlock
     fi
