@@ -25,8 +25,8 @@ export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
 export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
 # create source tmp dir
-SOURCE_TMP_DIR=mktemp -d
-export DOCKER_STACK_TMP_DIR=mktemp -d
+SOURCE_TMP_DIR=$(mktemp -d)
+export DOCKER_STACK_TMP_DIR=$(mktemp -d)
 
 function _clone_source() {
     if [[ ! -f "package.json" ]]; then
