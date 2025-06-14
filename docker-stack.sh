@@ -24,7 +24,7 @@ fi
 export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
 export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
-# create source tmp dir
+# create tmp dirs
 SOURCE_TMP_DIR=$(mktemp -d)
 export DOCKER_STACK_TMP_DIR=$(mktemp -d)
 
