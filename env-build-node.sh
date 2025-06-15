@@ -67,7 +67,7 @@ case "$1" in
 
         ;;
     *)
-        return 1
+        exit 1
 
         ;;
 esac
