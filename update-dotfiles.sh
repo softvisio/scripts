@@ -85,6 +85,8 @@ function _update_private_dotfiles() {
 
         git clone --quiet --depth=1 git@github.com:$DOTFILES_PRIVATE_GITHUB_SLUG.git $DOTFILES_TMP
 
+        ls -la
+
         # unlock
         if [[ -f "./unlock.sh" ]]; then
             echo "Unlock GPG key"
