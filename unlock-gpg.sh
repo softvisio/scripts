@@ -14,13 +14,5 @@ export GPG_TTY=$(tty)
 # decrypt gpg passphrase
 PASSPHRASE=$(echo $ENCRYPTED_PASSPHRASE | /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) decrypt $GITHUB_USERNAME)
 
-# unlock gpg key
-echo 1 | gpg --sign \
-    --batch \
-    --pinentry-mode=loopback \
-    --passphrase $PASSPHRASE \
-    --yes \
-    --quiet \
-    --armor \
-    -o /dev/null \
-    -u $GPG_KEY_ID
+# cache gpg key
+/usr/lib/gnupg/gpg-preset-passphrase --preset --restricted --passphrase $PASSPHRASE $GPG_KEY_ID
