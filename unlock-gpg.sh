@@ -15,7 +15,7 @@ export GPG_TTY=$(tty)
 passphrase=$(echo $encrypted_passphrase | /usr/bin/env bash <(curl --fail --silent --show-error https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) decrypt $github_username)
 
 # cache passphrase for key and sub-keys
-keygrips=$(gpg --fingerprint --with-keygrip $gpg_key_id | awk '/Keygrip/ { print $3 }')
+keygrips=$(gpg --list-secret-keys --with-keygrip $gpg_key_id | awk '/Keygrip/ { print $3 }')
 
 for keygrip in $keygrips; do
     echo "$passphrase" | /usr/lib/gnupg/gpg-preset-passphrase --preset $keygrip
