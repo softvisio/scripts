@@ -19,7 +19,7 @@ function ssh-crypt() {
     fi
 
     # create signature of github_username, that will be used as secret
-    local secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null) || ""
+    local secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null | sha512sum) || ""
 
     if [[ $secret == "" ]]; then
         echo "Private SSH key not found" >&2
