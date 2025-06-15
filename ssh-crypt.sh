@@ -29,10 +29,10 @@ function ssh-crypt() {
 
     case "$operation" in
         encrypt)
-            gpg --symmetric --armor --yes --batch --passphrase-fd=4 4<<< "$secret"
+            gpg --symmetric --yes --batch --passphrase-fd=4 4<<< "$secret" | base64 --wrap=0
             ;;
         decrypt)
-            gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
+            base64 -d | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
         *)
             echo "echo \"text\" | ssh-crypt encrypt \$GITHUB_USERNAME"
