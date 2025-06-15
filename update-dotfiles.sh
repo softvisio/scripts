@@ -85,13 +85,9 @@ function _update_private_dotfiles() {
 
         git clone --quiet --depth=1 git@github.com:$DOTFILES_PRIVATE_GITHUB_SLUG.git $DOTFILES_TMP
 
-        ls -la
-
         # unlock
-        if [[ -f "./unlock.sh" ]]; then
-            echo "Unlock GPG key"
-
-            ./unlock.sh || true
+        if [[ -f "$DOTFILES_TMP/unlock.sh" ]]; then
+            "$DOTFILES_TMP/unlock.sh" || true
         fi
 
         git -C $DOTFILES_TMP crypt unlock
@@ -111,8 +107,8 @@ function _update_deployment_dotfiles() {
         git clone --quiet --depth=1 git@github.com:$DOTFILES_DEPLOYMENT_GITHUB_SLUG.git $DOTFILES_TMP
 
         # unlock
-        if [[ -f "./unlock.sh" ]]; then
-            ./unlock.sh || true
+        if [[ -f "$DOTFILES_TMP/unlock.sh" ]]; then
+            "$DOTFILES_TMP/unlock.sh" || true
         fi
 
         git -C $DOTFILES_TMP crypt unlock
