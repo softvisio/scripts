@@ -87,6 +87,8 @@ function _update_private_dotfiles() {
 
         # unlock
         if [[ -f "./unlock.sh" ]]; then
+            echo "Unlock GPG key"
+
             ./unlock.sh || true
         fi
 
