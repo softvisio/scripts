@@ -4,8 +4,8 @@
 
 set -e
 
-encrypted_passphrase="jA0ECQMKoaA8QHejnU3/0kUB1rX0sKD6cikB7eXjDI8SOgyExFwwEtigbvZbDWusgwWKANoGQThlaoErr1E8n+zZ+MabXGOScX6mHEW9t8yzjzqKFSg="
 github_username=zdm
+encrypted_passphrase="jA0ECQMK6n87BxNaaeX_0kUBcrPzy1t9o6cyMJXX3T2SS3WNyXpmyxBA5tow8eyEbAFccIw5gADc-jE2-asJTwo8pYpxZmxQtoiA-I1gpah_NHThUdg="
 
 gpg_key_id=$1
 

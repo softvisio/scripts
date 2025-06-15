@@ -29,16 +29,16 @@ function ssh-crypt() {
         return 1
     fi
 
-    local secret=$(echo $secret | base64 --wrap=0)
+    local secret=$(echo $secret | basenc --base64url --wrap=0)
 
     case "$operation" in
         encrypt)
-            gpg --symmetric --yes --batch --passphrase-fd=4 4<<< "$secret" | base64 --wrap=0
+            gpg --symmetric --yes --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0
 
             echo
             ;;
         decrypt)
-            base64 -d | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
+            basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
         *)
             echo "echo \"text\" | ssh-crypt encrypt \$GITHUB_USERNAME"
