@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: only RSA or ED25519 keys are supported
+
 # echo "text-to-encrypt" | /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) encrypt $GITHUB_USERNAME
 
 # echo "text-to-decrypt" | /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) decrypt $GITHUB_USERNAME
