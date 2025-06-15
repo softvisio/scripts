@@ -35,8 +35,8 @@ function ssh-crypt() {
             gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
         *)
-            echo "cat \"text\" | ssh-crypt encrypt \$github_username"
-            echo "cat \"encrypted text\" | ssh-crypt decrypt \$github_username"
+            echo "echo \"text\" | ssh-crypt encrypt \$GITHUB_USERNAME"
+            echo "echo \"encrypted text\" | ssh-crypt decrypt \$GITHUB_USERNAME"
 
             return 1
             ;;
