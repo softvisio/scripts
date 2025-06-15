@@ -30,6 +30,8 @@ function ssh-crypt() {
     case "$operation" in
         encrypt)
             gpg --symmetric --yes --batch --passphrase-fd=4 4<<< "$secret" | base64 --wrap=0
+
+            echo
             ;;
         decrypt)
             base64 -d | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
