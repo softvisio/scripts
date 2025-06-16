@@ -117,6 +117,12 @@ function _update_deployment_dotfiles() {
     )
 }
 
+# MSYS
+if [ $(uname -o) = "Msys" ]; then
+    echo Msys is not supported
+    exit 1
+fi
+
 case "$1" in
     public)
         _update_public_dotfiles
