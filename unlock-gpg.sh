@@ -5,7 +5,7 @@
 set -e
 
 github_username=zdm
-encrypted_passphrase="jA0ECQMK6n87BxNaaeX_0kUBcrPzy1t9o6cyMJXX3T2SS3WNyXpmyxBA5tow8eyEbAFccIw5gADc-jE2-asJTwo8pYpxZmxQtoiA-I1gpah_NHThUdg="
+encrypted_passphrase="jA0ECQMIjlbQquxJ6tTq0kUB-_owraL1se7wve5kEjl3oKjZRt6yPKO6kep87bdEHoZSh-mpPHS-fpLreWBERaqjfs_r_vPMidfU73yCGDl5Ym3s9Ew="
 
 gpg_key_id=$1
 
