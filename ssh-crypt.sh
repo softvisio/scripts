@@ -14,6 +14,7 @@ function ssh-crypt() {
     local secret
 
     function create_secret() {
+        local github_username=$1
         local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
 
         if [[ $public_keys == "" ]]; then
