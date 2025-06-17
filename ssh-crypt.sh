@@ -11,31 +11,38 @@ set -e
 function ssh-crypt() {
     local operation=$1
     local github_username=$2
+    local secret
 
-    local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
+    function create_secret() {
+        local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
 
-    if [[ $public_keys == "" ]]; then
-        echo "Unable to get SSH public key from GitHub" >&2
+        if [[ $public_keys == "" ]]; then
+            echo "Unable to get SSH public key from GitHub" >&2
 
-        return 1
-    fi
+            return 1
+        fi
 
-    # create signature of github_username, that will be used as secret
-    local secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null | gpg --dearmor | basenc --base64url --wrap=0) || ""
+        # create signature of github_username, that will be used as secret
+        local secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null | gpg --dearmor | basenc --base64url --wrap=0) || ""
 
-    if [[ $secret == "" ]]; then
-        echo "Private SSH key not found" >&2
+        if [[ $secret == "" ]]; then
+            echo "Private SSH key not found" >&2
 
-        return 1
-    fi
+            return 1
+        fi
+
+        echo $secret
+    }
 
     case "$operation" in
         encrypt)
-            gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0
+            secret=$(create_secret $github_username)
 
-            echo
+            echo $(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
             ;;
         decrypt)
+            secret=$(create_secret $github_username)
+
             basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
         *)
