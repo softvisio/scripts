@@ -88,7 +88,7 @@ function update-dotfiles() {
             find "$DOTFILES_SOURCE" -type f -exec chmod go= {} \;
 
             # copy profile
-            yes | cp -rfp "$DOTFILES_SOURCE/*" "$DOTFILES_DESTINATION/" 2> /dev/null || true
+            \cp -rfp "$DOTFILES_SOURCE"/* "$DOTFILES_DESTINATION"
         ) || _dotfiles_error || return 1
 
         # after update
