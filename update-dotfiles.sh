@@ -12,140 +12,128 @@
 # install "private" component
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
-dotfiles_public_github_slug=zdm/dotfiles-public
-dotfiles_private_github_slug=zdm/dotfiles-private
-dotfiles_deployment_github_slug=zdm/dotfiles-deployment
+dotfiles_public_slug=zdm/dotfiles-public
+dotfiles_public_clone=
 
-dotfiles_home=~
-dotfiles_cache=$dotfiles_home/.local/share/dotfiles
-dotfiles_tmp=$dotfiles_cache/tmp
+dotfiles_private_slug=zdm/dotfiles-private
+dotfiles_private_clone=1
 
-function _update_dotfiles() {
+dotfiles_deployment_slug=zdm/dotfiles-deployment
+dotfiles_deployment_clone=1
+
+function update-dotfiles() {
     local type=$1
 
-    (
-        shopt -s dotglob
+    export DOTFILES_DESTINATION=~
 
-        # remove profile files
-        if [ -f $dotfiles_cache/$type.txt ]; then
-            for file in $(cat $dotfiles_cache/$type.txt); do
-                rm -f "$dotfiles_home/$file"
-            done
+    local dotfiles_cache=$DOTFILES_DESTINATION/.local/share/dotfiles
+
+    function _update-dotfiles() {
+        local type=$1
+        local slug=$2
+        local clone=$3
+
+        local dotfiles_tmp=$(mktemp -d)
+        export DOTFILES_SOURCE="$dotfiles_tmp/profile"
+
+        function _dotfiles-cleanup() {
+            rm -rf "$dotfiles_tmp"
+        }
+
+        function _dotfiles_error() {
+            _dotfiles-cleanup
+
+            echo "Update failed" >&2
+
+            return 1
+        }
+
+        echo "Updating \"${type}\" profile"
+
+        (
+            set -e
+
+            # download source
+            if [[ $clone ]]; then
+                git clone --quiet --depth=1 "git@github.com:$slug.git" $dotfiles_tmp
+            else
+                curl -fsSL "https://github.com/$slug/archive/main.tar.gz" | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+            fi
+
+            # before update
+            if [[ -f "$dotfiles_tmp/before-update.sh" ]]; then
+                "$dotfiles_tmp/before-update.sh"
+            fi
+
+            # update
+            shopt -s dotglob
+
+            # remove profile files
+            if [[ -f "$dotfiles_cache/$type.txt" ]]; then
+                for file in $(cat "$dotfiles_cache/$type.txt"); do
+                    if [[ ! -f "$DOTFILES_SOURCE/$file" ]]; then
+                        rm -f "$DOTFILES_DESTINATION/$file"
+                    fi
+                done
+            fi
+
+            # create profile files list
+            mkdir -p "$dotfiles_cache"
+            find "$DOTFILES_SOURCE" -type f -print0 | tr "\0" "\n" > "$dotfiles_cache/$type.txt"
+
+            # chmod
+            find "$DOTFILES_SOURCE" -type d -exec chmod u=rwx,go= {} \;
+            find "$DOTFILES_SOURCE" -type f -exec chmod go= {} \;
+
+            # copy profile
+            yes | cp -rfp "$DOTFILES_SOURCE/*" "$DOTFILES_DESTINATION/" 2> /dev/null || true
+        ) || _dotfiles_error || return 1
+
+        # after update
+        if [[ -f "$dotfiles_tmp/after-update.sh" ]]; then
+            source "$dotfiles_tmp/after-update.sh" || _dotfiles_error || return 1
         fi
 
-        # create profile files list
-        mkdir -p $dotfiles_cache
-        find $dotfiles_tmp/profile -type f -print0 | tr "\0" "\n" > $dotfiles_cache/$type.txt
+        # cleanup
+        _dotfiles-cleanup
+    }
 
-        # chmod
-        find $dotfiles_tmp/profile -type d -exec chmod u=rwx,go= {} \;
-        find $dotfiles_tmp/profile -type f -exec chmod go= {} \;
+    # Msys
+    if [ $(uname -o) = "Msys" ]; then
+        echo "Msys is not supported" >&2
 
-        # move profile
-        yes | cp -rfp $dotfiles_tmp/profile/* $dotfiles_home/ 2> /dev/null || true
+        return 1
 
-        # remove tmp location
-        rm -rf $dotfiles_tmp
-    )
-}
+    # other OS
+    else
 
-function _update_public_dotfiles() {
-    (
-        set -e
+        case "$type" in
+            public)
+                _update-dotfiles "$type" dotfiles_public_slug dotfiles_public_clone || return 1
 
-        echo 'Updating "public" profile'
+                ;;
+            private)
+                _update-dotfiles "$type" dotfiles_private_slug dotfiles_private_clone || return 1
 
-        rm -rf $dotfiles_tmp
-        mkdir -p $dotfiles_tmp
+                ;;
+            deployment)
+                _update-dotfiles "$type" dotfiles_deployment_slug dotfiles_deployment_clone || return 1
 
-        curl -fsSL "https://github.com/$dotfiles_public_github_slug/archive/main.tar.gz" | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+                ;;
+            *)
+                _update-dotfiles "public" dotfiles_public_slug dotfiles_public_clone || return 1
 
-        _update_dotfiles "public"
+                if [ -f "$dotfiles_cache/deployment.txt" ]; then
+                    _update-dotfiles "deployment" dotfiles_deployment_slug dotfiles_deployment_clone || return 1
+                fi
 
-        # postgresql
-        # mkdir -p /etc/postgresql-common
-        # curl -fsS -o /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
-    )
+                if [ -f "$dotfiles_cache/private.txt" ]; then
+                    _update-dotfiles "private" dotfiles_private_slug dotfiles_private_clone || return 1
+                fi
 
-    # source .bashrc
-    if [ -f $dotfiles_home/.bashrc ]; then
-        # echo Source $dotfiles_home/.bashrc
-
-        source $dotfiles_home/.bashrc
+                ;;
+        esac
     fi
 }
 
-function _update_private_dotfiles() {
-    (
-        set -e
-
-        echo 'Updating "private" profile'
-
-        rm -rf $dotfiles_tmp
-
-        git clone --quiet --depth=1 "git@github.com:$dotfiles_private_github_slug.git" $dotfiles_tmp
-
-        # unlock
-        if [[ -f "$dotfiles_tmp/unlock.sh" ]]; then
-            "$dotfiles_tmp/unlock.sh" || true
-        fi
-
-        git -C $dotfiles_tmp crypt unlock
-
-        _update_dotfiles "private"
-    )
-}
-
-function _update_deployment_dotfiles() {
-    (
-        set -e
-
-        echo 'Updating "deployment" profile'
-
-        rm -rf $dotfiles_tmp
-
-        git clone --quiet --depth=1 "git@github.com:$dotfiles_deployment_github_slug.git" $dotfiles_tmp
-
-        # unlock
-        if [[ -f "$dotfiles_tmp/unlock.sh" ]]; then
-            "$dotfiles_tmp/unlock.sh" || true
-        fi
-
-        git -C $dotfiles_tmp crypt unlock
-
-        _update_dotfiles "deployment"
-    )
-}
-
-# Msys
-if [ $(uname -o) = "Msys" ]; then
-    echo "Msys is not supported" >&2
-    exit 1
-fi
-
-case "$1" in
-    public)
-        _update_public_dotfiles
-
-        ;;
-    private)
-        _update_private_dotfiles
-
-        ;;
-    deployment)
-        _update_deployment_dotfiles
-
-        ;;
-    *)
-        _update_public_dotfiles
-
-        if [ -f $dotfiles_cache/deployment.txt ]; then
-            _update_deployment_dotfiles
-        fi
-
-        if [ -f $dotfiles_cache/private.txt ]; then
-            _update_private_dotfiles
-        fi
-
-        ;;
-esac
+update-dotfiles "$@"
