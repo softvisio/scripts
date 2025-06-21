@@ -81,7 +81,7 @@ function update-dotfiles() {
 
             # create profile files list
             mkdir -p "$dotfiles_cache"
-            find "$DOTFILES_SOURCE" -type f -print0 | tr "\0" "\n" > "$dotfiles_cache/$type.txt"
+            find "$DOTFILES_SOURCE" -type f -printf "%P\n" > "$dotfiles_cache/$type.txt"
 
             # chmod
             find "$DOTFILES_SOURCE" -type d -exec chmod u=rwx,go= {} \;
