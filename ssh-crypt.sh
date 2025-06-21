@@ -16,6 +16,7 @@ function ssh-crypt() {
     function create_secret() {
         local github_username=$1
         local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
+        local secret
 
         if [[ $public_keys == "" ]]; then
             echo "Unable to get SSH public key from GitHub" >&2
@@ -31,16 +32,18 @@ function ssh-crypt() {
 
             return 1
         fi
+
+        echo $secret
     }
 
     case "$operation" in
         encrypt)
-            create_secret $github_username
+            secret=$(create_secret $github_username)
 
             echo $(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
             ;;
         decrypt)
-            create_secret $github_username
+            secret=$(create_secret $github_username)
 
             basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
