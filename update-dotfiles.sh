@@ -12,17 +12,19 @@
 # install "private" component
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
-dotfiles_public_slug=zdm/dotfiles-public
-dotfiles_public_clone=
-
-dotfiles_private_slug=zdm/dotfiles-private
-dotfiles_private_clone=1
-
-dotfiles_deployment_slug=zdm/dotfiles-deployment
-dotfiles_deployment_clone=1
-
 function update-dotfiles() {
     local type=$1
+
+    declare -A types
+
+    types["public", "slug"]="zdm/dotfiles-public"
+    types["public", "clone"]=""
+
+    types["private", "slug"]="zdm/dotfiles-private"
+    types["private", "clone"]=1
+
+    types["deployment", "slug"]="zdm/dotfiles-deployment"
+    types["deployment", "clone"]=1
 
     export DOTFILES_DESTINATION=~
 
@@ -30,8 +32,8 @@ function update-dotfiles() {
 
     function _update-dotfiles() {
         local type=$1
-        local slug=$2
-        local clone=$3
+        local slug=${types[$type, "slug"]}
+        local clone=${types[$type, "clone"]}
 
         local dotfiles_tmp=$(mktemp -d)
         export DOTFILES_SOURCE="$dotfiles_tmp/profile"
@@ -109,26 +111,26 @@ function update-dotfiles() {
 
         case "$type" in
             public)
-                _update-dotfiles "$type" dotfiles_public_slug dotfiles_public_clone || return 1
+                _update-dotfiles "$type" || return 1
 
                 ;;
             private)
-                _update-dotfiles "$type" dotfiles_private_slug dotfiles_private_clone || return 1
+                _update-dotfiles "$type" || return 1
 
                 ;;
             deployment)
-                _update-dotfiles "$type" dotfiles_deployment_slug dotfiles_deployment_clone || return 1
+                _update-dotfiles "$type" || return 1
 
                 ;;
             *)
-                _update-dotfiles "public" dotfiles_public_slug dotfiles_public_clone || return 1
+                _update-dotfiles "public" || return 1
 
                 if [ -f "$dotfiles_cache/deployment.txt" ]; then
-                    _update-dotfiles "deployment" dotfiles_deployment_slug dotfiles_deployment_clone || return 1
+                    _update-dotfiles "deployment" || return 1
                 fi
 
                 if [ -f "$dotfiles_cache/private.txt" ]; then
-                    _update-dotfiles "private" dotfiles_private_slug dotfiles_private_clone || return 1
+                    _update-dotfiles "private" || return 1
                 fi
 
                 ;;
