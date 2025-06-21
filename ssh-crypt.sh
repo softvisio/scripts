@@ -24,25 +24,23 @@ function ssh-crypt() {
         fi
 
         # create signature of github_username, that will be used as secret
-        local secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null | gpg --dearmor 2> /dev/null | basenc --base64url --wrap=0) || ""
+        secret=$(ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" <<< "$github_username" 2> /dev/null | gpg --dearmor | basenc --base64url --wrap=0) || ""
 
         if [[ $secret == "" ]]; then
             echo "Private SSH key not found" >&2
 
             return 1
         fi
-
-        echo $secret
     }
 
     case "$operation" in
         encrypt)
-            secret=$(create_secret $github_username)
+            create_secret $github_username
 
             echo $(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
             ;;
         decrypt)
-            secret=$(create_secret $github_username)
+            create_secret $github_username
 
             basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
