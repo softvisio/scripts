@@ -117,9 +117,9 @@ function _update_deployment_dotfiles() {
     )
 }
 
-# MSYS
+# Msys
 if [ $(uname -o) = "Msys" ]; then
-    echo Msys is not supported
+    echo "Msys is not supported" >&2
     exit 1
 fi
 

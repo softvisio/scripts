@@ -6,13 +6,13 @@ set -e
 shopt -s extglob
 
 if [[ -z $SOURCE ]]; then
-    echo \$SOURCE is required
+    echo "\$SOURCE is required" >&2
 
     exit 1
 fi
 
 if [[ -z $DOCKER_STACK_NAME ]]; then
-    echo \$DOCKER_STACK_NAME is required
+    echo "\$DOCKER_STACK_NAME is required" >&2
 
     exit 1
 fi
@@ -25,12 +25,12 @@ export DOCKER_STACK_NAME=$DOCKER_STACK_NAME
 export DOCKER_STACK_NETWORK_NAME=$DOCKER_STACK_NETWORK_NAME
 
 # create tmp dirs
-SOURCE_TMP_DIR=$(mktemp -d)
+source_tmp_dir=$(mktemp -d)
 export DOCKER_STACK_TMP_DIR=$(mktemp -d)
 
 function _clone_source() {
     if [[ ! -f "package.json" ]]; then
-        cd $SOURCE_TMP_DIR
+        cd $source_tmp_dir
 
         git clone --quiet --depth=1 --single-branch ssh://git@github.com/$SOURCE .
 
@@ -55,7 +55,7 @@ function _create_external_network() {
 
 function _cleanup() {
     rm -rf $DOCKER_STACK_TMP_DIR
-    rm -rf $SOURCE_TMP_DIR
+    rm -rf $source_tmp_dir
 }
 
 if _clone_source; then
@@ -65,9 +65,9 @@ if _clone_source; then
         if [ -f "$name/compose.yaml" ]; then
 
             docker stack config \
-                -c $name/compose.yaml \
+                -c "$name/compose.yaml" \
                 -c compose.yaml \
-                > $DOCKER_STACK_TMP_DIR/$name.compose.yaml
+                > $DOCKER_STACK_TMP_DIR/${name}.compose.yaml
 
         fi
     done
