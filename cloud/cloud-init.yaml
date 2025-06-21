@@ -3,13 +3,13 @@
 package_upgrade: true
 
 runcmd:
-  - /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
+  - /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)
 
-  - /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+  - /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
-  - /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
+  - /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
 
-  - /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
+  - /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
 
   # setup hostname
   - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'

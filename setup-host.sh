@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh )
-# source <( curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
+# source <( curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh )
+# source <( curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh ) 2>&1 | tee /setup-host.log
 
 function _setup_host_debian() {
     DEBIAN_FRONTEND=noninteractive
@@ -18,7 +18,7 @@ function _setup_host_debian() {
         jq
 
     # install public dotfiles profile
-    source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+    source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
     # postgresql tmp files
     mkdir -p /etc/tmpfiles.d
@@ -33,7 +33,7 @@ EOF
         local VERSION_ID=$(source /etc/os-release && echo $VERSION_ID)
 
         # softvisio repository
-        /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/deb/main/setup.sh) install
+        /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/deb/main/setup.sh) install
 
         apt-get update
 

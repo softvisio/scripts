@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
+# /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh)
 
 set -e
 

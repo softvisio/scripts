@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 # update installed components
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh)
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh)
 
 # install "public" component
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
 # install "deployment" component
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
 
 # install "private" component
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
 DOTFILES_HOME=~
 DOTFILES_CACHE=$DOTFILES_HOME/.local/share/dotfiles
@@ -58,13 +58,13 @@ function _update_public_dotfiles() {
         rm -rf $DOTFILES_TMP
         mkdir -p $DOTFILES_TMP
 
-        curl -fsSL https://github.com/$DOTFILES_PUBLIC_GITHUB_SLUG/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
+        curl -fsS https://github.com/$DOTFILES_PUBLIC_GITHUB_SLUG/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
         _update_dotfiles "public"
 
         # postgresql
         # mkdir -p /etc/postgresql-common
-        # curl -fsSLo /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
+        # curl -fsS -o /etc/postgresql-common/psqlrc https://raw.githubusercontent.com/zdm/dotfiles-public/main/profile/.psqlrc
     )
 
     # source .bashrc

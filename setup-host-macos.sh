@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# /usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh)
+# /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-macos.sh)
 
 set -e
 
@@ -8,7 +8,7 @@ set -e
 sudo systemsetup -settimezone UTC
 
 # install brew
-/usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+/usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
 
 # install brew packages
 brew install bash wget htop mc nvim node cocoapods ios-sim
@@ -23,8 +23,8 @@ EOF
 fi
 
 # install public dotfiles profile
-# source <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
-/usr/bin/env bash <(curl -fsSL https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
+/usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
 # setup cocoapods environment
 pod setup
