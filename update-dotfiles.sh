@@ -58,7 +58,7 @@ function _update_public_dotfiles() {
         rm -rf $DOTFILES_TMP
         mkdir -p $DOTFILES_TMP
 
-        curl -fsS https://github.com/$DOTFILES_PUBLIC_GITHUB_SLUG/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
+        curl -fsSL https://github.com/$DOTFILES_PUBLIC_GITHUB_SLUG/archive/main.tar.gz | tar -C $DOTFILES_TMP --strip-components=1 -xzf -
 
         _update_dotfiles "public"
 
