@@ -40,7 +40,9 @@ function dotfiles() {
 
             # public repo
             if [[ $clone == "200" ]]; then
-                curl -fsSL "https://github.com/$repo_slug/archive/main.tar.gz" | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+                curl -fsSL "https://github.com/$repo_slug/archive/main.tar.gz" \
+                    | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+
             # private repo
             elif [[ $clone == "404" ]]; then
                 git clone --quiet --depth=1 "git@github.com:$repo_slug.git" $dotfiles_tmp
@@ -77,7 +79,11 @@ function dotfiles() {
 
             # copy profile
             \cp -rfp "$DOTFILES_SOURCE"/* "$DOTFILES_DESTINATION"
-        ) || _dotfiles_error || return 1
+        )
+
+        if [[ $? -ne 0 ]]; then
+            _dotfiles_error || return 1
+        fi
 
         # after update
         if [[ -f "$dotfiles_tmp/after-update.sh" ]]; then
@@ -101,7 +107,11 @@ function dotfiles() {
                 if [ -f "$dotfiles_cache/$type.txt" ]; then
                     local repo_slug=$(jq -r ".$type" <<< "$dotfiles")
 
-                    _update-dotfiles $type $repo_slug || return 1
+                    _update-dotfiles $type $repo_slug
+
+                    if [[ $? -ne 0 ]]; then
+                        return 1
+                    fi
                 fi
             done
         else
@@ -112,7 +122,11 @@ function dotfiles() {
 
                 return 1
             else
-                _update-dotfiles $type $repo_slug || return 1
+                _update-dotfiles $type $repo_slug
+
+                if [[ $? -ne 0 ]]; then
+                    return 1
+                fi
             fi
         fi
     fi
