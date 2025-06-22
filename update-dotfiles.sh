@@ -12,19 +12,22 @@
 # install "private" component
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
+# export DOTFILES= << JSON
+# {
+#     "public": "zdm/dotfiles-public",
+#     "private": "zdm/dotfiles-private",
+#     "deployment": "zdm/dotfiles-deployment"
+# }
+# JSON
+
+declare -A DOTFILES=(
+    [public]="zdm/dotfiles-public"
+    [private]="zdm/dotfiles-private"
+    [deployment]="zdm/dotfiles-deployment"
+)
+
 function update-dotfiles() {
     local type=$1
-
-    declare -A types
-
-    types["public", "slug"]="zdm/dotfiles-public"
-    types["public", "clone"]=""
-
-    types["private", "slug"]="zdm/dotfiles-private"
-    types["private", "clone"]=1
-
-    types["deployment", "slug"]="zdm/dotfiles-deployment"
-    types["deployment", "clone"]=1
 
     export DOTFILES_DESTINATION=~
 
@@ -32,8 +35,7 @@ function update-dotfiles() {
 
     function _update-dotfiles() {
         local type=$1
-        local slug=${types[$type, "slug"]}
-        local clone=${types[$type, "clone"]}
+        local repo_slug=$2
 
         local dotfiles_tmp=$(mktemp -d)
         export DOTFILES_SOURCE="$dotfiles_tmp/profile"
@@ -50,16 +52,24 @@ function update-dotfiles() {
             return 1
         }
 
-        echo "Updating \"${type}\" profile"
+        echo "Updating \"${type}\" profile from \"$repo_slug\""
 
         (
             set -e
 
             # download source
-            if [[ $clone ]]; then
-                git clone --quiet --depth=1 "git@github.com:$slug.git" $dotfiles_tmp
+            clone=$(curl -sL -w "%{http_code}" -o /dev/null https://api.github.com/repos/$repo_slug)
+
+            # public repo
+            if [[ $clone == "200" ]]; then
+                curl -fsSL "https://github.com/$repo_slug/archive/main.tar.gz" | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+            # private repo
+            elif [[ $clone == "404" ]]; then
+                git clone --quiet --depth=1 "git@github.com:$repo_slug.git" $dotfiles_tmp
+
+            # error
             else
-                curl -fsSL "https://github.com/$slug/archive/main.tar.gz" | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+                exit 1
             fi
 
             # before update
@@ -108,33 +118,25 @@ function update-dotfiles() {
 
     # other OS
     else
+        if [[ -z $type ]]; then
+            for type in "${!DOTFILES[@]}"; do
+                if [ -f "$dotfiles_cache/$type.txt" ]; then
+                    local repo_slug=${DOTFILES[$type]}
 
-        case "$type" in
-            public)
-                _update-dotfiles "$type" || return 1
-
-                ;;
-            private)
-                _update-dotfiles "$type" || return 1
-
-                ;;
-            deployment)
-                _update-dotfiles "$type" || return 1
-
-                ;;
-            *)
-                _update-dotfiles "public" || return 1
-
-                if [ -f "$dotfiles_cache/deployment.txt" ]; then
-                    _update-dotfiles "deployment" || return 1
+                    _update-dotfiles $type $repo_slug || return 1
                 fi
+            done
+        else
+            local repo_slug=${DOTFILES[$type]}
 
-                if [ -f "$dotfiles_cache/private.txt" ]; then
-                    _update-dotfiles "private" || return 1
-                fi
+            if [[ -z $repo_slug ]]; then
+                echo "Dotfiles profile is not valid" >&2
 
-                ;;
-        esac
+                return 1
+            else
+                _update-dotfiles $type $repo_slug || return 1
+            fi
+        fi
     fi
 }
 
