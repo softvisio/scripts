@@ -64,6 +64,8 @@ function dotfiles() {
             if [[ -f "$dotfiles_cache/$type.txt" ]]; then
                 for file in $(cat "$dotfiles_cache/$type.txt"); do
                     if [[ ! -f "$DOTFILES_SOURCE/$file" ]]; then
+                        echo "Remove \"$file\""
+
                         rm -f "$DOTFILES_DESTINATION/$file"
                     fi
                 done
