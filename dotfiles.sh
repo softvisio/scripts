@@ -3,8 +3,6 @@
 # install / update components
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) "$dotfiles" $type
 
-set -e
-
 function dotfiles() {
     local dotfiles=$1
     local type=$2
@@ -89,9 +87,13 @@ function dotfiles() {
             )
 
             if [[ $? -ne 0 ]]; then
-                _dotfiles_error || return 1
+                _dotfiles_error || exit 1
             fi
         )
+
+        if [[ $? -ne 0 ]]; then
+            return 1
+        fi
 
         # after update
         if [[ -f "$dotfiles_tmp/after-update.sh" ]]; then
