@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # install / update components
-# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) $DOTFILES $type
+# source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) $dotfiles $type
 
 function dotfiles() {
     local dotfiles=$1

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-# update installed components
+# update installed profiles
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh)
 
-# install "public" component
+# install / update "public" profile
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) public
 
-# install "private" component
+# install / update "private" profile
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
-# install "deployment" component
+# install / update "deployment" profile
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
 
-$DOTFILES=$(
+$dotfiles=$(
     cat << JSON
 {
     "public": "zdm/dotfiles-public",
@@ -22,4 +22,4 @@ $DOTFILES=$(
 JSON
 )
 
-source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) $DOTFILES "$@"
+source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) $dotfiles "$@"
