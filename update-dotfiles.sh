@@ -12,7 +12,7 @@
 # install / update "deployment" profile
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) deployment
 
-$dotfiles=$(
+dotfiles=$(
     cat << JSON
 {
     "public": "zdm/dotfiles-public",
