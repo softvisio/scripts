@@ -22,4 +22,4 @@ dotfiles=$(
 JSON
 )
 
-source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) $dotfiles "$@"
+source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh) "$dotfiles" "$@"
