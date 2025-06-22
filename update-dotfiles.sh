@@ -12,22 +12,19 @@
 # install "private" component
 # source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh) private
 
-# export DOTFILES= << JSON
-# {
-#     "public": "zdm/dotfiles-public",
-#     "private": "zdm/dotfiles-private",
-#     "deployment": "zdm/dotfiles-deployment"
-# }
-# JSON
-
-declare -A DOTFILES=(
-    [public]="zdm/dotfiles-public"
-    [private]="zdm/dotfiles-private"
-    [deployment]="zdm/dotfiles-deployment"
+export DOTFILES=$(
+    cat << JSON
+{
+    "public": "zdm/dotfiles-public",
+    "private": "zdm/dotfiles-private",
+    "deployment": "zdm/dotfiles-deployment"
+}
+JSON
 )
 
 function update-dotfiles() {
-    local type=$1
+    local dotfiles=$1
+    local type=$2
 
     export DOTFILES_DESTINATION=~
 
@@ -119,17 +116,17 @@ function update-dotfiles() {
     # other OS
     else
         if [[ -z $type ]]; then
-            for type in "${!DOTFILES[@]}"; do
+            for type in $(jq -r "keys | reverse[]" <<< "$dotfiles"); do
                 if [ -f "$dotfiles_cache/$type.txt" ]; then
-                    local repo_slug=${DOTFILES[$type]}
+                    local repo_slug=$(jq -r ".$type" <<< "$dotfiles")
 
                     _update-dotfiles $type $repo_slug || return 1
                 fi
             done
         else
-            local repo_slug=${DOTFILES[$type]}
+            local repo_slug=$(jq -r ".$type" <<< "$dotfiles")
 
-            if [[ -z $repo_slug ]]; then
+            if [[ $repo_slug == "null" ]]; then
                 echo "Dotfiles profile is not valid" >&2
 
                 return 1
@@ -140,4 +137,4 @@ function update-dotfiles() {
     fi
 }
 
-update-dotfiles "$@"
+update-dotfiles "$DOTFILES" "$@"
