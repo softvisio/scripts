@@ -10,12 +10,12 @@ set -Eeuo pipefail
 trap 'echo -e "⚠  Warning: A command has failed. Line ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null || true)" >&2; return 3 2> /dev/null || exit 3' ERR
 
 function ssh-crypt() {
-    local operation=$1
-    local github_username=$2
+    local operation=${1:-}
+    local github_username=${2:-}
     local secret
 
     function create_secret() {
-        local github_username=$1
+        local github_username=${1:-}
         local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
         local secret
 
@@ -49,6 +49,7 @@ function ssh-crypt() {
             basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
             ;;
         *)
+            echo "Usage:"
             echo "echo \"text\" | ssh-crypt encrypt \$GITHUB_USERNAME"
             echo "echo \"encrypted text\" | ssh-crypt decrypt \$GITHUB_USERNAME"
 
