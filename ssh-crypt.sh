@@ -6,7 +6,8 @@
 
 # echo "text-to-decrypt" | /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) decrypt $GITHUB_USERNAME
 
-set -e
+set -Eeo pipefail
+trap 'echo -e "\n⚠  Warning: A command has failed. Line ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null || true)" >&2; return 3 2> /dev/null || exit 3' ERR
 
 function ssh-crypt() {
     local operation=$1
