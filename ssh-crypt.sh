@@ -41,7 +41,10 @@ function ssh-crypt() {
         encrypt)
             secret=$(create_secret $github_username)
 
-            echo $(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
+            local encrypted
+            encrypted=$(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
+
+            echo "$encrypted"
             ;;
         decrypt)
             secret=$(create_secret $github_username)
