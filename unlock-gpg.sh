@@ -3,7 +3,7 @@
 # /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/unlock-gpg.sh) $GPG_KEY_ID
 
 set -Eeuo pipefail
-trap 'echo -e "⚠  Warning: A command has failed. Line ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null || true)" >&2; return 3 2> /dev/null || exit 3' ERR
+trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
 
 github_username=zdm
 encrypted_passphrase="jA0ECQMIjlbQquxJ6tTq0kUB-_owraL1se7wve5kEjl3oKjZRt6yPKO6kep87bdEHoZSh-mpPHS-fpLreWBERaqjfs_r_vPMidfU73yCGDl5Ym3s9Ew="
