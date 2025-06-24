@@ -182,7 +182,7 @@ EOF
     apt-get install -y keychain
 
     cat << EOF > /etc/profile.d/keep-wsl-running.sh
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 eval \$(keychain -q)
 EOF
