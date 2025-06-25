@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # cleanup
-# /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup
+# /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") cleanup
 
 # setup build environment
-# /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) setup-build
+# /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") setup-build
 
 # cleanup build environment
-# /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh) cleanup-build
+# /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") cleanup-build
 
 set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
