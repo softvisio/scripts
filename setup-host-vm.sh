@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # vmware
-# /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") vmware
+# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") vmware
 
 # wsl
-# /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") wsl
+# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") wsl
 
 set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
@@ -32,7 +32,7 @@ function __setup_user() {
     sed -i -e '/#\s*%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL/ s/#\s*%wheel/%wheel/' /etc/sudoers
 
     # install SSH public key
-    sudo -u $USERNAME /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    sudo -u $USERNAME bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
 }
 
 function _setup_host_vm() {
@@ -42,8 +42,8 @@ function _setup_host_vm() {
     source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
 
     # setup SSH
-    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
-    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
 
     case "${1:-}" in
         vmware)
@@ -72,7 +72,7 @@ function _setup_host_vm() {
     apt-get install -y git git-lfs git-filter-repo git-crypt gh
 
     # node build env
-    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") setup-build
+    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") setup-build
 
     # install gcloud
     apt-get install -y google-cloud-sdk
@@ -95,7 +95,7 @@ function _setup_host_vm() {
     n lts
     n rm lts
     n prune
-    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
+    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
 
     # install private dotfiles profile
     source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh") private
@@ -110,7 +110,7 @@ function _setup_host_vmware() {
     vmware-toolbox-cmd timesync enable
 
     # setup timesync
-    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
+    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
 
     # mount hgfs, if not mounted
     if mountpoint -q -- "/mnt/hgfs"; then
