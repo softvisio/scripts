@@ -54,7 +54,7 @@ function _cleanup_build() {
     rm -rf ~/.npm-cache
 }
 
-case "$1" in
+case "${1:-}" in
     setup-build)
         _setup_build
 

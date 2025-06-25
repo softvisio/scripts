@@ -8,7 +8,7 @@ trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null 
 github_username=zdm
 encrypted_passphrase="jA0ECQMIjlbQquxJ6tTq0kUB-_owraL1se7wve5kEjl3oKjZRt6yPKO6kep87bdEHoZSh-mpPHS-fpLreWBERaqjfs_r_vPMidfU73yCGDl5Ym3s9Ew="
 
-gpg_key_id=$1
+gpg_key_id=${1:-}
 
 export GPG_TTY=$(tty)
 

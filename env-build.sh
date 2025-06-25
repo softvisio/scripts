@@ -24,7 +24,7 @@ function _cleanup() {
     rm -rf /var/lib/apt/lists/*
 }
 
-case "$1" in
+case "${1:-}" in
     setup)
         _setup
         ;;

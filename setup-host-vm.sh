@@ -45,7 +45,7 @@ function _setup_host_vm() {
     /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh)
     /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh)
 
-    case "$1" in
+    case "${1:-}" in
         vmware)
             _setup_host_vmware
             ;;
@@ -194,4 +194,4 @@ EOF
 
 }
 
-_setup_host_vm $1
+_setup_host_vm ${1:-}
