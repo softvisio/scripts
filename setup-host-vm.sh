@@ -36,7 +36,7 @@ function __setup_user() {
 }
 
 function _setup_host_vm() {
-    DEBIAN_FRONTEND=noninteractive
+    export DEBIAN_FRONTEND=noninteractive
 
     # setup host
     source <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh)

@@ -7,7 +7,7 @@ set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
 
 function _setup_host_debian() {
-    DEBIAN_FRONTEND=noninteractive
+    export DEBIAN_FRONTEND=noninteractive
 
     apt-get update
 
@@ -30,7 +30,7 @@ d /var/run/postgresql 0755 root root
 EOF
 
     (
-        DEBIAN_FRONTEND=noninteractive
+        export DEBIAN_FRONTEND=noninteractive
 
         # load os release variables
         local VERSION_ID=$(source /etc/os-release && echo $VERSION_ID)
