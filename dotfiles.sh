@@ -29,78 +29,69 @@ function dotfiles() {
             _dotfiles-cleanup
 
             echo "Update failed" >&2
-
-            return 1
         }
 
         echo "Updating \"${type}\" profile from \"$repo_slug\""
 
         (
-            set +e
 
-            (
-                set -e
+            # download source
+            clone=$(curl -sL -w "%{http_code}" -o /dev/null https://api.github.com/repos/$repo_slug)
 
-                # download source
-                clone=$(curl -sL -w "%{http_code}" -o /dev/null https://api.github.com/repos/$repo_slug)
+            # public repo
+            if [[ $clone == "200" ]]; then
+                curl -fsSL "https://github.com/$repo_slug/archive/main.tar.gz" \
+                    | tar -C $dotfiles_tmp --strip-components=1 -xzf -
 
-                # public repo
-                if [[ $clone == "200" ]]; then
-                    curl -fsSL "https://github.com/$repo_slug/archive/main.tar.gz" \
-                        | tar -C $dotfiles_tmp --strip-components=1 -xzf -
+            # private repo
+            elif [[ $clone == "404" ]]; then
+                git clone --quiet --depth=1 "git@github.com:$repo_slug.git" $dotfiles_tmp
 
-                # private repo
-                elif [[ $clone == "404" ]]; then
-                    git clone --quiet --depth=1 "git@github.com:$repo_slug.git" $dotfiles_tmp
-
-                # error
-                else
-                    exit 1
-                fi
-
-                # before update
-                if [[ -f "$dotfiles_tmp/before-update.sh" ]]; then
-                    "$dotfiles_tmp/before-update.sh"
-                fi
-
-                # update
-                shopt -s dotglob
-
-                # remove profile files
-                if [[ -f "$dotfiles_cache/$type.txt" ]]; then
-                    for file in $(cat "$dotfiles_cache/$type.txt"); do
-                        if [[ ! -f "$DOTFILES_SOURCE/$file" ]]; then
-                            echo "Remove \"$file\""
-
-                            rm -f "$DOTFILES_DESTINATION/$file"
-                        fi
-                    done
-                fi
-
-                # create profile files list
-                mkdir -p "$dotfiles_cache"
-                find "$DOTFILES_SOURCE" -type f -printf "%P\n" > "$dotfiles_cache/$type.txt"
-
-                # chmod
-                find "$DOTFILES_SOURCE" -type d -exec chmod u=rwx,go= {} \;
-                find "$DOTFILES_SOURCE" -type f -exec chmod go= {} \;
-
-                # copy profile
-                \cp -rfp "$DOTFILES_SOURCE"/* "$DOTFILES_DESTINATION"
-            )
-
-            if [[ $? -ne 0 ]]; then
-                _dotfiles_error || exit 1
+            # error
+            else
+                exit 1
             fi
-        )
 
-        if [[ $? -ne 0 ]]; then
+            # before update
+            if [[ -f "$dotfiles_tmp/before-update.sh" ]]; then
+                "$dotfiles_tmp/before-update.sh"
+            fi
+
+            # update
+            shopt -s dotglob
+
+            # remove profile files
+            if [[ -f "$dotfiles_cache/$type.txt" ]]; then
+                for file in $(cat "$dotfiles_cache/$type.txt"); do
+                    if [[ ! -f "$DOTFILES_SOURCE/$file" ]]; then
+                        echo "Remove \"$file\""
+
+                        rm -f "$DOTFILES_DESTINATION/$file"
+                    fi
+                done
+            fi
+
+            # create profile files list
+            mkdir -p "$dotfiles_cache"
+            find "$DOTFILES_SOURCE" -type f -printf "%P\n" > "$dotfiles_cache/$type.txt"
+
+            # chmod
+            find "$DOTFILES_SOURCE" -type d -exec chmod u=rwx,go= {} \;
+            find "$DOTFILES_SOURCE" -type f -exec chmod go= {} \;
+
+            # copy profile
+            \cp -rfp "$DOTFILES_SOURCE"/* "$DOTFILES_DESTINATION"
+        ) || {
+            _dotfiles_error
             return 1
-        fi
+        }
 
         # after update
         if [[ -f "$dotfiles_tmp/after-update.sh" ]]; then
-            source "$dotfiles_tmp/after-update.sh" || _dotfiles_error || return 1
+            source "$dotfiles_tmp/after-update.sh" || {
+                _dotfiles_error
+                return 1
+            }
         fi
 
         # cleanup
