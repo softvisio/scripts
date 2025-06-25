@@ -15,7 +15,7 @@ trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null 
 function _setup_build() {
 
     # setup build env
-    /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) setup
+    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh") setup
 
     local PACKAGES=""
 
@@ -43,7 +43,7 @@ function _cleanup_build() {
     apt-get autoremove -y $PACKAGES || true
 
     # cleanup build env
-    /usr/bin/env bash <(curl -fsS https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh) cleanup
+    /usr/bin/env bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh") cleanup
 
     # cleanup apt
     apt-get clean

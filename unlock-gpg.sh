@@ -13,7 +13,7 @@ gpg_key_id=${1:-}
 export GPG_TTY=$(tty)
 
 # decrypt gpg passphrase
-passphrase=$(echo $encrypted_passphrase | /usr/bin/env bash <(curl --fail --silent --show-error https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh) decrypt $github_username)
+passphrase=$(echo $encrypted_passphrase | /usr/bin/env bash <(curl --fail --silent --show-error "https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh") decrypt $github_username)
 
 case "${1:-}" in
     passphrase)
