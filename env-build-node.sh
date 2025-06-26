@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
+# script=$(curl -fsSL "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh")
+#
 # cleanup
-# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") cleanup
-
+# bash <(echo "$script") cleanup
+#
 # setup build environment
-# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") setup-build
-
+# bash <(echo "$script") setup-build
+#
 # cleanup build environment
-# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") cleanup-build
+# bash <(echo "$script") cleanup-build
 
 set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
@@ -15,13 +17,15 @@ trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null 
 function _setup_build() {
 
     # setup build env
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh") setup
+    local script
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh")
+    bash <(echo "$script") setup
 
-    local PACKAGES=""
+    local packages=""
 
-    PACKAGES="$PACKAGES git python3 make g++"
+    packages="$packages git python3 make g++"
 
-    apt-get install -y $PACKAGES
+    apt-get install -y $packages
 }
 
 function _cleanup() {
@@ -36,14 +40,16 @@ function _cleanup() {
 }
 
 function _cleanup_build() {
-    local PACKAGES=""
+    local packages=""
 
-    PACKAGES="$PACKAGES git python3 make g++"
+    packages="$packages git python3 make g++"
 
-    apt-get autoremove -y $PACKAGES || true
+    apt-get autoremove -y $packages || true
 
     # cleanup build env
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh") cleanup
+    local script
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build.sh")
+    bash <(echo "$script") cleanup
 
     # cleanup apt
     apt-get clean

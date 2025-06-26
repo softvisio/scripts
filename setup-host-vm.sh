@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 # vmware
-# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") vmware
+# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh")
+# bash <(echo "$script") vmware
 
 # wsl
-# bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") wsl
+# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh")
+# bash <(echo "$script") wsl
 
 set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
@@ -16,14 +18,14 @@ trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null 
 # systemctl stop firewalld; systemctl disable firewalld
 
 function __setup_user() {
-    local USERNAME=zdm
+    local username=zdm
 
     # create user
-    useradd $USERNAME
-    passwd -d $USERNAME
+    useradd $username
+    passwd -d $username
 
     # add existed user to wheel group
-    usermod -a -G wheel $USERNAME
+    usermod -a -G wheel $username
 
     # allow "wheel" group users to perform su without password
     sed -i -e '/#auth\s\+sufficient\s\+pam_wheel.so\s\+trust\s\+use_uid/ s/#auth/auth/' /etc/pam.d/su
@@ -32,18 +34,24 @@ function __setup_user() {
     sed -i -e '/#\s*%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL/ s/#\s*%wheel/%wheel/' /etc/sudoers
 
     # install SSH public key
-    sudo -u $USERNAME bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    local script
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    sudo -u $username bash <(echo "$script")
 }
 
 function _setup_host_vm() {
     export DEBIAN_FRONTEND=noninteractive
 
     # setup host
-    source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
+    local scrippt
+    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
+    source <(echo "$script")
 
     # setup SSH
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    bash <(echo "$script")
+    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+    bash <(echo "$script")
 
     case "${1:-}" in
         vmware)
@@ -72,7 +80,8 @@ function _setup_host_vm() {
     apt-get install -y git git-lfs git-filter-repo git-crypt gh
 
     # node build env
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh") setup-build
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh")
+    bash <(echo "$script") setup-build
 
     # install gcloud
     apt-get install -y google-cloud-sdk
@@ -95,10 +104,12 @@ function _setup_host_vm() {
     n lts
     n rm lts
     n prune
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
+    bash <(echo "$script")
 
     # install private dotfiles profile
-    source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh") private
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh")
+    source <(echo "$script") private
 
     echo Setup host finished, you need to reboot server
 }
@@ -110,7 +121,9 @@ function _setup_host_vmware() {
     vmware-toolbox-cmd timesync enable
 
     # setup timesync
-    bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
+    local script
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
+    bash <(echo "$script")
 
     # mount hgfs, if not mounted
     if mountpoint -q -- "/mnt/hgfs"; then

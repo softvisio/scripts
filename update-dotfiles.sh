@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 
+# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh")
+#
 # update installed profiles
-# source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh")
-
+# source <(echo "$script")
+#
 # install / update "public" profile
-# source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh") public
-
+# source <(echo "$script") public
+#
 # install / update "private" profile
-# source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh") private
-
+# source <(echo "$script") private
+#
 # install / update "deployment" profile
-# source <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh") deployment
+# source <(echo "$script") deployment
 
 set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
