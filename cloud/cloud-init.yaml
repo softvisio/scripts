@@ -3,16 +3,16 @@
 package_upgrade: true
 
 runcmd:
-  - bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
+  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh"); bash <(echo "$script")
 
-  - bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
+  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh"); bash <(echo "$script")
 
-  - bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh"); bash <(echo "$script")
 
-  - bash <(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh"); bash <(echo "$script")
 
   # setup hostname
-  - 'hostname $(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/name" -H "Metadata-Flavor: Google").$(curl -s "http://metadata.google.internal/computeMetadata/v1/project/project-id" -H "Metadata-Flavor: Google")'
+  - 'hostname $(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name").$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/project/project-id")'
 
   - hostname > /etc/hostname
 
