@@ -3,23 +3,38 @@
 package_upgrade: true
 
 runcmd:
-  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh"); bash <(echo "$script")
+  # setup host
+  - |-
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
+    bash <(echo "$script")
 
-  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh"); bash <(echo "$script")
+  # setup timesync
+  - |-
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-timesync.sh")
+    bash <(echo "$script")
 
-  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh"); bash <(echo "$script")
+  # install ssh public key
+  - |-
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    bash <(echo "$script")
 
-  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh"); bash <(echo "$script")
+  # setup sshd
+  - |-
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+    bash <(echo "$script")
 
   # setup hostname
-  - 'hostname $(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name").$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/project/project-id")'
-
-  - hostname > /etc/hostname
+  - |-
+    name=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
+    project_id=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/project/project-id")
+    hostname $name.$project_id
+    hostname > /etc/hostname
 
   # install dotfiles deployment profile
-  - update-dotfiles deployment
+  - |-
+    update-dotfiles deployment
 
   # install docker
-  - apt-get install -y docker-ce
-
-  # - docker swarm init
+  - |-
+    apt-get install -y docker-ce
+    # docker swarm init
