@@ -7,7 +7,7 @@ set -Eeuo pipefail
 trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null | grep -oE "\S.*\S|\S" || true)" >&2; return 3 2> /dev/null || exit 3' ERR
 
 github_username=zdm
-encrypted_passphrase="jA0ECQMK8w9W68a9zmD_0kQB4IDlKcvHdk2BRAV-SvV-Qr5Sr65ci1sYGfyKTSsb6fTAq6XsiM_qmiTYzyNncJjrsIBqq0xsqAPQiGW8V-FrcQHabg=="
+encrypted_passphrase="U2FsdGVkX1+/a3Qii8oNkFfDEVvYqtVHi7Nf2tNQ+18="
 
 gpg_key_id=${1:-}
 

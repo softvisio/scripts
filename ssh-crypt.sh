@@ -16,6 +16,10 @@ function ssh-crypt() {
     local github_username=${2:-}
     local secret
 
+    # XXX for openssl >= 3.5.0
+    # local openssl_options="enc -aes-256-cbc -pbkdf2 -a -A -md SHA3-512 -iter 210000 -saltlen 16"
+    local openssl_options="enc -aes-256-cbc -pbkdf2 -a -A -md SHA3-512 -iter 210000"
+
     function create_secret() {
         local github_username=${1:-}
         local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
@@ -43,15 +47,12 @@ function ssh-crypt() {
         encrypt)
             secret=$(create_secret $github_username)
 
-            local encrypted
-            encrypted=$(gpg --symmetric --batch --passphrase-fd=4 4<<< "$secret" | basenc --base64url --wrap=0)
-
-            echo "$encrypted"
+            openssl $openssl_options -k "$secret" -e
             ;;
         decrypt)
             secret=$(create_secret $github_username)
 
-            basenc --base64url --decode | gpg --decrypt --quiet --batch --passphrase-fd=4 4<<< "$secret"
+            openssl $openssl_options -k "$secret" -d
             ;;
         *)
             echo "Usage:"
