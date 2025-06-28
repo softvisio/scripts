@@ -47,7 +47,10 @@ function ssh-crypt() {
         encrypt)
             secret=$(create_secret $github_username)
 
-            openssl $openssl_options -k "$secret" -e
+            local encrypted
+            encrypted=$(openssl $openssl_options -k "$secret" -e)
+
+            echo "$encrypted"
             ;;
         decrypt)
             secret=$(create_secret $github_username)
