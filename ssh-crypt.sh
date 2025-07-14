@@ -23,12 +23,12 @@ function ssh-crypt() {
         local secret
 
         if [[ $public_keys == "" ]]; then
-            echo "Unable to get SSH public key from GitHub" >&2
+            echo "User \"$github_username\" has no public SSH keys published on GitHub" >&2
 
             return 1
         fi
 
-        # create signature of github_username, that will be used as secret
+        # create AES-256 secret key
         secret=$(echo -n "$github_username" | ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" 2> /dev/null | openssl dgst -sha3-256 -binary) || ""
 
         if [[ $secret == "" ]]; then
