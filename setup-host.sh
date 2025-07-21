@@ -50,7 +50,7 @@ EOF
             repo-google-cloud \
             repo-postgresql
 
-        apt-get install -y n
+        apt-get install -y nvm
 
         # upgrade installed packages to the latest versions
         apt-get update
