@@ -101,7 +101,7 @@ function _setup_host_vm() {
 
     # install node
     source /etc/profile.d/nvm.sh
-    nvm install --lts
+    nvm install lts/*
     nvm cache clear
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
     bash <(echo "$script")
