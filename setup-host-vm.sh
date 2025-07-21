@@ -100,10 +100,9 @@ function _setup_host_vm() {
     systemctl restart tor
 
     # install node
-    source /etc/profile.d/n.sh
-    n lts
-    n rm lts
-    n prune
+    source /etc/profile.d/nvm.sh
+    nvm install --lts
+    nvm cache clear
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
     bash <(echo "$script")
 
