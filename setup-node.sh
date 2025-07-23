@@ -11,8 +11,8 @@ trap 'echo -e "⚠  Error ($0:$LINENO): $(sed -n "${LINENO}p" "$0" 2> /dev/null 
 # fi
 
 # make global modules loadable
-rm -rf ~/.node_modules
-ln -s ~/.npm/lib/node_modules ~/.node_modules
+# rm -rf ~/.node_modules
+# ln -s ~/.npm/lib/node_modules ~/.node_modules
 
 # update node_modules
 # npm install --global npm
