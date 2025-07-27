@@ -51,6 +51,7 @@ EOF
             repo-postgresql
 
         apt-get install -y fnm
+        source /etc/profile.d/fnm.sh
 
         # upgrade installed packages to the latest versions
         apt-get update

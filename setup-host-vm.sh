@@ -100,7 +100,6 @@ function _setup_host_vm() {
     systemctl restart tor
 
     # install node
-    source /etc/profile.d/fnm.sh
     fnm use --install-if-missing lts-latest
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-node.sh")
     bash <(echo "$script")
