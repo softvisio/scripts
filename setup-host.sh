@@ -50,16 +50,16 @@ EOF
             repo-google-cloud \
             repo-postgresql
 
-        apt-get install -y fnm
-        source /etc/profile.d/fnm.sh
-
         # upgrade installed packages to the latest versions
         apt-get update
         apt-get full-upgrade -y
-
-        # cleanup
-        apt-get autoremove -y
     )
+
+    apt-get install -y fnm
+    source /etc/profile.d/fnm.sh
+
+    # cleanup
+    apt-get autoremove -y
 }
 
 _setup_host_debian
