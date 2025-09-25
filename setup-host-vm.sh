@@ -89,7 +89,7 @@ function _setup_host_vm() {
     # $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
-    apt-get install -y postgresql-client-17
+    apt-get install -y postgresql-client-18
 
     # install docker
     apt-get install -y docker-ce
