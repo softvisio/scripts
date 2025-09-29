@@ -37,9 +37,10 @@ function _precache_passphrase() {
     local decrypted_passphrase=$2
 
     # precache passphrase for key and sub-keys
-    keygrips=$(gpg --list-secret-keys --with-keygrip "$key_id" | awk '/Keygrip/ { print $3 }')
+    keygrips=$($(gpg --list-secret-keys --with-keygrip "$key_id" 2> /dev/null || true) | awk '/Keygrip/ { print $3 }')
 
     for keygrip in $keygrips; do
+        echo $keygrip
         echo "$decrypted_passphrase" | /usr/lib/gnupg/gpg-preset-passphrase --preset $keygrip
     done
 }
