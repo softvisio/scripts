@@ -37,8 +37,12 @@ function _precache_passphrase() {
     local decrypted_passphrase=$2
 
     # precache passphrase for key and sub-keys
-    echo "$key_id"
-    keygrips=$(echo $(gpg --list-secret-keys --with-keygrip "$key_id" 2> /dev/null || true) | awk '/Keygrip/ { print $3 }')
+    echo "1 - $key_id"
+    keys=$(gpg --list-secret-keys --with-keygrip "$key_id" 2> /dev/null || true)
+
+    -z $keys && return
+
+    keygrips=$(echo "$keys" | awk '/Keygrip/ { print $3 }')
 
     for keygrip in $keygrips; do
         echo $keygrip
