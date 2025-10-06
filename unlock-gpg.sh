@@ -12,8 +12,8 @@ gpg_keys=$(
     cat << JSON
 {
     "dzagashev@gmail.com":      "U2FsdGVkX1+hSMAl+SljhhnDHE7EXcIjHgypuflLrs9y37YDXqCM9ioN/1B7lYC0",
-    "deb@softvisio.net":        "U2FsdGVkX1/+V6USDRFBjl/G9CZLI7ksk/bgXE5STTorgpu7jT9vTkr40IfCzS0N",
-    "deployment@softvisio.net": "U2FsdGVkX1+LUS7EJLKZUvCBwY6NJfNevO9vP2I4q2Rip9B4a5U5vOZ4aU/paKXR"
+    "deb@softvisio.net":        "U2FsdGVkX19XqIKSfUEzXHvgXUluWEF8DiCrBt1gH63pPy2XRfiTmvyhl4YTlM6TJ60olmj1BL9HTQBRXd1Vag==",
+    "deployment@softvisio.net": "U2FsdGVkX18O+Mz2vYH1tSTc/DPk/zX4VPsy0pwjjJjoezyvwYXJRzmHoEocOk7mNWibXM3o3q/Ii5X5F4LfAg=="
 }
 JSON
 )
@@ -52,7 +52,9 @@ function _precache_passphrase() {
 
 if [[ -z $gpg_key_id ]]; then
     for key_id in $(jq -r "keys | reverse[]" <<< "$gpg_keys"); do
-        encrypted_passphrase=$(jq -r ".\"$(echo $key_id)\"" <<< "$gpg_keys")
+        key_id=$(echo "$key_id")
+
+        encrypted_passphrase=$(jq -r ".\"$key_id\"" <<< "$gpg_keys")
         decrypted_passphrase=$(_decrypt_passphrase $encrypted_passphrase)
 
         _precache_passphrase "$key_id" "$decrypted_passphrase"
