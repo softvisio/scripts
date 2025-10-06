@@ -13,7 +13,7 @@ gpg_keys=$(
 {
     "dzagashev@gmail.com":      "U2FsdGVkX1+hSMAl+SljhhnDHE7EXcIjHgypuflLrs9y37YDXqCM9ioN/1B7lYC0",
     "deb@softvisio.net":        "U2FsdGVkX1/+V6USDRFBjl/G9CZLI7ksk/bgXE5STTorgpu7jT9vTkr40IfCzS0N",
-    "deployment@softvisio.net": "U2FsdGVkX19UVy1HE6ezTeCZ6CoOkPTRO/e0WTlf2JFPHa4k7GnygbtAR7gpoKGT"
+    "deployment@softvisio.net": "U2FsdGVkX1+LUS7EJLKZUvCBwY6NJfNevO9vP2I4q2Rip9B4a5U5vOZ4aU/paKXR"
 }
 JSON
 )
