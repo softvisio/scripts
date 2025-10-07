@@ -21,8 +21,8 @@ function update-dotfiles() {
     local dotfiles=$(
         cat << JSON
 {
-    "public": "zdm/dotfiles-public",
-    "private": "zdm/dotfiles-private",
+    "public":     "zdm/dotfiles-public",
+    "private":    "zdm/dotfiles-private",
     "deployment": "zdm/dotfiles-deployment"
 }
 JSON
