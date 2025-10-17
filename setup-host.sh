@@ -19,6 +19,8 @@ function _setup_host_debian() {
         tar \
         ca-certificates \
         curl \
+        less \
+        sudo \
         jq
 
     # install public dotfiles profile
