@@ -12,11 +12,11 @@ npm install --global \
     neovim
 
 # link packages globally
-pushd /var/local/softvisio-node/cli
+pushd /var/local/softvisio/cli
 npm link
 popd
 
-pushd /var/local/softvisio-node/core
+pushd /var/local/c0rejs/core
 npm link
 popd
 
