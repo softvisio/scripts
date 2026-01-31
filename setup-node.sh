@@ -16,7 +16,7 @@ pushd /var/local/softvisio/cli
 npm link
 popd
 
-pushd /var/local/c0rejs/core
+pushd /var/local/corejslib/core
 npm link
 popd
 
