@@ -20,7 +20,7 @@ pushd /var/local/corejslib/core
 npm link
 popd
 
-pushd /var/local/zdm/utils
+pushd /var/local/softvisio/utils
 npm link
 popd
 
