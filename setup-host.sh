@@ -44,13 +44,13 @@ EOF
         apt-get update
 
         apt-get reinstall -y \
-            repo-cloudflared \
-            repo-docker \
-            repo-git \
-            repo-git-lfs \
-            repo-github-cli \
-            repo-google-cloud \
-            repo-postgresql
+            cloudflared.repository \
+            docker.repository \
+            git.repository \
+            git-lfs.repository \
+            github-cli.repository \
+            google-cloud.repository \
+            postgresql.repository
 
         # upgrade installed packages to the latest versions
         apt-get update
