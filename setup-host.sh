@@ -38,7 +38,7 @@ EOF
         export DEBIAN_FRONTEND=noninteractive
 
         # instal  softvisio repository
-        script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/deb/main/setup.sh")
+        script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/deb-repository/main/setup.sh")
         bash <(echo "$script") install
 
         apt-get update
