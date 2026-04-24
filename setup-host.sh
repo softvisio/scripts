@@ -44,11 +44,9 @@ EOF
         apt-get update
 
         apt-get reinstall -y \
-            cloudflared.repository \
             docker.repository \
             git.repository \
             git-lfs.repository \
-            github-cli.repository \
             google-cloud.repository \
             postgresql.repository
 
@@ -57,6 +55,7 @@ EOF
         apt-get full-upgrade -y
     )
 
+    # fnm
     apt-get install -y fnm
     source /etc/profile.d/fnm.sh
 

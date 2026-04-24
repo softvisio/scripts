@@ -74,28 +74,43 @@ function _setup_host_vm() {
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
 
-    apt-get install -y mc htop nvim
+    apt-get install -y \
+        cloudflared.repository \
+        github-cli.repository \
+        mc \
+        htop \
+        nvim
 
     # git
-    apt-get install -y git git-lfs git-filter-repo git-crypt gh
+    apt-get install -y \
+        git \
+        git-lfs \
+        git-filter-repo \
+        git-crypt \
+        gh
 
     # node build env
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/env-build-node.sh")
     bash <(echo "$script") setup-build
 
     # install gcloud
-    apt-get install -y google-cloud-sdk
+    apt-get install -y \
+        google-cloud-sdk
     # XXX
     # $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
-    apt-get install -y postgresql-client-18
+    apt-get install -y \
+        postgresql-client-18
 
     # install docker
-    apt-get install -y docker-ce
+    apt-get install -y \
+        docker-ce
 
     # install tor
-    apt-get install -y tor nyx
+    apt-get install -y \
+        tor \
+        nyx
     sed -i -e '/SocksPort 9050/ s/9050/0.0.0.0:9050\nControlPort 0.0.0.0:9051/' /usr/share/tor/tor-service-defaults-torrc
     systemctl restart tor
 
@@ -108,7 +123,7 @@ function _setup_host_vm() {
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/update-dotfiles.sh")
     source <(echo "$script") private
 
-    echo Setup host finished, you need to reboot server
+    echo "Setup host finished, you need to reboot server"
 }
 
 function _setup_host_vmware() {
