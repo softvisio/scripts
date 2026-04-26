@@ -5,7 +5,7 @@
 # source <(echo "$script") "$dotfiles" $type
 
 set -Eeuo pipefail
-trap 'echo "⚠  Error ($0:$LINENO): $BASH_COMMAND" && return 3 2> /dev/null || exit 3' ERR
+trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 
 function dotfiles() {
     local dotfiles=${1:-}
