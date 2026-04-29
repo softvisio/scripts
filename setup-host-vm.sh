@@ -96,8 +96,8 @@ function _setup_host_vm() {
     # gpg
     _import_gpg_keys
 
-    # TODO: cloudflared.repository \
     apt-get install -y \
+        cloudflared.repository \
         github-cli.repository \
         mc \
         htop \
