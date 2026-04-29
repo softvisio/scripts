@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
 # vmware
-# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh")
-# bash <(echo "$script") vmware
+# 1. install public ssh keys
+# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh") && bash <(echo "$script")
+#
+# 2. install gpg keys
+# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
+# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
+# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-dzagashev@gmail.com.sh") && bash <(echo "$script")
+# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-public-keys.sh") && bash <(echo "$script")
+#
+# 3.
+# script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") && bash <(echo "$script") vmware
 
 # wsl
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh")
@@ -43,14 +52,14 @@ function _setup_host_vm() {
     export DEBIAN_FRONTEND=noninteractive
 
     # setup host
-    local scrippt
-    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
+    local script
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
     source <(echo "$script")
 
     # setup SSH
-    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
     bash <(echo "$script")
-    scrippt=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
     bash <(echo "$script")
 
     case "${1:-}" in
