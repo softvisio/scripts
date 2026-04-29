@@ -72,6 +72,7 @@ function _setup_host_vm() {
             ;;
 
         *)
+            echo "Invalid command"
             return 1
             ;;
     esac
