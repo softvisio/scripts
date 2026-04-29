@@ -4,13 +4,7 @@
 # 1. install public ssh keys
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh") && bash <(echo "$script")
 #
-# 2. install gpg keys
-# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
-# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
-# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-dzagashev@gmail.com.sh") && bash <(echo "$script")
-# script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-public-keys.sh") && bash <(echo "$script")
-#
-# 3.
+# 2.
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") && bash <(echo "$script") vmware
 
 # wsl
@@ -25,6 +19,16 @@ trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 
 # disable firewalld
 # systemctl stop firewalld; systemctl disable firewalld
+
+function _import_gpg_keys() {
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
+
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
+
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-dzagashev@gmail.com.sh") && bash <(echo "$script")
+
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-public-keys.sh") && bash <(echo "$script")
+}
 
 function __setup_user() {
     local username=zdm
@@ -57,8 +61,8 @@ function _setup_host_vm() {
     source <(echo "$script")
 
     # setup SSH
-    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
-    bash <(echo "$script")
+    # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh")
+    # bash <(echo "$script")
     script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-sshd.sh")
     bash <(echo "$script")
 
@@ -83,6 +87,9 @@ function _setup_host_vm() {
 
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
+
+    # gpg
+    _import_gpg_keys
 
     # TODO: cloudflared.repository \
     apt-get install -y \
