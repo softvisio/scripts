@@ -74,8 +74,8 @@ function _setup_host_vm() {
     # prefer ipv4 over ipv6
     sed -i -r '/precedence ::ffff:0:0\/96  10$/c precedence ::ffff:0:0\/96  100' /etc/gai.conf
 
+    # TODO: cloudflared.repository \
     apt-get install -y \
-        cloudflared.repository \
         github-cli.repository \
         mc \
         htop \
