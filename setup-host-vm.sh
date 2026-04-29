@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
-# vmware
-# 1. install public ssh keys
+# 1. install curl
+# apt update && apt install -y curl
+#
+# 2. install public ssh keys
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/install-ssh-public-key.sh") && bash <(echo "$script")
 #
-# 2. connect to the host via SSH
+# 3. connect to the host via SSH
 #
-# 3. run setup script
+# 4. run setup script
 #
 # vmware
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") && bash <(echo "$script") vmware
 #
-# or wsl
+# wsl
 # script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host-vm.sh") && bash <(echo "$script") wsl
 
 set -Eeuo pipefail
