@@ -19,9 +19,7 @@ function _init_docker() {
 
     init_docker=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/init_docker") || true
 
-    if [[ -z "$init_docker" ]]; then
-        docker swarm init
-    else
+    if [[ -n "$init_docker" ]]; then
         $init_docker
     fi
 }
@@ -44,18 +42,6 @@ bash <(echo "$script")
 
 # setup hostname
 _setup_hostname
-
-apt-get install -y \
-    mc \
-    htop
-
-apt-get install -y \
-    git \
-    git-lfs \
-    git-crypt
-
-apt-get install -y \
-    postgresql-client-18
 
 # install docker
 apt-get install -y \
