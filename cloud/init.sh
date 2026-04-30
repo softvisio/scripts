@@ -17,7 +17,7 @@ function _setup_hostname() {
 function _init_docker() {
     local init_docker
 
-    init_docker=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/init_docker")
+    init_docker=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/init_docker") || true
 
     if [[ -z "$init_docker" ]]; then
         docker swarm init
