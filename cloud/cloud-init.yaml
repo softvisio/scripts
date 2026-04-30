@@ -1,8 +1,7 @@
 #cloud-config
 
+package_update: true
 package_upgrade: true
 
 runcmd:
-  - |-
-    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/cloud/init.sh")
-    bash <(echo "$script")
+  - curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/cloud/init.sh" | bash
