@@ -3,4 +3,6 @@
 package_upgrade: true
 
 runcmd:
-  - script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/cloud/init.sh") && bash <(echo "$script")
+  - |-
+    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/cloud/init.sh")
+    bash <(echo "$script")
