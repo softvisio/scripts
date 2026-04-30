@@ -3,12 +3,6 @@
 set -Eeuo pipefail
 trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 
-function _import_gpg_keys() {
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
-
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/apps/main/gpg/backup/restore-gpg-public-keys.sh") && bash <(echo "$script")
-}
-
 function _setup_hostname() {
     local name
     name=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
@@ -20,7 +14,17 @@ function _setup_hostname() {
     hostname > /etc/hostname
 }
 
-function _init_docker_node() {}
+function _init_docker() {
+    local init_docker
+
+    init_docker=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/init_docker")
+
+    if [[ -z "$init_docker" ]]; then
+        docker swarm init
+    else
+        $init_docker
+    fi
+}
 
 # setup host
 script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/setup-host.sh")
@@ -41,16 +45,6 @@ bash <(echo "$script")
 # setup hostname
 _setup_hostname
 
-# install dotfiles deployment profile
-_import_gpg_keys
-update-dotfiles deployment
-
-# install docker
-apt-get install -y \
-    docker-ce
-# docker swarm init
-# name=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/[KEY]")
-
 apt-get install -y \
     mc \
     htop
@@ -62,3 +56,9 @@ apt-get install -y \
 
 apt-get install -y \
     postgresql-client-18
+
+# install docker
+apt-get install -y \
+    docker-ce
+
+_init_docker
