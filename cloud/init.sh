@@ -34,7 +34,10 @@ function _setup_hostname() {
     hostname > /etc/hostname
 }
 
-function _init_docker() {
+function _setup_docker() {
+    apt-get install -y \
+        docker-ce
+
     local init_docker
 
     init_docker=$(curl -fsS -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/init_docker") || true
@@ -50,8 +53,5 @@ _setup_instance
 # setup hostname
 _setup_hostname
 
-# install docker
-apt-get install -y \
-    docker-ce
-
-_init_docker
+# setup docker
+_setup_docker
