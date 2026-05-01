@@ -26,6 +26,8 @@ trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 # systemctl stop firewalld; systemctl disable firewalld
 
 function _import_gpg_keys() {
+    local script
+
     script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
 
     script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
