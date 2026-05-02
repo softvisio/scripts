@@ -16,7 +16,7 @@ apt-get install -y \
     postgresql-client-18
 
 # add gpg deployment key
-script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
+script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-deployment@softvisio.net.sh") && bash <(echo "$script")
 
 # install deployment dotfiles
 update-dotfiles deployment
