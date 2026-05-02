@@ -1,6 +1,0 @@
-kind: compute#urlMap
-name: http
-
-defaultUrlRedirect:
-  httpsRedirect: true
-  redirectResponseCode: MOVED_PERMANENTLY_DEFAULT
