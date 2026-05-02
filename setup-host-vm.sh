@@ -28,13 +28,13 @@ trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 function _import_gpg_keys() {
     local script
 
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-gpg-key-deb@softvisio.net.sh") && bash <(echo "$script")
 
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-gpg-key-deployment@softvisio.net.sh") && bash <(echo "$script")
 
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-key-dzagashev@gmail.com.sh") && bash <(echo "$script")
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-gpg-key-dzagashev@gmail.com.sh") && bash <(echo "$script")
 
-    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/backup/restore-gpg-public-keys.sh") && bash <(echo "$script")
+    script=$(curl -fsS "https://raw.githubusercontent.com/zdm/dotfiles-public/main/gpg/restore-gpg-public-keys.sh") && bash <(echo "$script")
 }
 
 function __setup_user() {
