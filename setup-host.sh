@@ -43,7 +43,7 @@ EOF
 
         apt-get update
 
-        # TODO: git-lfs.repository \
+        # TODO: git-lfs.repository
         apt-get reinstall -y docker.repository \
             git.repository \
             google-cloud.repository \
