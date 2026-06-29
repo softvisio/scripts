@@ -15,7 +15,7 @@ function ssh-crypt() {
     local operation=${1:-}
     local github_username=${2:-}
     local secret
-    local openssl_options="enc -a -A -aes-256-cbc -pbkdf2"
+    local openssl_options="enc -aes-256-cbc -base64 -A -pbkdf2 -md SHA256 -iter 600000 -saltlen 16"
 
     function create_secret() {
         local github_username=${1:-}

@@ -11,9 +11,14 @@ github_username=zdm
 gpg_keys=$(
     cat << JSON
 {
-    "dzagashev@gmail.com":      "U2FsdGVkX1+hSMAl+SljhhnDHE7EXcIjHgypuflLrs9y37YDXqCM9ioN/1B7lYC0",
-    "deb@softvisio.net":        "U2FsdGVkX19XqIKSfUEzXHvgXUluWEF8DiCrBt1gH63pPy2XRfiTmvyhl4YTlM6TJ60olmj1BL9HTQBRXd1Vag==",
-    "deployment@softvisio.net": "U2FsdGVkX18O+Mz2vYH1tSTc/DPk/zX4VPsy0pwjjJjoezyvwYXJRzmHoEocOk7mNWibXM3o3q/Ii5X5F4LfAg=="
+    "dzagashev@gmail.com":
+    "U2FsdGVkX1+k+EGNLtLKpgS0yiwRcRvVgrcDezft8GQ37NbK9re1F+adAm8EV5mYhXDjyg5PwF4=",
+
+    "deb@softvisio.net":
+    "U2FsdGVkX1+G+j/3Zz6GcxAl7l78nExg8AIEVd2C/qnWMrX9FrHzrSWVIxxCiNzJ2bbtKGfMYpDQ/ChqPpYO/O+qeq0UnmWB",
+
+    "deployment@softvisio.net":
+    "U2FsdGVkX19kzie+0QDgZf3YUxCOhxI4RXRNkaK0czYM00quuTlKyIcn4m8/y0kSJeddwSKzKUhUHkTztGW7/Ru7sOuq5gAg"
 }
 JSON
 )
