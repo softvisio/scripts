@@ -12,13 +12,13 @@ gpg_keys=$(
     cat << JSON
 {
     "dzagashev@gmail.com":
-    "U2FsdGVkX19cHt4tnDRe/LDIRL1Cxn8E+vNRY+0ou6Q5zqubwa1j",
+    "U2FsdGVkX18l/xs6YL0HzY2JxmK1vtbG5ychFxzaSwaAJiqI4YgYZg==",
 
     "deb@softvisio.net":
-    "U2FsdGVkX1+UDB3buiq5xeOlQ2QxgKG0sX34EXLt0p/X6oKtJSymJBwILfr524lBXgf3VvmI",
+    "U2FsdGVkX1/q+Dccw+i30eAqIAti0KLNQFc4PVl6ADlCEFfDJ6ah3jL4vRV1FuEq/xfhNldbFgJI/M3u86dhGX9Hz7IzGFDw",
 
     "deployment@softvisio.net":
-    "U2FsdGVkX19qkKbfl93m/NRK+x/o+stVnI4dmDPUEDBNDxMT7t0aiCsdDSX/B5QDJSgcduac"
+    "U2FsdGVkX1/ZgfCclnzZsdKNIU2UU/aIntSqc/RmTutZGYbGOsi6E1TLmJF6QYqeV7D0lMJCnA9lNIWfa81YMP48VZtCHXds"
 }
 JSON
 )
