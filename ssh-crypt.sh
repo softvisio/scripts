@@ -15,7 +15,7 @@ function ssh-crypt() {
     local operation=${1:-}
     local github_username=${2:-}
     local secret
-    local openssl_options="aes-256-cbc -base64 -A -pbkdf2 -md SHA256 -iter 10000 -saltlen 16"
+    local openssl_options="aes-256-cbc -base64 -A -pbkdf2 -md sha256 -iter 10000 -saltlen 16"
 
     function create_secret() {
         local github_username=${1:-}
@@ -29,7 +29,7 @@ function ssh-crypt() {
         fi
 
         # create AES-256 secret key
-        secret=$(echo -n "$github_username" | ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" 2> /dev/null | openssl dgst -sha3-256 -binary) || ""
+        secret=$(echo -n "$github_username" | ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" 2> /dev/null | openssl sha3-256 -binary) || ""
 
         if [[ $secret == "" ]]; then
             echo "Private SSH key not found" >&2
