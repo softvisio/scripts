@@ -13,15 +13,15 @@ npm install --global \
 
 # link packages globally
 pushd /var/local/softvisio/cli
-npm link
+npm link --dangerously-allow-all-scripts --force
 popd
 
 pushd /var/local/corejslib/core
-npm link
+npm link --dangerously-allow-all-scripts --force
 popd
 
 pushd /var/local/softvisio/utils
-npm link
+npm link --dangerously-allow-all-scripts --force
 popd
 
 # clear npm cache
