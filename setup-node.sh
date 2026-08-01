@@ -12,7 +12,7 @@ npm install --global \
     neovim
 
 # link packages globally
-pushd /var/local/softvisio/cli
+pushd /var/local/corejslib/cli
 npm link --dangerously-allow-all-scripts --force
 popd
 
