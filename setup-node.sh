@@ -8,8 +8,12 @@ trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 
 # install common packages
 npm install --global \
+    npm \
     corepack \
     neovim
+
+# update global packages
+npm update --global --dangerously-allow-all-scripts --force
 
 # link packages globally
 pushd /var/local/corejslib/cli
