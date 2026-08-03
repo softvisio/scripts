@@ -24,7 +24,7 @@ pushd /var/local/corejslib/core
 npm link --dangerously-allow-all-scripts --force
 popd
 
-pushd /var/local/softvisio/utils
+pushd /var/local/softvisio/toolset
 npm link --dangerously-allow-all-scripts --force
 popd
 
