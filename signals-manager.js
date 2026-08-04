@@ -34,12 +34,13 @@ async function start () {
         "stdio": "inherit",
     } );
 
-    return new Promise( resolve =>
-        proc.once( "close", ( code, signal ) => {
+    return new Promise( resolve => {
+        return proc.once( "close", ( code, signal ) => {
             proc = null;
 
             resolve( { code, signal } );
-        } ) );
+        } );
+    } );
 }
 
 function onSignal ( signal ) {
