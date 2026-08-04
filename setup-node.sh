@@ -24,7 +24,7 @@ pushd /var/local/corejslib/core
 npm link --dangerously-allow-all-scripts --force
 popd
 
-pushd /var/local/zdm/toolset
+pushd /var/local/zdm/ztools
 npm link --dangerously-allow-all-scripts --force
 popd
 
