@@ -16,7 +16,7 @@ npm install --global \
 npm update --global --dangerously-allow-all-scripts --force
 
 # link packages globally
-pushd /var/local/corejslib/cli
+pushd /var/local/corejslib/zcli
 npm link --dangerously-allow-all-scripts --force
 popd
 
