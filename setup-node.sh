@@ -16,7 +16,7 @@ npm install --global \
 npm update --global --dangerously-allow-all-scripts --force
 
 # link packages globally
-pushd /var/local/corejslib/zcli
+pushd /var/local/softvisio/zcli
 npm link --dangerously-allow-all-scripts --force
 popd
 
