@@ -43,9 +43,9 @@ EOF
 
         apt-get update
 
-        # TODO: git-lfs.repository
         apt-get reinstall -y docker.repository \
             git.repository \
+            git-lfs.repository \
             google-cloud.repository \
             postgresql.repository
 
