@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # NOTE: only RSA or ED25519 keys are supported
 

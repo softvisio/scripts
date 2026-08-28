@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # NOTE: https://man7.org/linux/man-pages/man5/sshd_config.5.html
 

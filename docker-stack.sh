@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # script=$(curl -fsSL "https://raw.githubusercontent.com/softvisio/scripts/main/docker-stack.sh")
 # bash <(echo "$script")

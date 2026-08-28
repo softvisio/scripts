@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # 1. install curl
 # apt update && apt install -y curl
@@ -232,7 +232,7 @@ EOF
     apt-get install -y keychain
 
     cat << EOF > /etc/profile.d/keep-wsl-running.sh
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 eval \$(keychain -q)
 EOF

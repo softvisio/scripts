@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # install / update components
 # script=$(curl -fsSL "https://raw.githubusercontent.com/softvisio/scripts/main/dotfiles.sh")
