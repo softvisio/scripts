@@ -98,7 +98,6 @@ function _setup_host_vm() {
     # gpg
     _import_gpg_keys
 
-    # XXX: cloudflared.repository
     apt-get install -y \
         github-cli.repository \
         mc \
@@ -120,8 +119,6 @@ function _setup_host_vm() {
     # install gcloud
     apt-get install -y \
         google-cloud-sdk
-    # XXX
-    # $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 
     # install postgresql client
     apt-get install -y \
