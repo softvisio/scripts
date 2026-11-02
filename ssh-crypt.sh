@@ -65,7 +65,6 @@ function ssh-crypt() {
                     -decrypt \
                     -binary \
                     -secretkey "$secret" \
-                    -secretkeyid "$secret_key_id" \
                     -inform DER
             ;;
         *)
