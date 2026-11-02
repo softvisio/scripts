@@ -6,7 +6,7 @@
 #
 # echo "text-to-encrypt" | bash <(echo "$script") encrypt $GITHUB_USERNAME
 #
-# echo "text-to-decrypt" | bash <(echo "$script") decrypt $GITHUB_USERNAME
+# echo "encrypted text" | bash <(echo "$script") decrypt $GITHUB_USERNAME
 
 set -Eeuo pipefail
 trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
@@ -14,26 +14,29 @@ trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 function ssh-crypt() {
     local operation=${1:-}
     local github_username=${2:-}
+    local secret_key_id=01
     local secret
-    local openssl_options="aes-256-cbc -base64 -A -pbkdf2 -md sha256 -iter 10000 -saltlen 16"
 
     function create_secret() {
         local github_username=${1:-}
-        local public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || ""
+        local public_keys
         local secret
+
+        public_keys=$(curl --fail --silent "https://github.com/${github_username}.keys") || public_keys=""
 
         if [[ $public_keys == "" ]]; then
             echo "User \"$github_username\" has no public SSH keys published on GitHub" >&2
-
             return 1
         fi
 
         # create AES-256 secret key
-        secret=$(echo -n "$github_username" | ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" 2> /dev/null | openssl sha3-256 -binary) || ""
+        secret=$(echo -n "$github_username" | ssh-keygen -Y sign -n ssh-crypt -q -f /dev/fd/4 4<<< "$public_keys" 2> /dev/null | openssl sha3-256) || secret=""
 
-        if [[ $secret == "" ]]; then
+        # extract HEX digest
+        secret=${secret##*= }
+
+        if [[ ! $secret =~ ^[[:xdigit:]]{64}$ ]]; then
             echo "Private SSH key not found" >&2
-
             return 1
         fi
 
@@ -42,17 +45,28 @@ function ssh-crypt() {
 
     case "$operation" in
         encrypt)
-            secret=$(create_secret $github_username)
+            secret=$(create_secret "$github_username")
 
-            local encrypted
-            encrypted=$(openssl $openssl_options -k "$secret" -e)
-
-            echo "$encrypted"
+            openssl cms \
+                -encrypt \
+                -stream \
+                -binary \
+                -aes-256-gcm \
+                -secretkey "$secret" \
+                -secretkeyid "$secret_key_id" \
+                -outform DER \
+                | openssl base64 -A
             ;;
         decrypt)
-            secret=$(create_secret $github_username)
+            secret=$(create_secret "$github_username")
 
-            openssl $openssl_options -k "$secret" -d
+            openssl base64 -d -A \
+                | openssl cms \
+                    -decrypt \
+                    -binary \
+                    -secretkey "$secret" \
+                    -secretkeyid "$secret_key_id" \
+                    -inform DER
             ;;
         *)
             echo "Usage:"
