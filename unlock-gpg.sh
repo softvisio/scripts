@@ -8,8 +8,10 @@ set -Eeuo pipefail
 trap 'echo "⚠  Error ($0:$LINENO, exit code: $?): $BASH_COMMAND" >&2' ERR
 
 github_username=zdm
+
+# quoted delimiter: no shell expansion inside the heredoc
 gpg_keys=$(
-    cat << JSON
+    cat << 'JSON'
 {
     "dzagashev@gmail.com":
     "MIAGCyqGSIb3DQEJEAEXoIAwgAIBADFJokcCAQQwCwQJc3NoLWNyeXB0MAsGCWCGSAFlAwQBLQQonUwnZr5OSkCbq+o15zNTHOsdOrtMe7J/+8L790oGUHWgogswktl7ZjCABgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDKGnXR0zMsSEYPwjsAIBEKCABA/V34jFnusmaMFXTM0RPHkAAAAABBCc5e/A6AZEfP8QcL0uj16+AAAAAAAA",
@@ -26,51 +28,113 @@ JSON
 gpg_key_id=${1:-}
 action=${2:-}
 
+# set in the main flow (not in a subshell), so they are shared by all functions
+ssh_crypt_script=""
+preset_passphrase_bin=""
+
+function _error() {
+    echo "$1" >&2
+
+    exit 1
+}
+
+function _find_preset_passphrase_bin() {
+    local libexecdir bin
+
+    libexecdir=$(gpgconf --list-dirs libexecdir 2> /dev/null || true)
+
+    for bin in \
+        "$libexecdir/gpg-preset-passphrase" \
+        /usr/lib/gnupg/gpg-preset-passphrase \
+        /usr/lib/gnupg2/gpg-preset-passphrase \
+        /usr/libexec/gpg-preset-passphrase; do
+        if [[ -x $bin ]]; then
+            echo "$bin"
+
+            return
+        fi
+    done
+
+    echo "gpg-preset-passphrase not found" >&2
+
+    return 1
+}
+
+function _get_encrypted_passphrase() {
+    local key_id=$1
+
+    # key id is passed as a jq variable, not interpolated into the filter
+    jq -r --arg key_id "$key_id" '.[$key_id] // empty' <<< "$gpg_keys"
+}
+
 function _decrypt_passphrase() {
-    encrypted_passphrase=$1
+    local encrypted_passphrase=$1 passphrase
 
     # decrypt gpg passphrase
-    local script
-    script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh")
-    passphrase=$(echo "$encrypted_passphrase" | bash <(echo "$script") decrypt "$github_username")
+    passphrase=$(printf '%s\n' "$encrypted_passphrase" | bash <(printf '%s' "$ssh_crypt_script") decrypt "$github_username")
 
-    echo -n "$passphrase"
+    printf '%s' "$passphrase"
 }
 
 function _precache_passphrase() {
-    local key_id=$1
-    local decrypted_passphrase=$2
+    local key_id=$1 decrypted_passphrase=$2 keys keygrips keygrip
 
     # precache passphrase for key and sub-keys
     keys=$(gpg --list-secret-keys --with-keygrip "$key_id" 2> /dev/null || true)
 
     if [[ -z $keys ]]; then
+        echo "⚠  Secret key not found: $key_id" >&2
+
         return
     fi
 
-    keygrips=$(echo "$keys" | awk '/Keygrip/ { print $3 }')
+    keygrips=$(awk '/Keygrip/ { print $3 }' <<< "$keys")
 
     for keygrip in $keygrips; do
-        echo "$decrypted_passphrase" | /usr/lib/gnupg/gpg-preset-passphrase --preset $keygrip
+        printf '%s\n' "$decrypted_passphrase" | "$preset_passphrase_bin" --preset "$keygrip"
     done
 }
 
-if [[ -z $gpg_key_id ]]; then
-    for key_id in $(jq -r "keys | reverse[]" <<< "$gpg_keys"); do
-        key_id=$(echo "$key_id")
+function _unlock_key() {
+    local key_id=$1 encrypted_passphrase decrypted_passphrase
 
-        encrypted_passphrase=$(jq -r ".\"$key_id\"" <<< "$gpg_keys")
-        decrypted_passphrase=$(_decrypt_passphrase $encrypted_passphrase)
+    encrypted_passphrase=$(_get_encrypted_passphrase "$key_id")
 
-        _precache_passphrase "$key_id" "$decrypted_passphrase"
-    done
-else
-    encrypted_passphrase=$(jq -r ".\"$(echo $gpg_key_id)\"" <<< "$gpg_keys")
-    decrypted_passphrase=$(_decrypt_passphrase $encrypted_passphrase)
-
-    if [[ "$action" == "get-passphrase" ]]; then
-        echo -n "$decrypted_passphrase"
-    else
-        _precache_passphrase "$gpg_key_id" "$decrypted_passphrase"
+    if [[ -z $encrypted_passphrase ]]; then
+        _error "Unknown key id: $key_id"
     fi
+
+    decrypted_passphrase=$(_decrypt_passphrase "$encrypted_passphrase")
+
+    if [[ $action == get-passphrase ]]; then
+        printf '%s' "$decrypted_passphrase"
+    else
+        _precache_passphrase "$key_id" "$decrypted_passphrase"
+    fi
+}
+
+# validate arguments
+if [[ -n $action && $action != get-passphrase ]]; then
+    _error "Unknown action: $action"
+fi
+
+if [[ $action == get-passphrase && -z $gpg_key_id ]]; then
+    _error "Key id is required for get-passphrase"
+fi
+
+# fetch ssh-crypt.sh only once
+ssh_crypt_script=$(curl -fsS "https://raw.githubusercontent.com/softvisio/scripts/main/ssh-crypt.sh")
+
+if [[ $action != get-passphrase ]]; then
+    preset_passphrase_bin=$(_find_preset_passphrase_bin)
+fi
+
+if [[ -z $gpg_key_id ]]; then
+    key_ids=$(jq -r 'keys | reverse[]' <<< "$gpg_keys")
+
+    while IFS= read -r key_id; do
+        _unlock_key "$key_id"
+    done <<< "$key_ids"
+else
+    _unlock_key "$gpg_key_id"
 fi
